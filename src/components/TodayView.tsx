@@ -73,7 +73,7 @@ export function TodayView({
         label: lessonNumberLabel(mod, lesson),
         done: isLessonComplete(lesson),
         courseId: parsed.courseId,
-        moduleId: parsed.lessonId,
+        moduleId: parsed.moduleId,
         lessonId: parsed.lessonId,
       });
     }

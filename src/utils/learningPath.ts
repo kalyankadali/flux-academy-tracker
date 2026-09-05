@@ -7,19 +7,13 @@ export const LEARNING_PATH_IDS: string[] = [
   'brand-design-mastery',
   'writesite-strategic-copywriting-for-web-designers',
   'web-design-masterclass',
-  'web-design-becoming-a-professional',
-  'freelancing-for-web-designers',
-  'webflow-masterclass-5-1',
-  'webflow-masterclass-5-1-pro-content',
+  'ecommerce-ai-sprint',
+  'webflow-ai',
+  'client-ready-imagery-with-magnific',
 ];
 
-/** Excluded from aggregate Learning path % (still on path / 40-day plan) */
-export const AGGREGATE_PATH_EXCLUDE = new Set([
-  'web-design-becoming-a-professional',
-  'freelancing-for-web-designers',
-  'webflow-masterclass-5-1',
-  'webflow-masterclass-5-1-pro-content',
-]);
+/** Excluded from aggregate Learning path % (still on path / 40-day plan). Empty: no-deadline long courses were removed from the path. */
+export const AGGREGATE_PATH_EXCLUDE = new Set<string>([]);
 
 export const AGGREGATE_PATH_IDS = LEARNING_PATH_IDS.filter((id) => !AGGREGATE_PATH_EXCLUDE.has(id));
 
@@ -36,15 +30,14 @@ export const LEARNING_PATH_GROUPS: { title: string; ids: string[] }[] = [
       'brand-design-mastery',
       'writesite-strategic-copywriting-for-web-designers',
       'web-design-masterclass',
-      'web-design-becoming-a-professional',
     ],
   },
   {
-    title: '5 · Freelance & Webflow',
+    title: '5 · Ecommerce AI Sprint & finishers',
     ids: [
-      'freelancing-for-web-designers',
-      'webflow-masterclass-5-1',
-      'webflow-masterclass-5-1-pro-content',
+      'ecommerce-ai-sprint',
+      'webflow-ai',
+      'client-ready-imagery-with-magnific',
     ],
   },
 ];

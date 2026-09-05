@@ -16,6 +16,8 @@ export interface Lesson {
   description: string;
   completed: boolean;
   subtasks: Subtask[];
+  /** Real Circle/Flux lesson URL when known — never invent */
+  url?: string;
 }
 
 export interface Module {

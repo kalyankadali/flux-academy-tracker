@@ -40,7 +40,7 @@ export function LessonDetail({
   const [, tick] = useState(0);
   const lessonKey = makeLessonKey(course.id, module.id, lesson.id);
   const isBoss = pinnedLessonKey === lessonKey;
-  const fluxUrl = fluxLessonUrl(course, lesson);
+  const fluxUrl = fluxLessonUrl(course, lesson, module);
 
   const watchDone = lesson.subtasks.some(
     (s) => classifySubtask(s) === 'watch' && s.completed,

@@ -1,3 +1,5 @@
 # Deploy note
 
-Triggered 2026-09-05 to ship production with a valid GitHub commit author (not bot@local).
+Public app: prefer https://flux-academy-tracker.vercel.app (Vercel project rename from figma-course-tracker).
+
+Commit via GitHub as kalyankadali (never bot@local) so Vercel production builds accept the author.

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { COURSES } from '../data/courses';
 import type { LessonKey } from '../types';
-import { todayKey } from '../utils/dates';
+import { todayKeyKolkata, isEcommerceFocusClearDay } from '../utils/dates';
 import { parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules } from '../utils/storage';
 import { accessUntilISO, formatAccessLabel, calmDaysRemaining } from '../utils/access';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function UpcomingView({ schedule, onOpen }: Props) {
-  const today = todayKey();
+  const today = todayKeyKolkata();
 
   const upcomingLessons = useMemo(() => {
     const items: {
@@ -109,6 +109,7 @@ export function UpcomingView({ schedule, onOpen }: Props) {
                         month: 'short',
                         day: 'numeric',
                       })}
+                  {isEcommerceFocusClearDay(date) ? ' · sprint focus' : ''}
                 </p>
                 <ul className="mt-2 space-y-2">
                   {items.map((item) => (

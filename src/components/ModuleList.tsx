@@ -28,6 +28,11 @@ export function ModuleList({ modules, hideCompleted, onOpenLesson }: Props) {
   return (
     <section className="space-y-3">
       <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100">Modules</h2>
+      {modules.length === 0 ? (
+        <p className="rounded-3xl border border-dashed border-stone-200 bg-white p-6 text-sm text-stone-400 dark:border-stone-700 dark:bg-stone-900">
+          No modules yet — curriculum will appear here when this course is ready.
+        </p>
+      ) : null}
       <div className="space-y-3">
         {visibleModules.map((mod) => {
           const mp = moduleProgress(mod);

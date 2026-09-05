@@ -202,7 +202,24 @@ export function useAppPrefs() {
   }, []);
 
   const dismissWeeklyReview = useCallback(() => {
-    setPrefs((p) => ({ ...p, weeklyReviewDismissedWeek: isoWeekKey() }));
+    setPrefs((p) => ({
+      ...p,
+      weeklyReviewDismissedWeek: isoWeekKey(),
+      lastWeeklyReviewWeekKey: isoWeekKey(),
+    }));
+  }, []);
+
+  const saveWeeklyFocusNote = useCallback((weeklyFocusNote: string) => {
+    const note = weeklyFocusNote.trim().slice(0, 200) || null;
+    setPrefs((p) => ({
+      ...p,
+      weeklyFocusNote: note,
+      lastWeeklyReviewWeekKey: isoWeekKey(),
+    }));
+  }, []);
+
+  const dismissTip = useCallback(() => {
+    setPrefs((p) => ({ ...p, tipDismissed: true }));
   }, []);
 
   const patchPrefs = useCallback((partial: Partial<AppPrefs>) => {
@@ -253,6 +270,8 @@ export function useAppPrefs() {
     clearUndo,
     useStreakShield,
     dismissWeeklyReview,
+    saveWeeklyFocusNote,
+    dismissTip,
     patchPrefs,
     visibleHomeCourseIds,
   };

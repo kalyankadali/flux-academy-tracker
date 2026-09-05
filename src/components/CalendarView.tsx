@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { COURSES } from '../data/courses';
 import type { LessonKey } from '../types';
-import { todayKey } from '../utils/dates';
+import { todayKeyKolkata, isEcommerceFocusClearDay } from '../utils/dates';
 import { makeLessonKey, parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules } from '../utils/storage';
 import { isLessonComplete } from '../utils/progress';
@@ -19,7 +19,7 @@ function daysInMonth(year: number, month: number) {
 }
 
 export function CalendarView({ schedule, pinnedCourseId, onSchedule, onOpen }: Props) {
-  const today = todayKey();
+  const today = todayKeyKolkata();
   const now = new Date();
   const [cursor, setCursor] = useState({ y: now.getFullYear(), m: now.getMonth() });
   const [selectedDate, setSelectedDate] = useState(today);
@@ -143,17 +143,21 @@ export function CalendarView({ schedule, pinnedCourseId, onSchedule, onOpen }: P
             const count = dotsByDay.get(iso) ?? 0;
             const isToday = iso === today;
             const selected = iso === selectedDate;
+            const focusClear = isEcommerceFocusClearDay(iso);
             return (
               <button
                 key={iso}
                 type="button"
                 onClick={() => setSelectedDate(iso)}
+                title={focusClear ? 'Ecommerce AI Sprint focus — plan stays clear' : undefined}
                 className={`relative flex h-10 flex-col items-center justify-center rounded-xl text-sm transition ${
                   selected
                     ? 'bg-orange-500 text-white'
                     : isToday
                       ? 'bg-orange-50 text-orange-800 dark:bg-orange-950/40 dark:text-orange-200'
-                      : 'text-stone-700 hover:bg-stone-50 dark:text-stone-200 dark:hover:bg-stone-800'
+                      : focusClear
+                        ? 'bg-sky-50 text-sky-800 dark:bg-sky-950/40 dark:text-sky-200'
+                        : 'text-stone-700 hover:bg-stone-50 dark:text-stone-200 dark:hover:bg-stone-800'
                 }`}
               >
                 {day}
@@ -177,8 +181,17 @@ export function CalendarView({ schedule, pinnedCourseId, onSchedule, onOpen }: P
             day: 'numeric',
           })}
         </h2>
+        {isEcommerceFocusClearDay(selectedDate) && (
+          <p className="mt-2 rounded-2xl bg-sky-50 px-3 py-2 text-xs text-sky-800 dark:bg-sky-950/40 dark:text-sky-200">
+            Ecommerce AI Sprint focus day — the 40-day plan keeps this date clear on purpose.
+          </p>
+        )}
         {itemsOnSelected.length === 0 ? (
-          <p className="mt-2 text-sm text-stone-400">No lessons on this day yet.</p>
+          <p className="mt-2 text-sm text-stone-400">
+            {isEcommerceFocusClearDay(selectedDate)
+              ? 'Intentionally clear for the live sprint.'
+              : 'No lessons on this day yet.'}
+          </p>
         ) : (
           <ul className="mt-3 space-y-2">
             {itemsOnSelected.map((item) => (

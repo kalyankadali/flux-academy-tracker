@@ -19,6 +19,7 @@ import {
   signOut,
 } from '../lib/supabase';
 import { loadPrefs } from '../utils/prefs';
+import { IpadTip } from './IpadTip';
 
 interface Props {
   prefs: AppPrefs;
@@ -26,6 +27,8 @@ interface Props {
   onMarkSynced: (remoteBlobId?: string | null) => void;
   morningPingEnabled: boolean;
   onMorningPing: (v: boolean) => void;
+  tipDismissed?: boolean;
+  onDismissTip?: () => void;
 }
 
 export function SyncPanel({
@@ -34,6 +37,8 @@ export function SyncPanel({
   onMarkSynced,
   morningPingEnabled,
   onMorningPing,
+  tipDismissed = true,
+  onDismissTip,
 }: Props) {
   const [status, setStatus] = useState<string | null>(null);
   const [paste, setPaste] = useState('');
@@ -341,6 +346,8 @@ export function SyncPanel({
           </button>
         </div>
       </div>
+
+      {!tipDismissed && onDismissTip && <IpadTip onDismiss={onDismissTip} />}
 
       <div className="rounded-3xl border border-dashed border-stone-200 bg-stone-50/50 p-5 dark:border-stone-700 dark:bg-stone-900/40">
         <label className="flex cursor-pointer items-start gap-3">

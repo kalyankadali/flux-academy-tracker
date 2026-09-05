@@ -8,7 +8,7 @@ import {
 } from '../utils/prefs';
 import { markQueueLessonDone, refreshQueueBatch } from '../utils/queue';
 import { compressCatchUp, generate40DayPlan } from '../utils/plan40';
-import { todayKey, isoWeekKey } from '../utils/dates';
+import { todayKey, isoWeekKey, isEcommerceFocusClearDay, nextSchedulableDayISO, addDaysISO } from '../utils/dates';
 
 export function useAppPrefs() {
   const [prefs, setPrefs] = useState<AppPrefs>(() => loadPrefs());
@@ -100,10 +100,13 @@ export function useAppPrefs() {
   const generatePlan = useCallback(() => {
     setPrefs((p) => {
       const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
-      // Keep boss lesson date if already scheduled
+      // Keep boss lesson date if already scheduled (never on Ecommerce focus-clear days)
       const schedule = generate40DayPlan(COURSES, { protectKeys: protect });
       if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
-        schedule[p.pinnedLessonKey] = p.schedule[p.pinnedLessonKey];
+        const kept = p.schedule[p.pinnedLessonKey];
+        schedule[p.pinnedLessonKey] = isEcommerceFocusClearDay(kept)
+          ? nextSchedulableDayISO(addDaysISO(kept, 1))
+          : kept;
       }
       return {
         ...p,

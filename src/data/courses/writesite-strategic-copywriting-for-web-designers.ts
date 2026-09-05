@@ -13,15 +13,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046269",
           "title": "Welcome",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:46",
+          "durationMinutes": 2,
           "description": "Thanks for joining WriteSite, a web copy mastery course!\n\nWelcome to the WriteSite! Get ready to level up your website strategy and web copywriting game. From rookies to pros, we've got you covered with expert tips and tricks to serve your web design clients better. \n\n\n\n\n\n\nTranscript\n\n﻿Welcome to WriteSite.\n\nSo we all know that great visual\n\ndesign is crucial to a successful\n\nwebsite project but in this course\n\nyou're going to learn about the\n\nother crucial piece, strategic copywriting.\n\nWithout well -informed copy your\n\nwebsite isn't going to do what\n\nyour clients needed to do which is\n\nhelp their business grow.\n\nSo in this course we're going to\n\ncover the essentials of\n\ncopywriting for websites, the\n\nstrategy work that needs to be\n\ndone in order to get a deep\n\nunderstanding of your clients\n\nbusiness and as importantly their\n\ncustomers and also how to\n\ntranslate this information into\n\nclear and targeted copy for the\n\nmost common pages of a website.\n\nThis course is intended to help\n\nyou layer on\n\na super valuable new skill on top\n\nof your current web design skills\n\nso that you can become a web\n\nstrategist that offers both\n\ncopywriting and design.\n\nThis will help you stand out from\n\nyour competitors who only offer\n\nweb design and increase your rates\n\nsteadily over time because of the\n\nvalue you'll be able to provide\n\nthe clients.\n\nGone are the days of being looked\n\nat as a commodity.\n\nWe all know that web design is\n\nbecoming easier to find and\n\ncheaper to hire than ever before.\n\nClients who view their web\n\ndesigner as an order taker don't\n\nvalue their brain to help them\n\nsolve problems they just want them\n\nto make their site look good.\n\nBut clients who understand you as\n\na trusted advisor and problem\n\nsolver who can strategize the best\n\napproach to copywriting and design\n\nwill be willing to pay you more\n\nwhile looking to you for guidance\n\non how to best present their\n\nbusiness to the world.\n\nTake on the mindset of\n\na trusted website advisor and\n\nconquer the world.\n\nStrategic copywriting will help\n\nyou do just that.\n\nLet's go.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046269-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -79,15 +79,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046272",
           "title": "AI Overview",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:58",
+          "durationMinutes": 2,
           "description": "So should you integrate AI into your copywriting?\nAI Overview\n\nThis video explains the role of AI in your website projects, what AI can/cannot do, and how important it is to view yourself as a website strategist.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046272-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -105,15 +105,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046273",
           "title": "AI Guiding Principles",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:36",
+          "durationMinutes": 3,
           "description": "We've established how AI is a powerful tool that can\nAI Guiding Principles  \n\nThis video explains the 4 Guiding Principles to leverage AI successfully.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046273-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -138,15 +138,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046274",
           "title": "Intro to Discovery & Research",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:42",
+          "durationMinutes": 2,
           "description": "Solid discovery and research are the foundation for website copywriting\nIntro to Discovery & Research\n\nThis video explains the importance of discovery research for website strategy and copywriting and the 3 components involved with discovery and research: \n\nClient Discovery\n\nCustomer Interviews\n\nCompetitor Research",
           "completed": false,
           "subtasks": [
             {
               "id": "4046274-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -164,15 +164,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046276",
           "title": "Running a Discovery Session",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "7:58",
+          "durationMinutes": 8,
           "description": "So we start discovery and research with\nRunning a Discovery Session\n\nA discovery session involves meeting with your client to uncover all the essential information needed to create a compelling pitch for their website. This is useful for writing website copy and can be used for other marketing purposes after the website has been launched. \n\n\nThe video will walk you through the Essential Questions Every Website Needs to Answer. These questions will arm you to run an effective strategy session with your clients.\n\n\n*Note - Many of these questions are repetitive in nature. This is purposeful. If you aren’t getting the info you need from your client, you are given a different way to ask a question. If you are getting the answers you need, don’t feel like you need to ask every question to your client.  \n\n\nFollow this link to get your copy of the Essential Website Questions",
           "completed": false,
           "subtasks": [
             {
               "id": "4046276-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 8,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -258,15 +258,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046279",
           "title": "Using AI for Research",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "10:10",
+          "durationMinutes": 11,
           "description": "So how do you use ChatGPT,\nUsing AI for Research \n\nUse the Essential Questions Every Website Needs To Answer to use AI for more thorough research.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046279-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 11,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -293,15 +293,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046278",
           "title": "Customer Interviews",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:31",
+          "durationMinutes": 7,
           "description": "We encourage you whenever possible to ask your client access\nCustomer Interviews\n\nWhenever possible, we encourage you to ask your client for access to interviewing at least 4-6 of their clients. We do this to help create clarity on what the messages are that clients care about. \n\n\nWithout interviews, it’s easy for the client to make decisions based on assumptions vs. truth. So often, interviews provide much-needed clarity on components of The Essential Questions Every Website Needs to Answer document that might not be fully fleshed out. \n\n\nInterviews up the value you are providing for message strategy. Because of this, be willing to ask for more $$ to do this research step. \n\n\nIf your client doesn’t give you access to interviews, at least ask them if they would be willing to do 4-6 interviews themselves and then get you this data. However, you doing the interviews is best because clients are more inclined to share honestly with an outside party like you vs. with the client themselves.  \n\n\nCLICK HERE FOR YOUR COPY OF THE CUSTOMER INTERVIEW TEMPLATE",
           "completed": false,
           "subtasks": [
             {
               "id": "4046278-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -329,15 +329,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046280",
           "title": "Competitor Research",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:09",
+          "durationMinutes": 2,
           "description": "Competitor research is important for identifying gaps in your messaging\nCompetitor Research \n\nThis video shows you how to do competitor research. \n\n\nUse this template to document your research\n\n\n\n\n\n\n\nTranscript\n\n﻿Competitor research is important\n\nfor identifying gaps in your\n\nmessaging and finding places where\n\nyou can differentiate the web copy\n\nfrom competitors.\n\nWe do research by finding four to\n\nfive websites that are direct\n\ncompetitors to your client.\n\nHop on each website and look for\n\nthe following things.\n\nWhat is the unique selling\n\nproposition of this website?\n\nWhat do you like about this website?\n\nWhat messages grab your attention?\n\nWhat are the weaknesses of this website?\n\nWhat is the information\n\narchitecture or page structure on\n\nthis site?\n\nFinally, know if there is anything\n\nunique about your project that\n\ncould be highlighted to make the\n\nmessage stand out from this competitor.\n\nSo we created a spreadsheet and on\n\nthis spreadsheet we audit each competitor.\n\nWe use this information to make\n\nsure we aren't missing anything as\n\nwe write website copy.\n\nClick the link in the module to\n\ngrab a copy of the template we use\n\nfor our competitor research.\n\nJust make a copy and save it to\n\nyour files for your next project.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046280-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -405,15 +405,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046282",
           "title": "How to Create a Brand Message Playbook",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "7:54",
+          "durationMinutes": 8,
           "description": "So let's create our brand message playbook. We're gonna show\nHow to Create a Brand Message Playbook\n\nMAKE A COPY OF THE BRAND MESSAGE PLAYBOOK HERE\n\nWhat to Do\n\nGo through each section of the Playbook, take the answers from your discovery session, and consolidate each response into one to three sentences or a short list of bullets.\n\nAlways lean towards less. Less is always more!  \n\nConvey the main talking points of the brand in the simplest terms possible.\n\nThis is meant to be a reference or guide for their brand, not long-form copy! \n\nIf it gets wordy, reduce and eliminate content.\n\nBrand this deck for your business and wow your clients with this simple summary. \n\n\n\nTips: \n\nLook for repetition and find where to consolidate.\n\nTry to eliminate filler words to streamline the message. \n\nPrioritize content based on the desires/needs/aspirations of the customer (not the cool features the business owner likes)\n\nMAKE A COPY OF THE BRAND MESSAGE PLAYBOOK HERE\n\n\n\n\n\n\n\n\n\nTranscript\n\nSo let's create our brand message playbook. \n\n\n\nWe're going to show you what you\n\n\n\nneed to do.\n\n\n\n\n\nSo I imagine you've gone through\n\n\n\nyour discovery session.\n\n\n\n\n\nYou've met with your client and\n\n\n\nyou've asked them all the\n\nquestions that we gave you in the\n\n38 questions.\n\n\n\n\n\nYou've done some interviews with\n\n\n\ntheir clients and you have a whole\n\nslew of notes, like a ton of notes\n\n\n\nthat you need to sort through.\n\n\n\n\n\nAnd really what we want to do is\n\n\n\nwe want to consolidate these answers.\n\n\n\nSo we want to take all those answers.\n\n\n\n\n\nWe want to consolidate each of\n\nthese down to three or four short \n\n\n\nbullet points.\n\n\n\n\n\nLike we want to create a summary.\n\n\n\nThis is a playbook\n\nthat they're going to access to be \n\n\n\nable to really understand simply\n\nand clearly their brand message.\n\n\n\n\n\nWe don't need to go into much detail.\n\n\n\n\n\nThis is going to be like high \n\n\n\nlevel bullet points about their messaging.\n\n\n\n\n\nSo remember, less is always more\n\n\n\nat this point.\n\n\n\n\n\nWe really want to simplify the \n\n\n\nmessaging because if you think\n\nabout a website or marketing, you \n\n\n\ncan't say everything at once.\n\n\n\n\n\nWe really want the best messages possible.\n\n\n\n\n\nSo convey the main talking points\n\nto the brand in the simplest terms possible.\n\n\n\n\n\nSo this guide that we're creating\n\nis meant to be a reference for the \n\n\n\nbrand, not long form copy.\n\n\n\n\n\nAnd if it gets too wordy, what we \n\n\n\nwant to do is we want to reduce\n\nand we want to eliminate as much\n\n\n\ncontent as possible.\n\n\n\n\n\nWe want, remember the high level \n\n\n\ntalking points for the brand.\n\n\n\n\n\nNow, remember, like you still have \n\n\n\nthe 38 questions that you can use\n\nas a reference point.\n\n\n\n\n\nSo if you eliminate stuff or you\n\ndon't, not everything gets into \n\n\n\nthe playbook, that's okay because\n\nyou can always go back to your 38 \n\n\n\nquestions as a reference sheet\n\nwhen you're writing content later\n\n\n\nif you need to write longer form copy. \n\n\n\nSo when you're done with this deck \n\n\n\nthat you're creating and we're\n\ngoing to give you a templated deck \n\n\n\nthat you can use to give to your client.\n\n\n\n\n\nWhen you're done with this deck, \n\n\n\nbrand it as a deck for your\n\nbusiness and give it to your \n\n\n\nclients and wow them with this\n\nsimple summary.\n\n\n\n\n\nSo just a few tips.\n\n\n\n\n\nWhat we want to do is we want to \n\n\n\nlook for repetition\n\nand find where we can consolidate.\n\n\n\n\n\nSo a lot of times if like in your\n\nnotes that you've taken, there's \n\n\n\nphrases that get said over and over.\n\n\n\n\n\nThose are phrases that are \n\n\n\nprobably important because they've\n\nbeen repeated, but you don't have \n\n\n\nto say them over and over in the\n\nbrand message playbook.\n\n\n\n\n\nYou really want to say them once,\n\nbut those would be messages that \n\n\n\nyou prioritize and really find\n\nplaces to consolidate messaging.\n\n\n\n\n\nEliminate any filler words to\n\nstreamline the messaging to make \n\n\n\nit as simple as possible.\n\n\n\n\n\nSo a lot of times we have adverbs \n\n\n\nor maybe too many descriptive\n\nwords and things like that.\n\n\n\n\n\nAnd so you can summarize things or\n\neliminate filler words to make\n\n\n\nsentences shorter and a bit more streamlined.\n\n\n\n\n\nSo look for ways to rephrase things.\n\n\n\n\n\nSo if you can get a sentence\n\nthat's like 10 words long down to \n\n\n\na sentence that's seven words\n\nlong, that's going to be really\n\n\n\ngood for you.\n\n\n\n\n\nAnd then prioritize content based \n\n\n\non the desires and needs and\n\naspirations of the customer.\n\n\n\n\n\nSo remember the end user is always\n\nthe priority.\n\n\n\nSo sometimes your brand and the\n\nperson that you're working with,\n\nthey really like to talk about\n\nthemselves, but remember this\n\n\n\nplaybook we're marketing and this\n\nwebsite is going to be about\n\n\n\nspeaking to the end user.\n\n\n\n\n\nSo really prioritize the content \n\n\n\nbased off them.\n\n\n\n\n\nSo let's dive in.\n\n\n\n\n\nWe're going to give you a template.\n\n\n\n\n\nSo basically this is the playbook.\n\n\n\n\n\nYou can brand this yourself.\n\nAnd we have an example of a CPA client.\n\n\n\nSo we're going to show you this.\n\n\n\nBut basically what you see in the\n\n\n\n38 questions document is you see\n\nall our sections.\n\n\n\n\n\nSo we have section one here.\n\n\n\n\n\nDo you understand my problems?\n\n\n\n\n\nDown here, section two, what is\n\nyour solution and how does it help?\n\n\n\n\n\nSection three, what makes your\n\noffer different?\n\n\n\n\n\nSection four, why should\n\nI trust you?\n\n\n\n\n\nFive, how does it work?\n\n\n\n\n\nSix, what will my experience be?\n\n\n\n\n\nAnd then that is a similar layout\n\nhere that you're going to see with\n\n\n\nour CPA client for the playbook.\n\n\n\n\n\nSo the persona development is\n\n\n\nreally diving into who are we\n\ntalking to?\n\n\n\n\n\nWhat are they trying to achieve?\n\n\n\n\n\nWhat's getting in the way?\n\n\n\n\n\nSo that's the problem section.\n\n\n\n\n\nHow is that making them feel?\n\n\n\n\n\nThat's the problem section.\n\n\n\n\n\nWhat do you believe they deserve instead?\n\n\n\n\n\nSo it's really developing the persona.\n\n\n\n\n\nAnd what we're doing is we're\n\n\n\ntaking everything from those\n\nsections and we're transferring it over.\n\n\n\nSo you're going to see that this\n\nfirst section here, target\n\n\n\naudience, what do they want to achieve?\n\n\n\n\n\nSo you read through all that.\n\n\n\n\n\nWhat are their biggest problems?\n\n\n\n\n\nWhat are their trigger moments?\n\n\n\n\n\nWhat emotions is this causing?\n\n\n\n\n\nSo what problems is that affecting\n\n\n\nthe financial aid?\n\n\n\n\n\nSo you're going to see what\n\n\n\nunpleasant event are they trying\n\nto avoid?\n\n\n\n\n\nAnd basically you're going to take\n\nall these notes and try to\n\n\n\nsummarize it down into high level\n\nsummary statements.\n\n\n\n\n\nSo they want to achieve, they want\n\na CPA that's going to help them\n\n\n\nwith their business.\n\n\n\n\n\nThey don't have time or capacity\n\n\n\n\n\nor know\n\n-how.\n\n\n\n\n\nSo that's what's getting in the way.\n\n\n\n\n\nHow is this making them feel?\n\n\n\n\n\nWhat do you believe they deserve instead?\n\n\n\n\n\nSo that's where we're really\n\n\n\ndeveloping our persona.\n\n\n\n\n\nWe go down here.\n\n\n\n\n\nWhat is your solution?\n\n\n\n\n\nHow does it help?\n\n\n\n\n\nAnd you're going to go back here\n\nto the document and we're going to\n\n\n\nreally look at our solution.\n\n\n\n\n\nAnd so in this section, we're\n\n\n\ngoing to summarize all this stuff.\n\n\n\n\n\nWe're going to make this really concise\n\n\n\nso we really get our high level\n\nmessaging cleaned up and we really\n\n\n\nhave this deliverable that we give\n\nto our client.\n\n\n\n\n\nThis next thing, what makes your\n\noffer different?\n\n\n\n\n\nWe dive back into, you know, some\n\nof this thing of what makes our\n\n\n\noffer different.\n\n\n\n\n\nSo what makes your offer different\n\n\n\ndown here?\n\n\n\n\n\nAnd so you grab all this language.\n\n\n\n\n\nAnd so really it starts to just\n\ngive you the tool to really\n\n\n\nsummarize each section of that 38 questions.\n\n\n\n\n\nWe're going to summarize it into\n\n\n\nthis brand message playbook that\n\nwe can give to our client.\n\n\n\n\n\nAnd so you go the whole way through.\n\n\n\n\n\nThe last thing that's slightly\n\n\n\nunique on this document is the\n\nbrand summary.\n\n\n\n\n\nAnd summary is almost like what\n\nyou would call an elevator pitch.\n\n\n\n\n\nAnd it's just the way to explain\n\nwhat the brand does in a short and\n\n\n\nconcise way.\n\n\n\n\n\nSo think three sentences.\n\n\n\n\n\nAnd we really like the problem,\n\nsolution, outcome flow.\n\n\n\n\n\nSo this first sentence right here,\n\nthink through how can we describe\n\n\n\nwhat the problem is in a sentence?\n\n\n\n\n\nHow can we describe our solution?\n\n\n\n\n\nAnd then how can we describe the outcome?\n\n\n\n\n\nAnd we write three sentences there.\n\n\n\n\n\nSo this right here is the brand\n\nmessage playbook.\n\n\n\n\n\nThere's going to be file here that\n\nyou can take and copy and modify\n\n\n\nfor yourself and begin to make a\n\nbrand message playbook.\n\n\n\n\n\nAnd this is a great deliverable to\n\nreally anchor the end of the\n\n\n\ndiscovery process.\n\n\n\n\n\nSo create this, send it to your\n\n\n\nclient for approval.\n\n\n\n\n\nThis is a milestone that you\n\n\n\nreally want to check off before\n\nyou start jumping into writing\n\n\n\nwebsite copy, because it really\n\ngives you confidence that you're\n\n\n\nheading in the right direction\n\nbefore you start wireframing and\n\n\n\nwriting website copy.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046282-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 8,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -465,15 +465,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046283",
           "title": "More Than One Target Audience",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:58",
+          "durationMinutes": 2,
           "description": "Okay. What to do if there's more than 1 target\nWhat to do if there is more than one target audience\n\nIf there is more than one audience, you should answer The Essential Questions Every Website Needs for each audience the website targets. \n\n\nHowever, the more audiences you have, the more difficult it becomes to write excellent web content.\n\n\nYou've probably heard it said that if you try to communicate with everyone, you end up communicating to no one. This is true for your website.  \n\n\nIf you do have more than one audience, here is what we recommend:  \n\n\nBest case scenario: Focus the message on the primary audience, which is most often the audience that drives the most revenue for the client.\n\n \n\nFor example, Walmart focuses all its advertising on moms. However, they still attract many different customers simply because they appeal to many people. Reassure the client that a focused message doesn't mean others won't be attracted to what they are selling. Just like Walmart, a lot more people shop there than just moms!  \n\n\n2nd best scenario: focus the homepage on the primary audience and then dedicate a supporting page to the secondary audience. You can include a minimal call-out on the home page for this secondary audience lower down the page and include a link in the navigation.\n\n\n3rd best scenario: Focus the homepage on multiple audiences. You will still need to develop a high-level message that speaks to everyone and then direct audiences toward the best path for them.   \n\n\n4th best scenario: Build more than one website! \n\n\n\n\n\n\n\nTranscript\n\n﻿Okay, what to do if there's more\n\nthan one target audience.\n\n\n\n\n\nThis happens with a lot of our\n\nclients, so don't feel like you're\n\n\n\nalone if you run into this.\n\n\n\n\n\nIf there is more than one\n\n\n\naudience, you really should answer\n\nthe essential questions every\n\nwebsite needs for each audience.\n\n\n\n\n\nBut, this means the more audiences\n\nyou have, the more difficult it's\n\ngoing to be to create great web content.\n\n\n\n\n\nSo you've probably heard it said\n\nthat if you try to communicate to\n\neveryone, you end up communicating\n\nto no one.\n\n\n\n\n\nAnd this is very true for your website.\n\n\n\n\n\nSo if you do have more than one\n\naudience, here's what we recommend.\n\n\n\n\n\nThe best case scenario, focus the\n\nmessage to the primary audience,\n\nthe audience that drives the most\n\nrevenue for the client.\n\n\n\n\n\nFor example, Walmart focuses all\n\nof their advertising towards moms.\n\n\n\n\n\nHowever, they still attract lots\n\nof different customers simply\n\nbecause they appeal to lots of people.\n\n\n\n\n\nReassure your client that a\n\nfocused message doesn't mean\n\nothers won't be attracted to what\n\nthey're selling.\n\n\n\n\n\nJust like Walmart, a lot more\n\npeople shop than just moms.\n\n\n\n\n\nThe second best scenario is focus\n\nthe homepage on the primary\n\naudience and then dedicate a\n\nsupporting page to the secondary audience.\n\n\n\n\n\nYou can include a minimal callout\n\non the homepage for the secondary\n\naudience, like lower down, and\n\nalso a link in the navigation.\n\n\n\n\n\nThird best scenario, focus the\n\nhomepage on multiple audiences.\n\n\n\n\n\nTo do this, you'll need to develop\n\na high -level message that speaks\n\nto everyone and then direct the\n\naudiences towards the path that's\n\nbest for them.\n\n\n\n\n\nLast scenario, build more than one website.\n\n\n\n\n\nNow this isn't going to make sense\n\nfor many businesses, but sometimes\n\n\n\nit just doesn't make sense to cram\n\naudiences who have nothing in\n\n\n\ncommon together on one site.\n\n\n\n\n\nSo that's it for what you should\n\n\n\ndo if you have more than one\n\naudience you're trying to\n\n\n\ncommunicate to on a website.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046283-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -558,15 +558,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046288",
           "title": "Headlines That Work",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:05",
+          "durationMinutes": 5,
           "description": "If you were to ask someone out for the 1st\nHeadlines That Work\n\nWebsite visitors are looking for 3 specific things when they land on a website:  \n\n\n1. Website Visitors Want to Understand the Main Service Being Offered\n\n\nBecause of this, the headline needs to be super clear. Website visitors are searching for answers. By seeing clearly what product or service you provide, they instantly answer the question–\"Did I land on the correct website?\" This is the very first thing they want to know. If this isn't clear, they are going somewhere else!\n\n\nThe headlines we teach will be as simple and clear as possible because simplicity and clarity grab someone's attention when searching for a solution to their problem.\n\n\n2. Website Visitors Want to Understand How Your Offer Significantly Benefits Them\n\n\nBenefit language should show the most significant outcome someone wants when working with a company like yours. This outcome is important because it helps the website visitor visualize success if they decide to use your product or service. \n\n\n3. Website Visitors Want to Understand 1 & 2 in the Fastest Time Possible \n\n\nThe longer it takes for a website visitor to determine if they landed on the right website, the higher the likelihood this website will fail. \n\n\nYou have around 3 seconds to pull this off! This means clarity and simplicity is your friend! \n\n\nA few mistakes people make when writing headlines: \n\nThey Get too cute or clever.\n\nSometimes people can thread the needle and hit both clever and clear; however, this is rarely done well!\n\nWe recommend clarity as your #1 priority.\n\n \n\nThey use insider language or jargon.\n\nOften companies fall in love with their slogan or phrase that makes sense to them but no one else. \n\nGuide them to avoid confusing language and to speak simply to the person outside their company.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046288-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -628,7 +628,7 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046291",
           "title": "AI Headline Writing Demo",
-          "duration": "10:00",
+          "duration": "9:07",
           "durationMinutes": 10,
           "description": "So we're gonna use ChatGPT\nAI Headline Writing Demo\n\nThis video walks you through a headline-writing session using AI. \n\n\n\n\n\n\n\nTranscript\n\nSo we're going to use ChatGPT here\n\nto help us brainstorm some\n\nheadlines for our website.\n\nNow, a lot of times, like, ChatGPT\n\nwill use headline formulas that\n\nhave to do more with ads.\n\nAnd ads are more kind of gimmicky\n\nor marketing.\n\nSo it's using formulas that aren't\n\nthe best for the website.\n\nFor the website, we really want to\n\nbe simple and clear.\n\nWe want people to understand what\n\nwe're doing and how we're doing it.\n\nAnd so we're not going to, you\n\nknow, use a lot of the gimmicky\n\nmarketing headlines.\n\nWe're going to use more headlines\n\nthat are clear for the website user.\n\nAnd so that's why we're really\n\nusing down here, see the outcome\n\nsolution formula down here.\n\nSo outcome plus solution.\n\nSo just very simple to the point.\n\nHere's the benefit we give you\n\nplus what we do.\n\nSo here's what I'm putting in.\n\nI'm writing\n\na main headline for our\n\nCPA website for business owners needing\n\na CPA and need a list of headlines\n\nusing the outcome plus solution formula\n\n.\n\nWe offer bookkeeping, accounting,\n\nand tax prep services.\n\nSo here we go.\n\nMaximize profits with expert\n\nbookkeeping solutions.\n\nIt's not bad.\n\nStreamline your finances with\n\nprofessional accounting services.\n\nYeah, these are good.\n\nMinimize tax burdens with\n\nstrategic CPA solutions.\n\nUnlock financial success\n\nwith tailored bookkeeping services.\n\nSo yeah, there's a lot of ideas\n\nthat we can pull from here that\n\ncould be used for our headlines.\n\nNow, sometimes ChatGPT will give\n\nyou like a super long headline.\n\nSo you could type in something\n\nlike, can you make these shorter\n\nor more punchy?\n\nWe actually got some pretty good\n\noutcomes right here.\n\nNow flip these and use the\n\nsolution plus outcome formula.\n\nSo solution plus outcome formula.\n\nAnd let's see what we get.\n\nSo basically what we're having is\n\nat the beginning of the sentence,\n\nthe service plus the result on the end.\n\nSo expert bookkeeping solutions\n\nfor maximizing profits.\n\nSee, it just flipped them.\n\nSo you can kind of see which ones\n\nlike, you know, read better there.\n\nLet\n\n's try something else.\n\nSometimes we just like outcome\n\nplus outcome.\n\nSo write some outcome plus outcome headlines.\n\nAnd now it's still connected our service.\n\nAnd I kind of wanted to drop the service.\n\nAnd it gave us a lot there.\n\nChatGPT got excited.\n\nSo maximize efficiency, minimize\n\nerrors, experience flawless bookkeeping.\n\nYeah, and so these are all really long.\n\nSo just kind of brainstorming here.\n\nSo can you simplify these and make them\n\npunchier?\n\nSo I was trying to get it.\n\nSo flawless bookkeeping, precise\n\ntax prep, maximize efficiency,\n\nminimize errors.\n\nIt's not bad.\n\nI don't love colons, but boost\n\nproductivity, gain financial\n\nclarity, choose expert accounting services.\n\nSo I think as we're going down,\n\nthey're not as strong as our first\n\nones because they really like the\n\nsimplicity of some of these top ones.\n\nSo let's go on to the next section\n\nof the head of the website.\n\nTypically, we start with our\n\nheadline as far as like what we do\n\nand how we do it.\n\nAnd then the next part of the\n\nwebsite, we really like to hit\n\nproblem language.\n\nSo we want to describe the\n\nproblems people are facing.\n\nSo I'm writing the problem section\n\nof our CPA website.\n\nI need a list of headlines that\n\nsimply describes the problem\n\nbusiness owners face when it\n\ncomes to keeping track of their financials.\n\nSo let's see what we get here.\n\nSo overwhelmed by financial\n\nrecords, find clarity with our CPA services.\n\nStruggling\n\nto stay organized financially, let\n\nus lighten the load.\n\nSo these are good.\n\nI actually like to save the\n\nsolution for the next section.\n\nSo let's see if we can say write\n\nthese, but don't provide the solution.\n\nJust state the problem.\n\nHere we go.\n\nOverwhelmed by financial records.\n\nSo that could be the headline.\n\nStruggling\n\nto stay organized financially,\n\nfeeling lost in a CRC.\n\nSo what we would do is that we\n\nwrite this problem question.\n\nThey have questions here.\n\nAnd then we have a descriptive\n\nparagraph that like describes it.\n\nAs a business owner, you may be\n\ndealing with all these things.\n\nAnd then the next section, we\n\nprovide the solution.\n\nI don't like that.\n\nThese are all questions.\n\nCan you write these as statements?\n\nStarting with business owners,\n\ndot, dot, dot.\n\nI want to say business owners are,\n\nyou know, dealing with something.\n\nSo let's see what chat\n\nCPT comes up with.\n\nBusiness owners feel overwhelmed\n\nby financial records.\n\nThat could be the headline.\n\nBusiness owners struggle to stay\n\norganized financially.\n\nBusiness owners feel lost in a sea\n\nof, so these could be some ideas.\n\nSo I do like the questions,\n\nsetting it up.\n\nWe do have, you know, this could\n\nbe more statements as headlines\n\nfor our problem section.\n\nNow let's just dive into our, the\n\nsolutions we provide.\n\nThat's the next section of the website.\n\nWe want to head a headline there.\n\nSo I now need a headline that\n\nsimply introduces the solutions we provide.\n\nSo let's see.\n\nSo this would be the next section.\n\nEmpowering your financial success,\n\ndiscover our comprehensive solutions.\n\nOkay.\n\nGive me 10 ideas.\n\nI said headline, chat GPT followed\n\nmy instruction there.\n\nSimplify, optimize, prosper,\n\nuncover our expert CPI solutions.\n\nNah.\n\nSimplify your financial edge,\n\nexplore our tailored, unlock your\n\nbusiness potential.\n\nAnd they love colons.\n\nI don't love the colons.\n\nSo I would say unlock your\n\nbusiness potential with our proven\n\nCPA services or discover something\n\nlike that.\n\nSo we can kind of get the flow.\n\nBut again, these aren't, these\n\naren't perfect.\n\nYou're gonna have to like take an\n\nedit, but it gives you a lot of\n\nideas to brainstorm really fast.\n\nAnd so that's pretty much what we do.\n\nAnd you may want to look for other\n\nformulas that you can try.\n\nSo give me a list of website\n\nheadline formulas.\n\nI can try.\n\nLet's see.\n\nSo we provide a bunch in the\n\ncourse that you can go through and\n\ntry yourself that we recommend\n\nbecause it really makes it simple.\n\nWhereas a lot of these are going\n\nto be a little complicated for you\n\nto work into the website and kind\n\nof gimmicky, but it's worth trying.\n\nThe how -to formula, how to\n\nachieve specific result in a short timeframe.\n\nSo you could try that.\n\nAre you experiencing blank common problem?\n\nWe have the solution.\n\nLike I don't love exclamations and\n\nthings like that.\n\nAnd let's see, it's really\n\ngrabbing a hold of gimmicky stuff.\n\nTop number of benefits, tip\n\nstrategies to achieve a desired outcome.\n\nThat's kind of more of a blog\n\npost, a listicle.\n\nAnd we're not doing that.\n\nThe challenge formula, take\n\nchallenge name.\n\nSee, again, this is like more ad copy.\n\nThat's not what we're looking for.\n\nTestimony formula, client name,\n\nachieve specific result with our\n\nproduct service.\n\nNot what we're looking for.\n\nComparison formula, curiosity,\n\ndiscover the secret.\n\nAgain, these are for ads.\n\nGuarantee.\n\nYep.\n\nTime sensitive, limited time offer.\n\nAgain, not for what we're doing.\n\nFrom undesirable situation to\n\ndesired outcome, our product and\n\nservice can help.\n\nAgain, this is more ad copy.\n\nThis isn't what we're looking for.\n\nSo I would say stick to a lot of\n\nthe formulas that we have in the\n\ncourse because they're more\n\ndesigned for the simplicity and\n\nclarity for a website versus\n\nwriting ads.\n\nOkay.\n\nHope this helps.",
           "completed": false,
@@ -654,15 +654,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046290",
           "title": "Subheadlines",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "13:43",
+          "durationMinutes": 14,
           "description": "The role of the headline is to draw the visitor\nSubheadlines\n\nThe role of the headline is to draw the visitor in, letting them know they showed up to the right website.  \n\nThe role of the subheadline is to hold their attention, build on the headline, and compel them to continue down the page. It adds specificity, detail, and context to the headline. \n\nAdditionally, the subheadline is often a differentiation statement for the business. It helps the reader know that this business isn’t like every other business out there. Their service is unique and provides unique value.   \n\nIf, in the headline, you let the visitor know you sell burgers. In the subheadline, you let them know those burgers are local, farm-raised, grass-fed, and grass-finished! \n\nIn the subheadline, you have much more flexibility to be cute or clever than the headline. \n\nOften what ends up being written for the subheadline could be used as a tagline or email signature for the business. \n\nSo let’s dive into writing subheadlines! \n\n\n\n\n\nWe want to look at sections 1, 2, & 3 in the Essential Questions Worksheet for our Solar Company. \n\n\n\n\n\nLook for statements that provide:\n\nMore detail\n\nMore value \n\n\n\n\n\nSo let’s look at our solar company.\n\n\n\n\n\nValue: \n\nReduction in electric bills/energy costs \n\nLowering increased utility costs\n\nA more energy-efficient home \n\nLower their carbon footprint/help the environment.\n\nIncreasing the value of their home\n\nThey feel proud and responsible for doing this.\n\nThey make back their money in 5 years. \n\n\n\n\n\nDetail: \n\nSolar shingles \n\nSolar energy without ugly solar panels\n\n\n\n\n\nYou can use the same formulas as the headline to write the subheadline–however, use more detailed and descriptive language.  \n\nFirst, we’ll grab our headline to see where we need to add detail and value. \n\n\n\n\nIncrease your home’s energy efficiency with solar \n\nUsing the [Outcome] + [Solution] formula or [Solution] + [Outcome] formula, we can begin to craft some subheadlines. \n\n\n\n\n\nI see the detail of solar shingles vs. ugly panels being a key differentiator. We probably need to mention this in the subheadline. \n\n\n\n\nIncrease your home’s energy efficiency with solar \n[Solution] Solar roof shingles [Outcome] that integrate beautifully with the look of your home \n\n\n\n\n\nIn fact, this specificity, roof shingles, raises the question–should this message lead on the website and get bumped up to the headline? Quite possibly!\n\nWhen writing headlines and subheadlines, it’s ok to play around with flipping them to see what feels best. \n\n\n\n\n\nSo if we flip them, here is what we get: \n\nSolar Roof Shingles That Integrate Beautifully With The Look Of Your Home\nIncrease your home’s energy efficiency with solar \n\n\n\n\n\nOk, we are getting closer. But now, we don’t need to say solar again in the subheadline. \n\nSo let’s nix that and add another value statement.\n\n\n\n\nSolar Roof Shingles That Integrate Beautifully With The Look Of Your Home\nHelp the environment with a more energy-efficient home \n\nYou can continue to play with the formulas, sub out, and exchange portions of the subheadline and headline to see if you can find a version you like the best! \n\n\n\n\n\nYou could try the [What] without [Pain] formula and get something like this: \n\nSolar Energy Without Ugly Panels \nRoof shingles that integrate beautifully with the look of your home \n\n\n\n\n\nAny of these versions work! However, I love using headlines that are as short as possible. So I would lean towards this last option over the others we wrote.\n\n\n\n\n\nNow let’s look at our CPA example. \n\nLooking at sections 1, 2, and 3 of our Essential Questions Worksheet for our CPA Client, we see the following detail and value statements: \n\nValue:\n\nSave time\n\nRelieve stress\n\nPay less taxes\n\nAvoid penalties\n\nGetting organized\n\nDoing right \n\nSaving money\n\nBooks in order/organized\n\nMinimize tax liability\n\nMaximize cash flow \n\nPredictable finances\n\nPeace of mind\n\nConfidence\n\nDetail: \n\nbookkeeping, accounting, and taxes for small business owners\n\nWe specialize in cleaning up messy books--judgment-free! And then we have a monthly check-in to help you know how to read your numbers to make better decisions\n\nJudgement Free Cleanup \n\nGet your books in order and taxes ready in less than 30 days\n\nGet everything in order and filed with less than 30 minutes of your time a month\n\nOnce we automate your systems all you need to do is check our report each month \n\nEasily get taxes filed without worry of getting audited \n\nThey feel like they are paying a full-time employee for only hundreds of dollars a month. \n\nAs I read through this list, I see many words that seem to indicate how stressful and time-consuming bookkeeping is for a small business owner. They want to feel organized because getting their numbers wrong could be detrimental to their business. So let’s tap into those words for the subheadline. \n\n\n\n\n\nLet’s start with pulling in our headline:\n\nGrow Your Business Smoothly with Bookkeeping & Accounting \n[Outcome] Receive the peace of mind [Solution] of books done right\n\n\n\n\n\nHowever, there are so many strong value statements that listing a string of outcome statements could be really powerful here. \n\n\n\n\nGrow Your Business Smoothly with Bookkeeping & Accounting \n[Outcome] Get organized, [Outcome] Save time, and [Outcome] Save Money \n\nOr maybe one of the detail statements needs to be stated. Decide what is strongest to lead with for the business. Remember, whatever is not used can be used lower down on the homepage. \n\n\n\n\n\nSo you could choose something like: \n\nGrow Your Business Smoothly with Bookkeeping & Accounting \n[Outcome] Judgment-free [Solution] clean up of your books and [Outcome]worry-free [Solution] tax filing \n\n\n\n\n\nAny of these combinations could work! \n\n\n\n\nHere are two bonus formulas we like to use for subheadlines:\n\n\n\n\n\nBonus subheadline One:\n\n[Strong Verb - Get, Build, Boost, Grow, etc.] [Outcome] with [Benefit]\n\nExample: Create teams of confident leaders equipped with the tools to carry the organization forward\n\n\n\n\n\nBonus Subheadline Two\n\nA short list of the services provided:\n\n[adjective] [noun], [adjective] [noun] & [adjective] [noun]\n\nExample: Handmade Furniture, Custom Design, Superior Craftsmanship\n\n\n\n\n\nTo wrap up:\n\nAlways write subheadlines with headlines\n\nTry interchanging parts of the subheadline and headline till it feels right \n\nAlways try to simplify and remove unnecessary words\n\nThe headline makes people want to read the subheadline, and the subheadline makes people want to read the next section of the website. \n\nDon’t be afraid to try things! \n\n\n\n\n\nHappy Subheadline Writing!",
           "completed": false,
           "subtasks": [
             {
               "id": "4046290-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 14,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -688,15 +688,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046295",
           "title": "Buttons That Invite Action",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:30",
+          "durationMinutes": 5,
           "description": "A button on your website is more than just a\nButtons That Invite Action\n\nA button on your website is more than just a call to action. It represents the goal of the website. If there were one thing we wanted every visitor to do, the button would communicate that action. \n\nIt essentially helps to focus the website. When writing website content, you aren’t writing to get someone to download a lead generator, buy an item, and schedule an appointment. You are picking one action for them to take, and the button represents that action. \n\nThe website might have secondary calls to action where a visitor might have the opportunity to do other things. However, the primary call to action needs to be consistent throughout the website. Make this button the same color and make this message consistent throughout the website.  \n\nWhen a website has no clear call to action, the website visitor is left to figure out what their next step is on their own. “Hmm… maybe I’ll email them. But let me check out some other sites first. Oh, they have a free consultation? That’s interesting. But I could also learn more by reading this article they have. Oh! Look at this video they have; that’s neat!” So the visitor meanders all over the place, not sure what the next step is you want them to take. \n\nThere is a reason why stores have clear exit signs. If you need to get out of the building, there is one clear path. Think of the button as the clear exit sign. Without a clear CTA, your website visitor will exit the website, just for the wrong reason. But they’ll end up going out the side door instead of the door that makes you money. \n\n\n\n\n\nSo what should your primary buttons be?\n\n\n\n\n\n1. The clear action someone needs to take if they are ready to make a buying decision\n\nIf someone is ready to buy or do business with you, what is the first thing they need to do? This is what should be on your button. \n\nIf they need to get on your calendar, then the button might say \n\n“Schedule a Call”\n\nNot “Contact”. “Contact” isn’t specific enough. \n\n\n\n\n\nIf they need to add an item to a cart, then the button might say \n\n“Add to Cart”\n\n or \n\n“Buy Now”\n\n or \n\n“Purchase”\n\nNot “Learn More”. Learning more isn’t the action you want them to take. \n\n\n\n\n\nIf they need to get an estimate or a quote, then the button would say “Get an Estimate” or “Schedule an Estimate” \n\nNot your phone number.\n\n\n\n\n\n2. Consistent throughout the website \n\nMake all your primary buttons the same color and the same message. \n\nWhy? You want the website visitor never to be confused about what you want them to do. \n\n\n\n\nExamples of good button copy: \n\nPurchase\n\nAdd to Cart\n\nBuy Now\n\nRequest a Consult\n\nSchedule a Call\n\nBook An Appointment\n\nGet A Quote \n\nBook a Demo\n\nExamples of Ok button copy: \n\nContact - People know what this means, but could be stronger by describing what they are contacting you to do\n\nTalk To Us - Clients might prefer something like this because it feels more personable. This is similar to Contact. It works, but it’s not ideal. \n\nExamples of Poor button copy: \n\nLearn more - This is valuable somewhere on the website but not a great CTA\n\nGet Started - Unclear what the action is\n\nSo let’s look at our two examples, our solar company, and our CPA. \n\nLook at Question #34 in the Essential Questions Document. \n\nFor our solar company, we have “Talk to An Energy Specialist”\n\nAnd for our CPA, we have “Schedule a Call”\n\nAnd that’s Buttons That Invite Action! \n\nHappy copywriting!",
           "completed": false,
           "subtasks": [
             {
               "id": "4046295-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -722,15 +722,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046293",
           "title": "Header Images",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:37",
+          "durationMinutes": 6,
           "description": "Question. Do you think an image in the header of\nHeader Images\n\nThis video talks through how your website message is more than just the words you use, but also the images! It’s essential to choose the right ones. \n\n\nThe goal of a header image is to allow the user to see themselves represented in the product or service AND display a positive feeling the outcome of using that product or service will give them.\n\n\nThe ideal scenario to display is the combination of your primary audience AND the product or service your client is promoting.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046293-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -748,15 +748,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046294",
           "title": "Wireframing The Header Demo",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "7:02",
+          "durationMinutes": 8,
           "description": "Okay. So here we are. We're gonna start constructing\nDemo of Wireframing The Header\n\nThis video is a demo of wireframing a homepage header.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046294-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 8,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -774,15 +774,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046297",
           "title": "Identifying and Agitating Problems",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "11:37",
+          "durationMinutes": 12,
           "description": "The 5th habit of Stephen Covey's book, 7 Habits of\nIdentifying And Agitating Problems\n\nThe 5th habit of Stephen Covey’s book “7 Habits of Highly Effective People” is: Seek first to understand, then be understood. \n\nThis critical skill is crucial for building rapport with others. When we seek real understanding of others, it builds tremendous trust. They feel heard, and they feel important. \n\nWhen we help people feel heard and important, they will be much more likely to pay attention to what we have to say. \n\nWhen writing excellent website copy, you’ll start receiving feedback from visitors saying, “It’s as if you were inside my head speaking directly to me. You knew exactly what I was going through.”\n\nThe best way to connect with visitors in this way is to understand and articulate their problems in your web copy. \n\nRemember, problems are the only reason why someone is on the website. They have a problem that needs to be solved. And when they read words that identify what problems they are facing, they feel heard, understood, and feel important. \n\nSadly many businesses only talk about their solutions. By doing this, they fail to connect with the real motivations driving their customers. \n\nOne of the best places to start talking about problems on the webpage is immediately after the header. \n\nIf the header establishes what someone is looking for, then the next section of the website should show what problems are keeping the visitor from getting what they want. \n\nIn this section, we love to talk about the significant obstacles this person might be facing and then amplify or agitate those problems by digging into their emotions. \n\nSo let’s dive into writing a problem section for the website…\n\nSo again, we want to write this section keeping in context our header. Here is the content for our header with our solar company: \n\n[Headline] Increase Your Home’s Efficiency with Solar\n\n[Subheadline] Roof shingles that integrate beautifully with the look of your home\n\nSo we want to ask ourselves if someone wants to increase efficiency in their home, what problems are they facing when it comes to efficiency?\n\nJump into the Essential Questions worksheet\n\nAnd\n\nThe Essential Questions Demo Worksheet.\n\nLook at questions 3, 4, 5, 6, 7, 8, and 9.\n\nFor our solar company, we see these problem statements: \n\nRising energy costs\n\nEnvironmental problems\n\nHigh electric bills\n\nConcerned by costs (this feeling language is super important!)\n\nMixed reviews on solar\n\nUnsure what to do next\n\nAlso, if you do customer interviews, all those questions are crucial to understanding customer problems. \n\nIn the problem section we are writing, we will write a header to identify the problem and a descriptive paragraph to agitate the problem.\n\nLooking at this list of problems, we see that rising costs and environmental problems are the major high-level problems this person might be facing, so let’s include that in the header. Also, we can snag that feeling language to add extra oomph. \n\nSo we could write a header that goes:\n\nIt’s concerning seeing costs increase and the environment suffer\n\n\nAnd then, to agitate that problem more, we write a more descriptive paragraph below the header. \n\nThis paragraph allows you to dive into an exact scenario this visitor might be facing. We want them to picture themselves while reading. If possible, use colors, textures, and creativity whenever writing. Also, look to touch on some of the other problem statements if you can.  \n\nSo you could write something like: \n\nYou dread opening your utility bills each month, knowing that costs are increasing. The thought of solar is intriguing, but you may be unsure if this is an investment worth pursuing.\n\nSee how we took the feeling of “concern” and escalated that to “dread”? We put the person in an exact situation “opening your utility bills each month.” And we were able to talk about some of the other problems they might be facing, “unsure about solar.”\n\nSo let’s look at that together: \n\nIt’s concerning seeing costs increase and the environment suffer\n\nYou dread opening your utility bills each month, knowing that costs are increasing. The thought of solar is intriguing, and you are unsure if this is an investment worth pursuing.\n\n\nThis is a great problem section! \n\nTo make it even stronger, include an image of a concerned customer opening up their utility bill. \n\n\nLet’s look at our CPA business. \n\nThe headline and subheadline for our CPA business is: \n\n[Headline] Grow Your Business Smoothly with Bookkeeping & Accounting\n\n[Subheadline] Judgement-free cleanup of your books and worry-free tax filing \n\nSo we want to ask ourselves if someone wants to run their business smoothly, what’s keeping them from getting what they want?\n\nJump into the Essential Questions worksheet and look at questions 3, 4, 5, 6, 7, 8, and 9.\n\nDon’t have time\n\nDon’t have capacity\n\nDon’t have the know-how\n\nFeeling overwhelmed and stressed at tax time\n\nTheir monthly financial review wasn’t getting done\n\nAnxious about not getting it right\n\nUncertain about best practices\n\nOverwhelmed by doing it themselves\n\nConfused about where to start \n\nMight be paying too much in taxes\n\nOr too little and worried about having to pay penalties \n\nThis takes too much time and is keeping the business owner away from doing more profitable things\n\nHaving to pay penalties to the government \n\nBeing seen as unorganized \n\nDIY bookkeeping and accounting is stressful. Always worried about doing something wrong. \n\nWe have a lot to work off of here! \n\nSo look at the list and determine what the high-level problem might be for the header. If I were to summarize, this whole bookkeeping thing seems very overwhelming. I’d love to lead with that… \n\nMany small businesses are overwhelmed by keeping up with their books\n\nAnd because this is such a strong list, I'd consider making a bulleted list instead of writing a paragraph to agitate the problem. AND, instead of bullets, in my design I’m going to suggest an \n\n✘  to signify these are problems.   \n\nSo something like… \n\n✘ Are you too busy to keep up?\n\n✘ Are you overwhelmed and stressed at tax time?\n\n✘ Are you sick of unending paperwork?\n\n✘ Are you paying too much in taxes?\n\n✘ Are you paying too little in taxes and worried about penalties?\n\n✘ Do you just want peace of mind you are doing it right? \n\nSee how this list really agitates the problem?\n\nLet’s look at it all together:\n\nMany small businesses are overwhelmed by keeping up with their books\n\n✘ Are you too busy to keep up?\n\n✘ Are you overwhelmed and stressed at tax time?\n\n✘ Are you sick of unending paperwork?\n\n✘ Are you paying too much in taxes?\n\n✘ Are you paying too little in taxes and worried about penalties?\n\n✘ Do you just want peace of mind you are doing it right? \n\nAdding a photo of a stressed business owner will be the icing on the cake! \n\nThis section is a key section on the homepage to help web visitors know that you understand exactly what they are going through. \n\nDo this, and they will be more likely to buy! \n\nHappy copywriting!",
           "completed": false,
           "subtasks": [
             {
               "id": "4046297-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 12,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -846,15 +846,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047363",
           "title": "AI Service and Product Description Demo",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:04",
+          "durationMinutes": 5,
           "description": "1 of the most common\nAI Service and Product Description Demo \n\nThis video walks through using AI to help write service and product descriptions.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047363-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -980,15 +980,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047366",
           "title": "Why Work With Us",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "8:25",
+          "durationMinutes": 9,
           "description": "Why do you choose to partner with most people in\nWhy Work With Us\n\nIf you come across as likable, more people will buy from you. \n\nIf they don’t like you, they won’t want to work with you! \n\n\nSo how do we help the website visitor like us?\n\n\nWe show understanding.  \n\n\nThink about all the relationships you’ve formed in your life. Almost every single one of them, you didn’t do any research on them to determine if you wanted to get to know them more. You naturally gravitated towards them because “they just seem to get you.”\n\n\nWhen we show understanding in our website copy, we help website visitors feel like “we get them,” thus upping the likability factor of our business. \n\n\nThe framework we like to use in this section is:\n\n1. A header\n\n2. Statement of understanding\n\n3. Statement of reassurance \n\n4. Photo of the business owner or image that represents the people who work for the business\n\n4. Learn More (Links to About Page *Optional)\n\n\nSo let’s dive into our solar and CPA company… \n\n\nTypically the header we use for this section is as simple as: \n\nWhat makes us different?\n\nWhy work with [brand name]?\n\nWhy partner with us?\n\n\nThe paragraphs under the header will follow this framework: \n\n[Understanding statement] + [Reassurance statement]\n\n\nSo our solar company… \n\n[Understanding statement] We understand how concerning it is to receive larger utility bills month after month. Costs keep rising, and the environment keeps suffering. \n\n\n[Reassurance statement] Solar Express has been helping homeowners just like you find relief from rising costs. To help you make an informed decision, one of our energy techs will perform a comprehensive energy audit so you know if solar is right for you. \n\n\nOur CPA business…\n\n\n[Understanding statement] We understand how running a small business is stressful. The last thing you need to worry about is getting your books right. \n\n\n[Reassurance statement] For over 20 years, we’ve specialized in helping small businesses have the confidence they need so they can grow their business with ease. \n\n\n\n\n\n\n\n\n\nTranscript\n\n﻿Why do you choose to partner with\n\nmost people in your life?\n\nDon't overthink this question.\n\nWe typically choose to pursue a\n\nrelationship, a partnership, or an\n\nagreement because we like the person.\n\nSome call it a gut instinct, a\n\nfeeling, a hunch.\n\nThere's just something about this\n\nperson or this business that I like.\n\nIf you come across as likable,\n\nguess what?\n\nMore people will buy from you.\n\nIf they don't like you, they won't\n\nwant to work with you.\n\nSo how do we help the website\n\nvisitor like us?\n\nWe do this by showing understanding.\n\nThink about all the relationships\n\nthat you've formed in your life,\n\nalmost every single one of them.\n\nYou didn't do research on them to\n\ndetermine if you wanted to get to\n\nknow them more.\n\nYou naturally gravitated towards\n\nthem because they just seemed to\n\nget you.\n\nWell, when we show understanding\n\nin our website copy, we help the website\n\nvisitor feel like we get them,\n\nthus upping the likability factor\n\nof the business.\n\nAnd so we want to communicate to\n\nour website visitors that we get\n\nthem or we understand them.\n\nWe do this by creating a Why Work\n\nWith Us section on the homepage.\n\nWhy work with us?\n\nWell, we do this in the Why Work\n\nWith Us section.\n\nWe have these components.\n\nWe have a header.\n\nWe have a statement of understanding.\n\nWe have a statement of reassurance.\n\nWe show a photo of the business\n\nowner or an image that represents\n\nthe team.\n\nAnd then a learn more button or an\n\nabout button that goes to the\n\nabout page.\n\nAnd so this is how we set up this\n\nsection of understanding.\n\nWhy work with us?\n\nWell, it's because we understand\n\nyou and we're going to reassure\n\nyou that we can deliver.\n\nSo why work with us header formulas.\n\nSo this section typically looks\n\nlike this.\n\nIt may have header that says what\n\nmakes us different.\n\nWhy work with brand name?\n\nWhy partner with us?\n\nOr at brand name, we and then some\n\nsort of differentiation statement.\n\nSo at brand name, we provide\n\nquality customer service.\n\nAnd then underneath, there's going\n\nto be a description.\n\nWell, the description will look\n\nlike this, an understanding statement.\n\nSo we understand the problems\n\nyou're going through and then a\n\nreassurance statement underneath\n\nthat this is we can help you.\n\nWe can alleviate these fears,\n\nthese problems, these pains that\n\nyou might have.\n\nAnd so let's look at a few examples.\n\nSo let's dive over here.\n\nSo this example here is Wilhouse Construction.\n\nSo why partner with Wilhouse?\n\nSo we have this why work with us section.\n\nWe realize that even though you\n\nmay not be satisfied with your\n\ncurrent space, the idea of a\n\nrenovation can feel like a\n\ndaunting process.\n\nLike right there, it identifies\n\nlike we understand what you're\n\ngoing through.\n\nAnd then let's offer a statement\n\nof reassurance.\n\nIt's our job to make this\n\nenjoyable and to make your\n\nrenovation something you'll love.\n\nAnd so it goes on to explain, we\n\nunderstand what you're going\n\nthrough, and then we're going to\n\nreassure you.\n\nAnd then remember last video,\n\nright here is another value section.\n\nEnjoy your home, get the space you\n\nneed, see your dreams come to life.\n\nSo another value section.\n\nRight here, let's go to this consultant.\n\nWhy work with Bright Arrow?\n\nSo another why work with us\n\nsection is going to lead with a\n\nstatement of understanding.\n\nChange and growth can be hard work.\n\nNot everyone is able to transition\n\nwith ease and offering your leader\n\nor leadership team support to\n\nsucceed in a new role or\n\nenvironment is crucial.\n\nSo it's like we get it, we\n\nunderstand it.\n\nAnd then we're going to have a\n\nstatement of reassurance.\n\nWe guide your team through a\n\nstructured process by providing\n\nhonest, caring input that changes\n\nthe status quo.\n\nWe always create a safe\n\nand\n\nconfident confidential\n\nplace for your executives and\n\nleadership team to work through\n\ncommunication and leadership challenges.\n\nAnd it goes on, describes in more detail.\n\nWhy work with us?\n\nWell, you should work with us\n\nbecause we understand you and we\n\ncan help you out.\n\nNext one, let's look at this\n\nCosmic Comfort is a energy\n\ncompany, electrical and solar company.\n\nSo why work with Cosmic Comfort?\n\nWell, a statement of understanding.\n\nYou need a knowledgeable and\n\ndependable technician who can make\n\nyour home safe and help you save\n\nmoney on utility bills.\n\nHiring a handyman just won't do it sometimes.\n\nWe know your time is valuable\n\nbecause of this.\n\nWe communicate as consistently as possible.\n\nSo it's now going into reassurance.\n\nSo you're dealing with this problem.\n\nWe understand it and we're going\n\nto reassure you with it.\n\nSo let's go into our solar company\n\nand our CPA company.\n\nNow, first, our solar company in\n\nour essential questions document,\n\nwe get understanding language at\n\nquestion number five.\n\nWhat are your top emotions?\n\nTheir problems are causing.\n\nSo the top emotions concerned by\n\ncosts and carbon footprint.\n\nSo we want to start with a\n\nunderstanding statement.\n\nWe understand how concerning this\n\nis for you.\n\nAnd then we want to bring a reassurance.\n\nLet's look at our CPA.\n\nSo number five, anxious about not\n\ngetting it right, uncertain about\n\nbest practices, overwhelmed by\n\ndoing it themselves, confused\n\nabout where to start.\n\nSo we need an understanding.\n\nWe understand that you're dealing\n\nwith all this emotion.\n\nAnd here's how we help you.\n\nHere's how we help alleviate.\n\nSo a statement of reassurance.\n\nSo let's go to our wireframe.\n\nSo our wireframe with our solar company.\n\nSo we have why work with us?\n\nOkay, why work with us?\n\nWe understand how concerning it is\n\nto receive.\n\nSo that concern statement to\n\nreceive larger utility bills month\n\nafter month.\n\nCosts keep costs.\n\nLet's change that costs keep\n\nrising, and the environment keeps suffering.\n\nSolar Express, so made up the\n\ncompany name, Solar Express has\n\nbeen helping homeowners just like\n\nyou find relief from rising costs.\n\nTo help you make an informed\n\ndecision, one of our energy techs\n\nwill perform a comprehensive\n\nenergy audit so you know if solar\n\nis right for you.\n\nAnd then let's go to read more\n\nabout us.\n\nAnd so I would probably put a team\n\nor a picture of one of their techs here.\n\nRead more about us.\n\nLet's go over to our CPA.\n\nWhat makes us different?\n\nSo remember all those feelings,\n\noverwhelmed and stressed.\n\nSo we understand how running a\n\nsmall business is stressful.\n\nThe last thing you need to worry\n\nabout is getting your books right.\n\nFor over 20 years, so a little bit\n\nof authority here, we've\n\nspecialized in helping small\n\nbusinesses have the confidence\n\nthey need so they can grow their\n\nbusiness with ease.\n\nRead more about us.\n\nAnd so if there's a single person\n\nin the company like that runs,\n\nit's the CPA put them here or it\n\ncould be their team or something\n\nlike that, or someone, a CPA\n\nworking with a customer.\n\nBut this would be a great, both of\n\nthese would be great examples of a\n\nwhy work with us section that\n\nhelps communicate understanding so\n\nthat the website\n\nvisitor is more likely to like.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047366-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 9,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1014,15 +1014,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047367",
           "title": "Who Is This For?",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:14",
+          "durationMinutes": 6,
           "description": "A who is this for section\nWho Is This For?\n\nA “Who is this for” section helps the website visitor answer the question–is this for people like me?\n\nNot every website needs this section because you might be talking about who it’s for throughout the website copy. \n\nFor instance, with our solar company example, we are talking about homeowners throughout the website copy; we don’t really need a separate section to talk about “Who this is for.”\n\nThe same goes for our CPA example. This CPA company works with small businesses. We are talking about small businesses throughout the website copy, so we don’t really need a separate section.  \n\n\n\n\nSo when do you use a \"Who this is for?\" Section?\n\n1. If there are multiple audiences \n\n2. If you want to create a tribe identity \n\n\n\n\n\nExample: Men's Workout Group\n\nThis is for:\n\nGuys who hate making excuses\n\nGuys who love sweat and tears\n\nGuys who want to get in the best shape of their lives",
           "completed": false,
           "subtasks": [
             {
               "id": "4047367-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1154,15 +1154,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047374",
           "title": "Organizing The Homepage",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:02",
+          "durationMinutes": 5,
           "description": "Okay. So let's talk about organizing the homepage.\nOrganizing The Homepage\n\n\nThis video walks through organizing the homepage wireframe. \n\n\nDownload the homepage wireframe examples of for the example Solar Company and example CPA Firm below: \n\n\n\nHOMEPAGE_WIREFRAME_EXAMPLE_FOR_C...\n1.29 MB\n\n\n\n\nHOMEPAGE_WIREFRAME_EXAMPLE_FOR_S...\n1.3 MB",
           "completed": false,
           "subtasks": [
             {
               "id": "4047374-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1489,15 +1489,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046303",
           "title": "Service Pages",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "10:05",
+          "durationMinutes": 11,
           "description": "So services pages,\nService Pages\n\nServices pages are often the most boring pages on a website. Companies love to spew tons of information about all their services- endless details about every aspect of their business. \n\nOften this just becomes too much to read and misses an opportunity to deepen the understanding and appreciation the reader has of the company.\n\n\n\n\nThere are 2 common approaches we take to Services:\n\nA stand-alone page\n\nA section page with multiple sub-pages.\n\n\n\n\nFor companies with more complex offerings, we like to build a section page, and then separate detail pages for each service. The front page often mimics what’s been introduced on the Home page, not because we’re lazy, but because a user may click the Services link in the nav before scrolling through the Home page, or may enter the site through the services page. Sometimes this is from a shared link, sometimes through search, or often through promoting that page in ads or on social media.\n\n[Look at the wireframe example in the module]\n\nNow let’s move to the service detail page. We like to include a handful of components here, just enough to inform and excite the reader, and not too much to scare them off.\n\nThis includes: addressing the problem, illustrating the benefits, detailing some of the technical info (which can include how a service works, or what to expect as the customer), we sometimes include a value proposition list, testimonials specific to that service (if these exist), and a process.\n\n[Look at the wireframe example in the module]\n\nFor the stand-alone page, this functions as an introduction to each service, all on one page. For many companies, a simplified Services page makes a lot of sense, mostly based on the quantity of services being offered.\n\n\n\nSolar_Company_-_Services.pdf\n746.22 KB\n\n\n\n\nCPA_Firm_-_Services.pdf\n749.4 KB\n\n\n\n\nCPA Firm - Bookkeeping.pdf\n1.13 MB",
           "completed": false,
           "subtasks": [
             {
               "id": "4046303-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 11,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1541,15 +1541,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047076",
           "title": "How We Work Page",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:23",
+          "durationMinutes": 7,
           "description": "So for\nHow We Work Page\n\nFor some businesses and industries, their process is pretty straightforward. For others, it can be pretty complex and take numerous steps to complete.\n\nEither way, it can be useful to simplify these processes and explain how it’s going to work to do business with a company.\n\nThere are 2 main reasons we want to lay this out:\n\n1) Because clarity on a process can help a customer better understand what they’re getting into, and\n\n2) because the customer might be hesitant to move forward with a company because they don’t have a clear grasp of what will happen. \n\nExplaining how something works is a good idea, especially for services!\n\nTo get this started, we really need to ask our clients to walk us through their typical process with their customers. This often ends up looking like this- they do a bunch of setup work, like figuring out what needs to be done and making a plan, then the work gets done. Sounds pretty boring!\n\nSo we need to make this appealing and also make it simple. Many businesses have a process that takes lots of steps, like 8 or 10. THIS is not something you want to include on a website. In this case, we need to work with our client to split those steps up into 2-3 buckets, then focus only on those higher-level steps on the website. \n\nWe also really like ending with the positive outcomes the customer will discover.\n\nIdeally, we’re talking about 3-4 steps, where the last one can highlight the outcome.\n\n\n\n\nCPA_Firm_-_Bookkeeping.pdf\n1.13 MB",
           "completed": false,
           "subtasks": [
             {
               "id": "4047076-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1575,15 +1575,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047077",
           "title": "Product Pages",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:38",
+          "durationMinutes": 5,
           "description": "The biggest difference between product pages and service pages\nProduct Pages\n\nThe biggest difference between product pages and services pages is features.\n\nWe are still solving problems and talking about benefits, but often there is a list of features that need to be presented. \n\nHowever, instead of just listing off features, we want to make sure we talk about features so that the main benefit is highlighted. \n\nFor example, a vacuum cleaner has the following features: \n\nExtendable hose \n\nPowerful suction\n\n9 attachments \n\nLightweight\n\nWe want to communicate the benefit that the buyer receives from these features. So might say something like… \n\nExtendable hose to clean hard-to-reach places\n\nPowerful suction that gets every dirt particle \n\n9 Attachments to clean a variety of surfaces \n\nSave your back with our lightest vacuum ever  \n\nWe are going to jump over to our solar company and wireframe a page for a product they sell–The Whole House Fan. \n\n\n\n\nSolar_Company_-_Product_Page.pdf\n1.25 MB",
           "completed": false,
           "subtasks": [
             {
               "id": "4047077-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1609,15 +1609,15 @@ export const WRITESITE_STRATEGIC_COPYWRITING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047078",
           "title": "Career Pages",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "10:04",
+          "durationMinutes": 11,
           "description": "The best careers pages\nCareers\n\nThe best careers pages treat a career as an entirely new product on the website. The business wants to lay out the case for WHY a person might want to work at that company, so they take the time to show how their company is different. \n\nBecause of this, the company might want to consider similarly treating the careers page as you would a homepage. You can go back through the homepage module on days 2 and 3 to layout your careers page. \n\nI want to show you an example of a career page that does a great job showing WHY a person might want to work with their company. \n\nThis company is Moore’s Electrical & Mechanical. \n\nWe see all the components of a strong header. \n\nA headline that communicates what the visitor is looking for and a strong value\n\nA subheadline that amplifies the value \n\nA clear action to take\n\nA perfect image\n\nThen we move to the next section of their website: \n\nHere they address the problem–Mondays. It’s just written in a positive way.  And by writing it in a positive way, they are also giving the solution–“Yes, Mondays suck. But when you work here, they won’t”.\n\nThen underneath the header, they communicate a clear value proposition. \n\nShare in our success, reach your potential, be a partner. \n\nThese are laid out visually. \n\nThis entire section is perfect. \n\nNext, \n\nThis section, “What our partners are saying,” is the same as testimonials. They have great videos and written testimonials from their partners throughout the site. \n\nMany career pages don’t go the extra effort to display what the people inside the company are saying. This is a powerful section on Moore’s website. \n\nThen… \n\nThis section is the “Who this is for” section of the careers page. It helps the person visiting the page identify if Moore’s is a place they belong. And they have a video for each person that is identified telling their story. \n\nThis next section of the careers page would typically be a section that talks about company values. Many websites throw this information on their homepage or about page, but often it’s not info that's suitable for the client. \n\nMission, vision, and values language is best internally; it works for people inside the company. Moore’s does a great job communicating the values that drive their business in this section. If someone identifies with these values, then Moores is a great fit! \n\nThen after the values section, they show the benefits they offer their employees. Again throughout this site, they do great visually, making the main things as easy to understand as possible. Most careers pages would have company benefits hidden in a paragraph–these guys highlight the best ones for prospective employees to see. \n\nNext, Moore’s communicates a “How it works” section. This section is excellent at communicating how easy it will be to apply. Communicating “How it works” reduces friction a prospective employee might have to apply. \n\nAnd then Moore’s ends with a final call to action. \n\nSee how they pull from failure language, then balanced out by success?\n\nThis is an excellent careers page! \n\nSo lay out a careers page much like you would your homepage, just with a message that’s geared toward a prospective employee. \n\nSo let’s jump over to our wireframes. I created a wireframe for our Solar Company and CPA Company. \n\n\n\n\nSolar_Company_Careers_Page.pdf\n1.29 MB\n\n\n\n\nCPA_Careers_Page.pdf\n1.24 MB",
           "completed": false,
           "subtasks": [
             {
               "id": "4047078-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 11,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null

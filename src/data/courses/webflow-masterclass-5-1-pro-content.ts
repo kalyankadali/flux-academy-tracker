@@ -823,15 +823,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045763",
           "title": "Client Onboarding",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "8:42",
+          "durationMinutes": 9,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4045763-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 9,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1021,15 +1021,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045765",
           "title": "Document existing website",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "10:31",
+          "durationMinutes": 11,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4045765-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 11,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1219,7 +1219,7 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045766",
           "title": "Review design",
-          "duration": "10:00",
+          "duration": "9:22",
           "durationMinutes": 10,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
@@ -1417,15 +1417,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045767",
           "title": "Plan fonts, colors, spacing",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:12",
+          "durationMinutes": 5,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4045767-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1615,15 +1615,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045768",
           "title": "Export Figma assets",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:29",
+          "durationMinutes": 7,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4045768-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1813,15 +1813,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045769",
           "title": "301 redirects and URL map",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:38",
+          "durationMinutes": 5,
           "description": "Check out a great tool for setting up 301 redirects: Rapid301",
           "completed": false,
           "subtasks": [
             {
               "id": "4045769-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2028,15 +2028,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045770",
           "title": "Create Webflow account",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:22",
+          "durationMinutes": 3,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4045770-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2226,15 +2226,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047339",
           "title": "Create Webflow project",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "11:25",
+          "durationMinutes": 12,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047339-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 12,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2424,15 +2424,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047341",
           "title": "Create MarkUp and Loom links",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:07",
+          "durationMinutes": 2,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047341-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2622,15 +2622,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047342",
           "title": "Import Figma assets",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:57",
+          "durationMinutes": 2,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047342-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2820,15 +2820,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047343",
           "title": "Set up ALL pages",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "8:41",
+          "durationMinutes": 9,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047343-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 9,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3018,15 +3018,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047344",
           "title": "Import Relume components",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:03",
+          "durationMinutes": 6,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047344-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3216,15 +3216,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047345",
           "title": "Style guide setup",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "30:23",
+          "durationMinutes": 31,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047345-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 31,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3414,15 +3414,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047346",
           "title": "Nav and footer + links",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:48",
+          "durationMinutes": 3,
           "description": "Lessons\nWorking with Clients & Building Your Webflow Career\nIntroduction & Process Overview\nEffective Project Management: Notion Template, Starter Project, Communication & Feedback\nUltimate Webflow Build Checklist\nPricing, Proposals & Closing Deals\nOnboarding & Managing Client Expectations\nTransferring Project & Smooth Launches\nClient Training & Handover\nFinding & Retaining New Clients\nBecoming a Webflow Expert\nScaling into a Webflow Agency\nWorking Together with Team Members\nCreating & Managing Team Accounts\nEstablishing a Collaborative Workflow for Designers and Developers\nStyling & Structuring Considerations for Teams\nTeam Project Management & Organization\nConclusion & What’s Next\nConclusion & What’s Next\nThe Ultimate Webflow Build Checklist - PRO Course\nIntroduction\nGetting Started\nValues and Principles\nClient Onboarding",
           "completed": false,
           "subtasks": [
             {
               "id": "4047346-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3612,15 +3612,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047347",
           "title": "Create DONE DONE DONE",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:02",
+          "durationMinutes": 5,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047347-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3638,15 +3638,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047348",
           "title": "Build easy",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:38",
+          "durationMinutes": 5,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047348-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3664,15 +3664,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047349",
           "title": "Build tricky",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:01",
+          "durationMinutes": 5,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047349-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3690,15 +3690,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047522",
           "title": "Technical SEO",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:25",
+          "durationMinutes": 4,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047522-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3716,15 +3716,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047523",
           "title": "Integrations and automations",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:28",
+          "durationMinutes": 4,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047523-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3742,15 +3742,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047524",
           "title": "Make it sexy",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:40",
+          "durationMinutes": 3,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047524-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3768,15 +3768,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047525",
           "title": "Clean up",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "16:47",
+          "durationMinutes": 17,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047525-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 17,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3794,15 +3794,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047526",
           "title": "Flow Gurus audit",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "26:47",
+          "durationMinutes": 27,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047526-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 27,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3820,7 +3820,7 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047527",
           "title": "MarkUp tweaks + Client Review",
-          "duration": "10:00",
+          "duration": "9:22",
           "durationMinutes": 10,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
@@ -3846,7 +3846,7 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047529",
           "title": "Transfer",
-          "duration": "10:00",
+          "duration": "9:04",
           "durationMinutes": 10,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
@@ -3872,15 +3872,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047530",
           "title": "Set up hosting",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:24",
+          "durationMinutes": 5,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047530-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3898,15 +3898,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047531",
           "title": "Add 301 redirects",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:17",
+          "durationMinutes": 6,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047531-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3924,15 +3924,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047532",
           "title": "Pre-launch checks",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "8:50",
+          "durationMinutes": 9,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047532-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 9,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3950,15 +3950,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047537",
           "title": "Go live",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "7:32",
+          "durationMinutes": 8,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047537-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 8,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -3976,15 +3976,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047538",
           "title": "Post-live testing",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:41",
+          "durationMinutes": 7,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047538-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4002,15 +4002,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047539",
           "title": "Handover",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "10:24",
+          "durationMinutes": 11,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047539-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 11,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4028,15 +4028,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047540",
           "title": "Post-live tweaks",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:29",
+          "durationMinutes": 4,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047540-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4054,15 +4054,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047541",
           "title": "Customer feedback",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:34",
+          "durationMinutes": 5,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047541-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4080,15 +4080,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047542",
           "title": "Compile case study + promote",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:16",
+          "durationMinutes": 6,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047542-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4106,15 +4106,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047543",
           "title": "30 day review",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:10",
+          "durationMinutes": 2,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047543-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4132,15 +4132,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4047544",
           "title": "Review and improve",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:13",
+          "durationMinutes": 5,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047544-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -4165,15 +4165,15 @@ export const WEBFLOW_MASTERCLASS_5_1_PRO_CONTENT: CourseData = {
         {
           "id": "4045771",
           "title": "How to automate customer feedback",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:34",
+          "durationMinutes": 5,
           "description": "Cloneable - Customer Review Link Generator",
           "completed": false,
           "subtasks": [
             {
               "id": "4045771-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null

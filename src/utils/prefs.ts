@@ -19,12 +19,23 @@ export function defaultPrefs(): AppPrefs {
     syncId: uuid(),
     theme: 'light',
     pinnedCourseId: 'figma-for-web-designers-2-0',
+    pinnedLessonKey: null,
     recentlyUsed: [],
     showAllCourses: false,
     schedule: {},
     queue: emptyQueue(),
     lastSyncAt: null,
     remoteBlobId: null,
+    dailyBudgetMinutes: 105,
+    deferPractice: false,
+    focusLessonMode: false,
+    dayDoneDates: [],
+    streakShieldUsedWeek: null,
+    lastUndo: null,
+    morningPingEnabled: false,
+    planGeneratedAt: null,
+    weeklyReviewDismissedWeek: null,
+    catchUpCompressedUntil: null,
   };
 }
 
@@ -45,6 +56,7 @@ export function loadPrefs(): AppPrefs {
       syncId: parsed.syncId || base.syncId,
       theme: parsed.theme === 'dark' ? 'dark' : 'light',
       pinnedCourseId: parsed.pinnedCourseId ?? base.pinnedCourseId,
+      pinnedLessonKey: parsed.pinnedLessonKey ?? null,
       recentlyUsed: Array.isArray(parsed.recentlyUsed) ? parsed.recentlyUsed : [],
       showAllCourses: !!parsed.showAllCourses,
       schedule: parsed.schedule && typeof parsed.schedule === 'object' ? parsed.schedule : {},
@@ -56,6 +68,19 @@ export function loadPrefs(): AppPrefs {
         : emptyQueue(),
       lastSyncAt: parsed.lastSyncAt ?? null,
       remoteBlobId: parsed.remoteBlobId ?? null,
+      dailyBudgetMinutes:
+        typeof parsed.dailyBudgetMinutes === 'number'
+          ? Math.min(180, Math.max(60, parsed.dailyBudgetMinutes))
+          : base.dailyBudgetMinutes,
+      deferPractice: !!parsed.deferPractice,
+      focusLessonMode: !!parsed.focusLessonMode,
+      dayDoneDates: Array.isArray(parsed.dayDoneDates) ? parsed.dayDoneDates : [],
+      streakShieldUsedWeek: parsed.streakShieldUsedWeek ?? null,
+      lastUndo: parsed.lastUndo ?? null,
+      morningPingEnabled: !!parsed.morningPingEnabled,
+      planGeneratedAt: parsed.planGeneratedAt ?? null,
+      weeklyReviewDismissedWeek: parsed.weeklyReviewDismissedWeek ?? null,
+      catchUpCompressedUntil: parsed.catchUpCompressedUntil ?? null,
     };
   } catch {
     return defaultPrefs();

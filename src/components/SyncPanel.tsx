@@ -1,29 +1,62 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AppPrefs } from '../types';
+import type { Session } from '@supabase/supabase-js';
 import {
   applySyncPayload,
   buildSyncPayload,
-  cloudPull,
-  cloudPush,
   copyText,
   downloadSyncFile,
-  hasJsonBinKey,
   parseSyncJson,
 } from '../lib/sync';
+import {
+  getSession,
+  getSupabase,
+  isSupabaseConfigured,
+  mergeSyncPayloads,
+  pullSnapshot,
+  pushSnapshot,
+  signInWithMagicLink,
+  signOut,
+} from '../lib/supabase';
 import { loadPrefs } from '../utils/prefs';
 
 interface Props {
   prefs: AppPrefs;
   onImported: (prefs: AppPrefs) => void;
   onMarkSynced: (remoteBlobId?: string | null) => void;
+  morningPingEnabled: boolean;
+  onMorningPing: (v: boolean) => void;
 }
 
-export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
+export function SyncPanel({
+  prefs,
+  onImported,
+  onMarkSynced,
+  morningPingEnabled,
+  onMorningPing,
+}: Props) {
   const [status, setStatus] = useState<string | null>(null);
   const [paste, setPaste] = useState('');
   const [busy, setBusy] = useState(false);
+  const [email, setEmail] = useState('');
+  const [session, setSession] = useState<Session | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const cloudReady = hasJsonBinKey();
+  const supabaseReady = isSupabaseConfigured();
+
+  useEffect(() => {
+    let unsub: (() => void) | undefined;
+    (async () => {
+      const s = await getSession();
+      setSession(s);
+      const sb = getSupabase();
+      if (!sb) return;
+      const { data } = sb.auth.onAuthStateChange((_event, next) => {
+        setSession(next);
+      });
+      unsub = () => data.subscription.unsubscribe();
+    })();
+    return () => unsub?.();
+  }, []);
 
   const exportNow = () => {
     const payload = buildSyncPayload(prefs);
@@ -64,40 +97,82 @@ export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
     doImportText(text);
   };
 
-  const pushCloud = async () => {
+  const sendMagic = async () => {
+    if (!email.trim()) {
+      setStatus('Enter the email you use on Mac and iPad.');
+      return;
+    }
     setBusy(true);
-    const payload = buildSyncPayload(prefs);
-    const res = await cloudPush(payload);
+    const res = await signInWithMagicLink(email);
     setBusy(false);
     if (!res.ok) {
       setStatus(res.error);
       return;
     }
-    onMarkSynced(res.binId);
-    setStatus(`Cloud backup saved (bin ${res.binId.slice(0, 8)}…).`);
+    setStatus('Magic link sent — check your email on this device. Same email pairs Mac + iPad.');
   };
 
-  const pullCloud = async () => {
-    const binId = prefs.remoteBlobId || (import.meta.env.VITE_JSONBIN_BIN_ID as string | undefined);
-    if (!binId) {
-      setStatus('No remote bin id yet — push once from this device first, or set VITE_JSONBIN_BIN_ID.');
-      return;
-    }
+  const doPush = async () => {
     setBusy(true);
-    const res = await cloudPull(binId);
+    const payload = buildSyncPayload(prefs);
+    const res = await pushSnapshot(prefs.syncId, payload);
     setBusy(false);
     if (!res.ok) {
       setStatus(res.error);
       return;
     }
-    const applied = applySyncPayload(res.payload);
+    onMarkSynced();
+    setStatus('Pushed snapshot to Supabase. Pull on your other device with the same email.');
+  };
+
+  const doPull = async () => {
+    setBusy(true);
+    const res = await pullSnapshot();
+    setBusy(false);
+    if (!res.ok) {
+      setStatus(res.error);
+      return;
+    }
+    if (!res.row) {
+      setStatus('No cloud snapshot yet — push from this device first.');
+      return;
+    }
+    const applied = applySyncPayload(res.row.payload);
     if (!applied.ok) {
       setStatus(applied.error);
       return;
     }
     onImported(loadPrefs());
-    onMarkSynced(binId);
-    setStatus('Pulled latest from cloud.');
+    onMarkSynced();
+    setStatus('Pulled latest snapshot from Supabase.');
+  };
+
+  const doMerge = async () => {
+    setBusy(true);
+    const res = await pullSnapshot();
+    if (!res.ok) {
+      setBusy(false);
+      setStatus(res.error);
+      return;
+    }
+    const local = buildSyncPayload(prefs);
+    const merged = res.row ? mergeSyncPayloads(local, res.row.payload) : local;
+    const applied = applySyncPayload(merged);
+    if (!applied.ok) {
+      setBusy(false);
+      setStatus(applied.error);
+      return;
+    }
+    const push = await pushSnapshot(merged.syncId, merged);
+    setBusy(false);
+    if (!push.ok) {
+      setStatus(`Merged locally but push failed: ${push.error}`);
+      onImported(loadPrefs());
+      return;
+    }
+    onImported(loadPrefs());
+    onMarkSynced();
+    setStatus('Auto-merged local + cloud, then pushed the combined snapshot.');
   };
 
   return (
@@ -110,9 +185,8 @@ export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
           Cross-device progress
         </h1>
         <p className="max-w-xl text-sm text-stone-500 dark:text-stone-400">
-          Progress always saves in this browser. To move between iPad and Mac, export a sync file (or
-          copy the payload) and import it on the other device. Optional cloud needs a JSONBin API key
-          in env.
+          Progress always saves in this browser. Pair Mac + iPad with the same email via magic link,
+          or keep Export / Import as a calm backup.
         </p>
       </header>
 
@@ -139,9 +213,87 @@ export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
         )}
       </div>
 
+      <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
+        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Supabase · magic link</h2>
+        {!supabaseReady ? (
+          <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+            Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable cloud sync.
+          </p>
+        ) : session?.user ? (
+          <>
+            <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
+              Signed in as <span className="font-medium">{session.user.email}</span>
+            </p>
+            <p className="mt-1 text-xs text-stone-400">
+              Use this same email on your other device to pair.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                disabled={busy}
+                onClick={doPush}
+                className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+              >
+                Push snapshot
+              </button>
+              <button
+                type="button"
+                disabled={busy}
+                onClick={doPull}
+                className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-stone-600 ring-1 ring-stone-200 disabled:opacity-50 dark:bg-stone-800 dark:text-stone-200 dark:ring-stone-600"
+              >
+                Pull snapshot
+              </button>
+              <button
+                type="button"
+                disabled={busy}
+                onClick={doMerge}
+                className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-orange-700 ring-1 ring-orange-200 disabled:opacity-50 dark:bg-stone-800 dark:text-orange-300 dark:ring-orange-800"
+              >
+                Auto-merge
+              </button>
+              <button
+                type="button"
+                disabled={busy}
+                onClick={async () => {
+                  await signOut();
+                  setStatus('Signed out.');
+                }}
+                className="rounded-xl px-3 py-2 text-sm text-stone-400 hover:text-stone-600"
+              >
+                Sign out
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="mt-2 text-xs text-stone-400">
+              Magic link only — no passwords. Same email on Mac + iPad.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                className="min-w-[200px] flex-1 rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm dark:border-stone-600 dark:bg-stone-950 dark:text-stone-100"
+              />
+              <button
+                type="button"
+                disabled={busy}
+                onClick={sendMagic}
+                className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+              >
+                Send magic link
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Export</h2>
+          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Export backup</h2>
           <p className="mt-1 text-xs text-stone-400">
             Download or copy everything (prefs + all course progress).
           </p>
@@ -164,7 +316,7 @@ export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
         </div>
 
         <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Import</h2>
+          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Import backup</h2>
           <p className="mt-1 text-xs text-stone-400">Choose a file or paste the payload below.</p>
           <input
             ref={fileRef}
@@ -178,7 +330,7 @@ export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
             onChange={(e) => setPaste(e.target.value)}
             placeholder="Paste sync JSON here…"
             rows={4}
-            className="mt-3 w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 font-mono text-xs dark:border-stone-700 dark:bg-stone-800"
+            className="mt-3 w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 font-mono text-xs dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200"
           />
           <button
             type="button"
@@ -190,45 +342,23 @@ export function SyncPanel({ prefs, onImported, onMarkSynced }: Props) {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Optional cloud</h2>
-        {cloudReady ? (
-          <>
-            <p className="mt-1 text-xs text-stone-400">
-              JSONBin key detected. Push from one device, pull on the other (same bin id).
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button
-                type="button"
-                disabled={busy}
-                onClick={pushCloud}
-                className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
-              >
-                Push to cloud
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={pullCloud}
-                className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-stone-600 ring-1 ring-stone-200 disabled:opacity-50 dark:bg-stone-800 dark:text-stone-200 dark:ring-stone-600"
-              >
-                Pull from cloud
-              </button>
-            </div>
-            {prefs.remoteBlobId && (
-              <p className="mt-2 break-all font-mono text-xs text-stone-400">Bin: {prefs.remoteBlobId}</p>
-            )}
-          </>
-        ) : (
-          <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
-            Connect sync for auto cross-device: set{' '}
-            <code className="rounded bg-stone-100 px-1 text-xs dark:bg-stone-800">VITE_JSONBIN_API_KEY</code>{' '}
-            (optional{' '}
-            <code className="rounded bg-stone-100 px-1 text-xs dark:bg-stone-800">VITE_JSONBIN_BIN_ID</code>
-            ). Until then, Export / Import is the reliable iPad ↔ Mac path. Email yourself the file or
-            AirDrop it.
-          </p>
-        )}
+      <div className="rounded-3xl border border-dashed border-stone-200 bg-stone-50/50 p-5 dark:border-stone-700 dark:bg-stone-900/40">
+        <label className="flex cursor-pointer items-start gap-3">
+          <input
+            type="checkbox"
+            checked={morningPingEnabled}
+            onChange={(e) => onMorningPing(e.target.checked)}
+            className="mt-1 rounded border-stone-300 text-orange-600 focus:ring-orange-300"
+          />
+          <span>
+            <span className="block text-sm font-medium text-stone-700 dark:text-stone-200">
+              Morning ping (coming)
+            </span>
+            <span className="mt-0.5 block text-xs text-stone-400">
+              Soft reminder preference saved — delivery will be enabled later.
+            </span>
+          </span>
+        </label>
       </div>
 
       {status && (

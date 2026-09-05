@@ -6,6 +6,7 @@ interface Props {
   onTab: (t: TopTab) => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
+  hidden?: boolean;
 }
 
 const TABS: { id: TopTab; label: string }[] = [
@@ -16,7 +17,18 @@ const TABS: { id: TopTab; label: string }[] = [
   { id: 'sync', label: 'Sync' },
 ];
 
-export function TopNav({ tab, onTab, theme, onToggleTheme }: Props) {
+export function TopNav({ tab, onTab, theme, onToggleTheme, hidden }: Props) {
+  if (hidden) {
+    return (
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
+          Focus mode
+        </p>
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+      </div>
+    );
+  }
+
   return (
     <nav className="mb-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
       <div className="flex max-w-full items-center gap-1 overflow-x-auto rounded-2xl bg-white/70 p-1 shadow-sm ring-1 ring-stone-100 dark:bg-stone-900/70 dark:ring-stone-800">

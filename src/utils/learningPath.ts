@@ -13,6 +13,16 @@ export const LEARNING_PATH_IDS: string[] = [
   'webflow-masterclass-5-1-pro-content',
 ];
 
+/** Excluded from aggregate Learning path % (still on path / 40-day plan) */
+export const AGGREGATE_PATH_EXCLUDE = new Set([
+  'web-design-becoming-a-professional',
+  'freelancing-for-web-designers',
+  'webflow-masterclass-5-1',
+  'webflow-masterclass-5-1-pro-content',
+]);
+
+export const AGGREGATE_PATH_IDS = LEARNING_PATH_IDS.filter((id) => !AGGREGATE_PATH_EXCLUDE.has(id));
+
 export const LEARNING_PATH_GROUPS: { title: string; ids: string[] }[] = [
   { title: '1 · Foundations in Figma', ids: ['figma-for-web-designers-2-0'] },
   {

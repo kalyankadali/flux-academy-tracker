@@ -56,15 +56,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046375",
           "title": "Setting You Up For Success: The Basics",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:33",
+          "durationMinutes": 4,
           "description": "Hey, and welcome to level 1. Our goal with this",
           "completed": false,
           "subtasks": [
             {
               "id": "4046375-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -334,15 +334,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046454",
           "title": "Simple Client Onboarding",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:01",
+          "durationMinutes": 3,
           "description": "Onboarding new clients can be very simple or very complex",
           "completed": false,
           "subtasks": [
             {
               "id": "4046454-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -370,15 +370,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046499",
           "title": "Running a Strategy Session",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "30:47",
+          "durationMinutes": 31,
           "description": "Hey, designer friends and welcome to the strategy\nStrategy Session Template\n\nGet the template here",
           "completed": false,
           "subtasks": [
             {
               "id": "4046499-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 31,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -567,15 +567,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047415",
           "title": "How to Wireframe Like a Pro",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "21:45",
+          "durationMinutes": 22,
           "description": "Hi, and welcome to the wireframing skill. In this video,\n📐 Platfroma UI Kit\n\nGet the files here: Download the fig files\n\n\n\n\n\n🎁 Relume Trial\n\nHow to get the Relume Trial",
           "completed": false,
           "subtasks": [
             {
               "id": "4047415-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 22,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -629,15 +629,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4047402",
           "title": "Acing the Visual Design",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:13",
+          "durationMinutes": 2,
           "description": "You're getting paid to design websites, of course, acing the\n🎓 Flux Design Courses\n\nCore Design Skills\n\nBrand Design Mastery\n\nWeb Design Masterclass",
           "completed": false,
           "subtasks": [
             {
               "id": "4047402-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -931,7 +931,7 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046580",
           "title": "Creating an Amazing Client Experience",
-          "duration": "10:00",
+          "duration": "9:28",
           "durationMinutes": 10,
           "description": "Most people think that the only thing that matters is",
           "completed": false,
@@ -1020,15 +1020,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046746",
           "title": "Using Your Name VS Agency Name",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:26",
+          "durationMinutes": 5,
           "description": "Although you're just a business of 1 at this point,",
           "completed": false,
           "subtasks": [
             {
               "id": "4046746-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1200,15 +1200,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046916",
           "title": "Case Studies: Real Examples of Expensive Proposals",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "7:30",
+          "durationMinutes": 8,
           "description": "In this video I want to give you a sneak",
           "completed": false,
           "subtasks": [
             {
               "id": "4046916-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 8,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1236,7 +1236,7 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046935",
           "title": "How to Sell Without Being “Salesy”",
-          "duration": "10:00",
+          "duration": "9:18",
           "durationMinutes": 10,
           "description": "Most people hate sales because 1, they hate being sold",
           "completed": false,
@@ -1450,15 +1450,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046939",
           "title": "Understanding the Finance of Scale",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:10",
+          "durationMinutes": 4,
           "description": "If you've put the right system that we've covered in",
           "completed": false,
           "subtasks": [
             {
               "id": "4046939-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1531,15 +1531,15 @@ export const FREELANCING_FOR_WEB_DESIGNERS: CourseData = {
         {
           "id": "4046995",
           "title": "How to Delegate Work Successfully",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:28",
+          "durationMinutes": 7,
           "description": "When I started delegating some of my work, I fell",
           "completed": false,
           "subtasks": [
             {
               "id": "4046995-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null

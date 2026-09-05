@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { AppPrefs, LessonKey, ThemeMode } from '../types';
+import type { AppPrefs, LessonKey, ThemeMode, UndoSnapshot } from '../types';
 import { COURSES } from '../data/courses';
 import {
   applyTheme,
@@ -7,6 +7,8 @@ import {
   savePrefs,
 } from '../utils/prefs';
 import { markQueueLessonDone, refreshQueueBatch } from '../utils/queue';
+import { compressCatchUp, generate40DayPlan } from '../utils/plan40';
+import { todayKey, isoWeekKey } from '../utils/dates';
 
 export function useAppPrefs() {
   const [prefs, setPrefs] = useState<AppPrefs>(() => loadPrefs());
@@ -30,6 +32,20 @@ export function useAppPrefs() {
     });
   }, []);
 
+  // Expire undo after ~30s
+  useEffect(() => {
+    if (!prefs.lastUndo) return;
+    const ms = prefs.lastUndo.expiresAt - Date.now();
+    if (ms <= 0) {
+      setPrefs((p) => ({ ...p, lastUndo: null }));
+      return;
+    }
+    const id = window.setTimeout(() => {
+      setPrefs((p) => ({ ...p, lastUndo: null }));
+    }, ms);
+    return () => clearTimeout(id);
+  }, [prefs.lastUndo]);
+
   const setTheme = useCallback((theme: ThemeMode) => {
     setPrefs((p) => ({ ...p, theme }));
   }, []);
@@ -44,6 +60,13 @@ export function useAppPrefs() {
       const queue = refreshQueueBatch({ keys: [], completedKeys: [] }, COURSES, pinnedCourseId);
       return { ...p, pinnedCourseId, queue };
     });
+  }, []);
+
+  const pinLesson = useCallback((key: LessonKey | null) => {
+    setPrefs((p) => ({
+      ...p,
+      pinnedLessonKey: p.pinnedLessonKey === key ? null : key,
+    }));
   }, []);
 
   const touchRecent = useCallback((courseId: string) => {
@@ -66,10 +89,47 @@ export function useAppPrefs() {
     });
   }, []);
 
+  const replaceSchedule = useCallback((schedule: Record<string, string>) => {
+    setPrefs((p) => ({
+      ...p,
+      schedule,
+      planGeneratedAt: new Date().toISOString(),
+    }));
+  }, []);
+
+  const generatePlan = useCallback(() => {
+    setPrefs((p) => {
+      const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
+      // Keep boss lesson date if already scheduled
+      const schedule = generate40DayPlan(COURSES, { protectKeys: protect });
+      if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
+        schedule[p.pinnedLessonKey] = p.schedule[p.pinnedLessonKey];
+      }
+      return {
+        ...p,
+        schedule,
+        planGeneratedAt: new Date().toISOString(),
+        catchUpCompressedUntil: null,
+      };
+    });
+  }, []);
+
+  const applyCatchUpCompress = useCallback(() => {
+    setPrefs((p) => {
+      const schedule = compressCatchUp(p.schedule, COURSES, {
+        bossKey: p.pinnedLessonKey,
+      });
+      return {
+        ...p,
+        schedule,
+        catchUpCompressedUntil: todayKey(),
+      };
+    });
+  }, []);
+
   const tickQueueItem = useCallback((key: LessonKey) => {
     setPrefs((p) => {
       let queue = markQueueLessonDone(p.queue, key);
-      // If all 3 done, roll to next batch
       if (queue.keys.length > 0 && queue.keys.every((k) => queue.completedKeys.includes(k))) {
         queue = refreshQueueBatch(queue, COURSES, p.pinnedCourseId);
       }
@@ -97,33 +157,100 @@ export function useAppPrefs() {
     }));
   }, []);
 
+  const markDayDone = useCallback((date = todayKey()) => {
+    setPrefs((p) => ({
+      ...p,
+      dayDoneDates: p.dayDoneDates.includes(date) ? p.dayDoneDates : [...p.dayDoneDates, date],
+    }));
+  }, []);
+
+  const setDeferPractice = useCallback((deferPractice: boolean) => {
+    setPrefs((p) => ({ ...p, deferPractice }));
+  }, []);
+
+  const setFocusLessonMode = useCallback((focusLessonMode: boolean) => {
+    setPrefs((p) => ({ ...p, focusLessonMode }));
+  }, []);
+
+  const setMorningPing = useCallback((morningPingEnabled: boolean) => {
+    setPrefs((p) => ({ ...p, morningPingEnabled }));
+  }, []);
+
+  const setDailyBudget = useCallback((dailyBudgetMinutes: number) => {
+    setPrefs((p) => ({
+      ...p,
+      dailyBudgetMinutes: Math.min(180, Math.max(60, dailyBudgetMinutes)),
+    }));
+  }, []);
+
+  const recordUndo = useCallback((snap: Omit<UndoSnapshot, 'expiresAt'>) => {
+    setPrefs((p) => ({
+      ...p,
+      lastUndo: { ...snap, expiresAt: Date.now() + 30_000 },
+    }));
+  }, []);
+
+  const clearUndo = useCallback(() => {
+    setPrefs((p) => ({ ...p, lastUndo: null }));
+  }, []);
+
+  const useStreakShield = useCallback((weekKey: string) => {
+    setPrefs((p) => ({ ...p, streakShieldUsedWeek: weekKey }));
+  }, []);
+
+  const dismissWeeklyReview = useCallback(() => {
+    setPrefs((p) => ({ ...p, weeklyReviewDismissedWeek: isoWeekKey() }));
+  }, []);
+
+  const patchPrefs = useCallback((partial: Partial<AppPrefs>) => {
+    setPrefs((p) => ({ ...p, ...partial }));
+  }, []);
+
+  const hasPlan = Object.keys(prefs.schedule).length > 0;
+
   const visibleHomeCourseIds = useMemo(() => {
+    // While pinned/plan-active: show fewer courses
+    const limit = prefs.pinnedCourseId || hasPlan ? 2 : 4;
     if (prefs.showAllCourses) return COURSES.map((c) => c.id);
     const ids: string[] = [];
     if (prefs.pinnedCourseId) ids.push(prefs.pinnedCourseId);
     for (const id of prefs.recentlyUsed) {
       if (!ids.includes(id)) ids.push(id);
     }
-    // Fill from learning path / COURSES order
     for (const c of COURSES) {
       if (!ids.includes(c.id)) ids.push(c.id);
-      if (ids.length >= 4) break;
+      if (ids.length >= limit) break;
     }
-    return ids.slice(0, 4);
-  }, [prefs.showAllCourses, prefs.pinnedCourseId, prefs.recentlyUsed]);
+    return ids.slice(0, limit);
+  }, [prefs.showAllCourses, prefs.pinnedCourseId, prefs.recentlyUsed, hasPlan]);
 
   return {
     prefs,
+    hasPlan,
     setTheme,
     toggleTheme,
     pinCourse,
+    pinLesson,
     touchRecent,
     setShowAllCourses,
     setScheduleDate,
+    replaceSchedule,
+    generatePlan,
+    applyCatchUpCompress,
     tickQueueItem,
     refreshQueue,
     replacePrefs,
     markSynced,
+    markDayDone,
+    setDeferPractice,
+    setFocusLessonMode,
+    setMorningPing,
+    setDailyBudget,
+    recordUndo,
+    clearUndo,
+    useStreakShield,
+    dismissWeeklyReview,
+    patchPrefs,
     visibleHomeCourseIds,
   };
 }

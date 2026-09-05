@@ -13,15 +13,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046207",
           "title": "Welcome",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:25",
+          "durationMinutes": 2,
           "description": "📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046207-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -58,15 +58,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046208",
           "title": "Assignment: Create your “before” design",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:38",
+          "durationMinutes": 4,
           "description": "To get started, we're going to give you a quick\nAssignment 1:\n\nCreate your “before” design (30 min)\n\nTo get started, we’re inviting you to complete a quick design challenge. This will be your “before” design, allowing you to see the progress you’re making during the program.\n\n\n\nStep 1:\n\nChoose ONE the following companies/briefs to design for:\n\nOption 1: Socail, A consumer software company\n\nOption 2: Lightwaves, An indie music festival\n\nOption 3: Converge, A coffee shop in your home town\n\n(Full briefs below.)\n\nStep 2:\n\nChoose ONE of the following two formats:\n\nWebsite hero section 1440 (w) x 900 (h) px\n\nBillboard Poster 1300 (w) x 2052 (h) px\n\nStep 3:\n\nSpend 30 minutes (only) designing for your chosen brief in your chosen format (website OR poster). Use any software you wish. Use the tagline as your headline.\n\n\n\nStep 4:\n\nExport as a .jpg and submit your work on this form: https://flux-academy.typeform.com/to/XS7IkKnY\n\n(Note that we won’t be providing detailed feedback on your “before” design, this is for your reference so you can see your improvement at the end)\n\nBriefs:\n\nOption 1: Consumer software\n\nBusiness Name: Socail (sic)\n\nLocation: San Francisco, USA (customers across the English speaking world)\n\nDescription: Social + ai = Socail. The next step from auto-suggest, we analyse your message history and use the power of artificial intelligence to automatically converse with your friends and family. No need to keep up with endless WhatsApp groups or make lame excuses when you don’t want to go out—we handle your entire social life. Terms and conditions apply.\n\nCustomers: Tech early adopters, primarily men aged 20–40.\n\nTagline: Never be lost for words again.\n\n\n\nOption 2: Music festival\n\nBusiness Name: Lightwaves\n\nLocation: Melbourne, Australia\n\nDescription: The word’s finest indie music artists join up-and-coming bands from across the region at this two day event held on the 21st to 22nd of January.\n\nCustomers: 16–35 year olds who love indie music.\n\nTagline: The world’s best indie music, live in Victoria.\n\n\n\nOption 3: Coffee shop\n\nBusiness Name: Converge\n\nLocation: Your home town\n\nDescription: A stylish café close to the transport hub and many office buildings. Favoured by commuters as well as those who like to relax away from the busy lunch times and morning rush.\n\nCustomers: A cross-section of the local community.\n\nTagline: [Your home town]’s finest independent coffee house.\n\nFigma\n\nIf you do not know what design software to use, you can start using Figma, which will be later used for other exercises.\n\nOpen a free Figma account: https://www.figma.com/\n\nIf you're new to Figma, here's a tutorial from our YouTube channel",
           "completed": false,
           "subtasks": [
             {
               "id": "4046208-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -323,15 +323,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046215",
           "title": "Lesson: Principles of Layout Pt 1 of 3",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "8:30",
+          "durationMinutes": 9,
           "description": "If you want to know whether your design is working\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046215-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 9,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -368,15 +368,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046216",
           "title": "Lesson: Principles of Layout Pt 2 of 3",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:49",
+          "durationMinutes": 6,
           "description": "This lesson, we're going to cover 2 further principles, alignment\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046216-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -413,15 +413,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046217",
           "title": "Lesson: Principles of Layout Pt 3 of 3",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:37",
+          "durationMinutes": 7,
           "description": "Okay. Let's get into our final principles of layouts for\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046217-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -690,15 +690,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4047361",
           "title": "Bonus: Hierarchy in Web Design",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "34:59",
+          "durationMinutes": 35,
           "description": "Hey designers and welcome to the hierarchy skill. This is",
           "completed": false,
           "subtasks": [
             {
               "id": "4047361-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 35,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -803,15 +803,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046223",
           "title": "Lesson: Fonts and Typefaces",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:36",
+          "durationMinutes": 5,
           "description": "Selecting the right font for the job is a really\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046223-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -893,15 +893,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046228",
           "title": "Lesson: Pairing Fonts",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "6:30",
+          "durationMinutes": 7,
           "description": "So you want to use more than 1 font in\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046228-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 7,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1051,15 +1051,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046231",
           "title": "Demo: Typographic Layouts & Grids",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "12:58",
+          "durationMinutes": 13,
           "description": "In this lesson slash demo, we're going to talk about\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046231-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 13,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1141,15 +1141,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046232",
           "title": "Assignment: Typographic Layouts",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:18",
+          "durationMinutes": 3,
           "description": "Your assignment for this module is to design 3 book\nAssignment 3:\n\nTypographic layouts (multiple exercises)\n\nOverview:\nDesign three book covers using only type.\n\nFormat:\n1649 (w) x 2540 (h) px\n\nInstructions:\nUse only black and white—no other colors / shades. Follow the brief for each cover. Type can be set in any case of your choosing. Use any software you wish.\n\nCover 1:\n\nUse only one font (one typeface in one weight/width/emphasis) and one point size.\n\nTitle: The boy done good; Subtitle: A heartwarming story of overcoming the odds; Author: Xavier Silva; Extra copy: “A masterpiece.” —The Guardian.\n\nCover 2:\n\nUse only one typeface, up to three fonts, and three point sizes.\n\nTitle: Feed your family on a budget; Subtitle: The ultimate guide to cooking, baking, and saving money; Author: Sarah George; Extra copy: Fully revised and updated edition.\n\nCover 3:\n\nUse two typefaces and any number of fonts at any point size.\n\nTitle: Waking nightmare; Subtitle: The chilling horror bestseller; Author: Alistair Smith; Extra copy: “Smith has turned the genre on its head.” —Literary Review",
           "completed": false,
           "subtasks": [
             {
               "id": "4046232-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1209,15 +1209,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4047376",
           "title": "Bonus: Type in Web Design",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:05:22",
+          "durationMinutes": 66,
           "description": "Hey and welcome to the chapter on typography. I'm super",
           "completed": false,
           "subtasks": [
             {
               "id": "4047376-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 66,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1242,15 +1242,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046233",
           "title": "Lesson: Color Associations",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "2:51",
+          "durationMinutes": 3,
           "description": "Color brings life and interest. We can use it to\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046233-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 3,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1633,15 +1633,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046245",
           "title": "Demo: Photography",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "13:59",
+          "durationMinutes": 14,
           "description": "Okay. We've got a brief from the features editor to\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046245-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 14,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1678,15 +1678,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046243",
           "title": "Lesson: Illustration",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:11",
+          "durationMinutes": 4,
           "description": "In the last lesson we looked at photography. In this\nPen tool tutorial by Matt mentioned in the vid: https://www.youtube.com/watch?v=PAstYyvkrr0\n\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046243-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1741,15 +1741,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046246",
           "title": "Demo: Illustration",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "10:51",
+          "durationMinutes": 11,
           "description": "So how do we select and then integrate illustrations",
           "completed": false,
           "subtasks": [
             {
               "id": "4046246-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 11,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1767,15 +1767,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046247",
           "title": "Lesson: Layers",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:06",
+          "durationMinutes": 5,
           "description": "Layers are overlapping elements. This comes from the physical world\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046247-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1991,15 +1991,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046253",
           "title": "Assignment: Image",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:40",
+          "durationMinutes": 2,
           "description": "So for the image module, your assignment is to create\nAssignment 5:\n\nImage\n\nOverview:\nCreate a layered collage of photographs and vector illustrations / shapes, suitable for the client you chose for your “before” design in Assignment #1.\n\nFormat:\nImage to work within a website hero section (do not design the entire hero section; just the image). [Collage photo, illustration (suitable for hero section, movie poster style—show examples in intro video.]\n\nInstructions: The collage should not ‘bleed off’ any side of the canvas i.e. there must be clear space on all sides.\n\nResources: Select the photographs from https://unsplash.com or https://www.pexels.com . Illustrations can be third party, drawn by yourself, or simple geometric shapes. Texture can be added in-software or from photographs.\n\n\n\n\n\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046253-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2114,7 +2114,7 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046257",
           "title": "Lesson: Visual Harmony",
-          "duration": "10:00",
+          "duration": "9:19",
           "durationMinutes": 10,
           "description": "In this lesson we're thinking about visual harmony. What is\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
@@ -2204,15 +2204,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046256",
           "title": "Demo: How To Get Started",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "20:03",
+          "durationMinutes": 21,
           "description": "How do you get started on a new design project?\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046256-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 21,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2249,15 +2249,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046259",
           "title": "Lesson: Developing Your Taste",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "3:08",
+          "durationMinutes": 4,
           "description": "Even if you're a strategic thinker who can help solve\n📋 \"Core Design Skills\" Resources Doc - access here (bookmark this)",
           "completed": false,
           "subtasks": [
             {
               "id": "4046259-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 4,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2390,15 +2390,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046260",
           "title": "Assignment: Final Project",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:47",
+          "durationMinutes": 2,
           "description": "Okay. So your final assignment for this course is to\nFinal Assignment 6:\n\nCreate your “after” design\n\nOverview: Design one or both formats from the Assignment 1 brief (website and poster).\n\nInstructions:\n\nBillboard Poster (to be presented in PSD mockup) https://mrmockup.com/city-poster-mockup/\n\nWebsite to include the hero section PLUS two sections and a footer.",
           "completed": false,
           "subtasks": [
             {
               "id": "4046260-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2452,15 +2452,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046261",
           "title": "What’s Next",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:34",
+          "durationMinutes": 2,
           "description": "You've made it to the final lesson. Well done. Now",
           "completed": false,
           "subtasks": [
             {
               "id": "4046261-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 2,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2539,15 +2539,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046265",
           "title": "Storytelling in Web Design",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "23:26",
+          "durationMinutes": 24,
           "description": "Hi, and welcome to the storytelling skill. In this video,",
           "completed": false,
           "subtasks": [
             {
               "id": "4046265-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 24,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2565,15 +2565,15 @@ export const CORE_DESIGN_SKILLS: CourseData = {
         {
           "id": "4046267",
           "title": "Visuals in Web Design",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "47:03",
+          "durationMinutes": 48,
           "description": "Hey and welcome to 1 of the most fun and",
           "completed": false,
           "subtasks": [
             {
               "id": "4046267-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 48,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null

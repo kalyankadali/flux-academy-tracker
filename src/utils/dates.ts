@@ -1,9 +1,26 @@
-/** Local calendar date as YYYY-MM-DD */
+/** Local calendar date as YYYY-MM-DD (device local) */
 export function todayKey(d = new Date()): string {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
+}
+
+/** Calendar date in Asia/Kolkata as YYYY-MM-DD */
+export function todayKeyKolkata(d = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(d);
+}
+
+export function addDaysISO(iso: string, days: number): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  dt.setDate(dt.getDate() + days);
+  return todayKey(dt);
 }
 
 export function formatMinutes(mins: number | null | undefined): string {
@@ -33,4 +50,26 @@ export function computeStreak(streakDates: string[]): number {
     cursor.setDate(cursor.getDate() - 1);
   }
   return streak;
+}
+
+/** ISO week key like 2026-W36 */
+export function isoWeekKey(d = new Date()): string {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return `${date.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+export function isSunday(d = new Date()): boolean {
+  return d.getDay() === 0;
+}
+
+export function daysBetweenISO(a: string, b: string): number {
+  const [ay, am, ad] = a.split('-').map(Number);
+  const [by, bm, bd] = b.split('-').map(Number);
+  const da = new Date(ay, am - 1, ad).getTime();
+  const db = new Date(by, bm - 1, bd).getTime();
+  return Math.round((db - da) / 86400000);
 }

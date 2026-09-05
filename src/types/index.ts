@@ -61,11 +61,23 @@ export interface QueueBatch {
 
 export type ThemeMode = 'light' | 'dark';
 
+export type SubtaskKind = 'watch' | 'download' | 'practice' | 'other';
+
+export interface UndoSnapshot {
+  courseId: string;
+  moduleId: string;
+  lessonId: string;
+  subtaskId: string;
+  expiresAt: number;
+}
+
 export interface AppPrefs {
   version: 2;
   syncId: string;
   theme: ThemeMode;
   pinnedCourseId: string | null;
+  /** Boss lesson — catch-up won't skip */
+  pinnedLessonKey: LessonKey | null;
   recentlyUsed: string[];
   showAllCourses: boolean;
   /** lessonKey -> YYYY-MM-DD target date */
@@ -74,6 +86,26 @@ export interface AppPrefs {
   lastSyncAt: string | null;
   /** Optional remote blob id when using JSONBin-style cloud */
   remoteBlobId: string | null;
+  /** Soft daily focus budget in minutes (~90–120) */
+  dailyBudgetMinutes: number;
+  /** When true, Today can defer practice subtasks */
+  deferPractice: boolean;
+  /** Lesson fullscreen focus (hide top tabs) */
+  focusLessonMode: boolean;
+  /** Dates marked "day done" via close ritual */
+  dayDoneDates: string[];
+  /** ISO week (YYYY-Www) when streak shield was used */
+  streakShieldUsedWeek: string | null;
+  /** Last undoable check (~30s) */
+  lastUndo: UndoSnapshot | null;
+  /** Stub: morning ping coming later */
+  morningPingEnabled: boolean;
+  /** When 40-day plan was last generated */
+  planGeneratedAt: string | null;
+  /** ISO week when weekly review was dismissed */
+  weeklyReviewDismissedWeek: string | null;
+  /** Catch-up compress applied for these dates */
+  catchUpCompressedUntil: string | null;
 }
 
 export type TopTab = 'home' | 'today' | 'upcoming' | 'calendar' | 'sync';

@@ -13,15 +13,15 @@ export const WEB_DESIGN_MASTERCLASS: CourseData = {
         {
           "id": "4046304",
           "title": "Welcome to the Web Design Masterclass",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "4:55",
+          "durationMinutes": 5,
           "description": "Hey. I'm Matt Jumper, and welcome to the web design",
           "completed": false,
           "subtasks": [
             {
               "id": "4046304-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 5,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -774,15 +774,15 @@ export const WEB_DESIGN_MASTERCLASS: CourseData = {
         {
           "id": "4046322",
           "title": "Concept C - Hero / AI Images",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "33:33",
+          "durationMinutes": 34,
           "description": "Okay. So at this point, I'm gonna swap out this",
           "completed": false,
           "subtasks": [
             {
               "id": "4046322-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 34,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1371,15 +1371,15 @@ export const WEB_DESIGN_MASTERCLASS: CourseData = {
         {
           "id": "4046343",
           "title": "Adventures",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "31:10",
+          "durationMinutes": 32,
           "description": "Okay. So we have our hero concepts done. Now, I",
           "completed": false,
           "subtasks": [
             {
               "id": "4046343-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 32,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1625,7 +1625,7 @@ export const WEB_DESIGN_MASTERCLASS: CourseData = {
           "title": "Hosts",
           "duration": "21:58",
           "durationMinutes": 22,
-          "description": "Yep. Yeah. No problem.",
+          "description": "Yep. Yeah. No problem.\n👉 Get course support here: Course Support\n🙌  For any other issues, contact us at team@flux-academy.com.\nLesson Summary\nThe text focuses on creating a parallax effect by adjusting the size and alignment of elements on a design canvas. It discusses:\nModifying dimensions and layouts to enhance visual appeal and functionality\nOrganizing elements into auto layouts for polished results\nEnsuring proper spacing and alignment for a polished final product\nConsidering client feedback to improve the overall aesthetic\nThe author describes receiving feedback from a client for changes needed in a project, such as:\nUtilizing a different hero image\nReplacing black bars with blue for added color\nAdding a new project section\nThe process involved in retrofitting the design includes exploring new layout options and creating card components for individuals involved in the project, as well as:\nExperimenting with colors and layouts\nMaking adjustments to enhance the overall design\nOpting for a scattered layout to showcase experts in the project\nExperimenting with design elements like color choices, text placement, and layout spacing for a visually appealing final design",
           "completed": false,
           "subtasks": [
             {
@@ -2006,15 +2006,15 @@ export const WEB_DESIGN_MASTERCLASS: CourseData = {
         {
           "id": "4046361",
           "title": "Gallery",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "8:13",
+          "durationMinutes": 9,
           "description": "Okay. So the gallery on the current website is a",
           "completed": false,
           "subtasks": [
             {
               "id": "4046361-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 9,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -2222,15 +2222,15 @@ export const WEB_DESIGN_MASTERCLASS: CourseData = {
         {
           "id": "4047396",
           "title": "Conclusion",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "0:41",
+          "durationMinutes": 1,
           "description": "Alright. Congrats on completing the 3rd and final module of",
           "completed": false,
           "subtasks": [
             {
               "id": "4047396-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 1,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null

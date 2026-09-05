@@ -303,15 +303,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045340",
           "title": "Add, Remove, Edit Pages",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "18:10",
+          "durationMinutes": 19,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045340-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 19,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -366,15 +366,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045358",
           "title": "Edit Links, Navigation, Footer",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "14:06",
+          "durationMinutes": 15,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045358-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 15,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -420,15 +420,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047095",
           "title": "Transitions",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "5:07",
+          "durationMinutes": 6,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047095-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 6,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -446,15 +446,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047128",
           "title": "Responsiveness",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "30:35",
+          "durationMinutes": 31,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047128-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 31,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -500,15 +500,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047132",
           "title": "Final launch",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "12:27",
+          "durationMinutes": 13,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047132-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 13,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -669,15 +669,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045368",
           "title": "Review Figma",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "12:51",
+          "durationMinutes": 13,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045368-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 13,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -705,15 +705,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045389",
           "title": "Set up Framer",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "50:34",
+          "durationMinutes": 51,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045389-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 51,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -813,15 +813,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045406",
           "title": "Hero: Modal and cleanup",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "29:59",
+          "durationMinutes": 30,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045406-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 30,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -839,15 +839,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045420",
           "title": "Spline",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "15:50",
+          "durationMinutes": 16,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045420-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 16,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -875,15 +875,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4045432",
           "title": "Configurable components",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "58:43",
+          "durationMinutes": 59,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4045432-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 59,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -947,15 +947,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047143",
           "title": "Bento Grid",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:31:17",
+          "durationMinutes": 92,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047143-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 92,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1037,15 +1037,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047186",
           "title": "Carousel component",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:00:04",
+          "durationMinutes": 61,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047186-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 61,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1118,15 +1118,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047181",
           "title": "Footer",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "33:16",
+          "durationMinutes": 34,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047181-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 34,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1172,15 +1172,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047190",
           "title": "Blog Overview/Setup",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "18:43",
+          "durationMinutes": 19,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047190-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 19,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1208,15 +1208,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047226",
           "title": "Blog Inside Page",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:42:06",
+          "durationMinutes": 103,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047226-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 103,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null
@@ -1523,15 +1523,15 @@ export const FRAMER_MASTERCLASS_2_0: CourseData = {
         {
           "id": "4047473",
           "title": "QA/Launch",
-          "duration": "10:00",
-          "durationMinutes": 10,
+          "duration": "1:05:29",
+          "durationMinutes": 66,
           "description": "Description not yet verified from the Circle lesson page; enrichment remains pending.",
           "completed": false,
           "subtasks": [
             {
               "id": "4047473-watch",
               "label": "Watch lesson",
-              "estimatedMinutes": 10,
+              "estimatedMinutes": 66,
               "completed": false,
               "actualMinutes": null,
               "timerStartedAt": null

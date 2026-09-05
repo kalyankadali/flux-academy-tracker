@@ -7,6 +7,7 @@ import { ProgressBar } from './ProgressBar';
 import { DoThisNext } from './DoThisNext';
 import { LearningPath } from './LearningPath';
 import { quoteForToday } from '../utils/quotes';
+import { aggregateLearningPathPct } from '../utils/pathProgress';
 import type { LessonKey, QueueBatch } from '../types';
 
 interface Props {
@@ -19,6 +20,8 @@ interface Props {
   queue: QueueBatch;
   onOpenLesson: (courseId: string, moduleId: string, lessonId: string) => void;
   onTickQueue: (key: LessonKey) => void;
+  onGeneratePlan: () => void;
+  hasPlan: boolean;
 }
 
 export function CoursePicker({
@@ -31,6 +34,8 @@ export function CoursePicker({
   queue,
   onOpenLesson,
   onTickQueue,
+  onGeneratePlan,
+  hasPlan,
 }: Props) {
   const cards = useMemo(
     () =>
@@ -54,6 +59,7 @@ export function CoursePicker({
 
   const readyCount = cards.filter((c) => !c.comingSoon).length;
   const quote = quoteForToday();
+  const pathPct = useMemo(() => aggregateLearningPathPct(COURSES), []);
 
   return (
     <section className="space-y-6">
@@ -72,6 +78,25 @@ export function CoursePicker({
             : ` ${readyCount} courses ready.`}
         </p>
       </header>
+
+      <div className="rounded-3xl border border-orange-100 bg-orange-50/60 px-5 py-4 dark:border-orange-900/40 dark:bg-orange-950/20">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
+              Learning path
+            </p>
+            <p className="text-2xl font-semibold text-stone-800 dark:text-stone-100">{pathPct.pct}%</p>
+            <p className="text-xs text-stone-400">Core path progress (excludes later electives)</p>
+          </div>
+          <button
+            type="button"
+            onClick={onGeneratePlan}
+            className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white"
+          >
+            {hasPlan ? 'Regenerate 40-day plan' : 'Generate 40-day plan'}
+          </button>
+        </div>
+      </div>
 
       <DoThisNext queue={queue} onOpen={onOpenLesson} onTick={onTickQueue} />
 

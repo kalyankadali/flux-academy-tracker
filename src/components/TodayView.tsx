@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
 import { COURSES } from '../data/courses';
 import type { AppPrefs, LessonKey, QueueBatch } from '../types';
-import { todayKey, todayKeyKolkata, addDaysISO, formatMinutes, isSunday, isoWeekKey } from '../utils/dates';
+import { todayKey, todayKeyKolkata, addDaysISO, formatMinutes, isSunday, isoWeekKey, isEcommerceFocusClearDay } from '../utils/dates';
 import { parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules, loadCourseState } from '../utils/storage';
 import { collectNextLessonKeys } from '../utils/queue';
 import { DoThisNext } from './DoThisNext';
+import { PlanGenerateControl } from './PlanGenerateControl';
 import { isLessonComplete } from '../utils/progress';
 import { countDaysBehind } from '../utils/plan40';
 import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../utils/dailyBudget';
@@ -72,7 +73,7 @@ export function TodayView({
         label: lessonNumberLabel(mod, lesson),
         done: isLessonComplete(lesson),
         courseId: parsed.courseId,
-        moduleId: parsed.moduleId,
+        moduleId: parsed.lessonId,
         lessonId: parsed.lessonId,
       });
     }
@@ -149,7 +150,7 @@ export function TodayView({
 
   const shield = canUseStreakShield({
     streakDates,
-    budgetMetDates: prefs.dayDoneDates, // approximate: days marked done counted as budget-met
+    budgetMetDates: prefs.dayDoneDates,
     shieldUsedWeek: prefs.streakShieldUsedWeek,
     today,
   });
@@ -190,42 +191,31 @@ export function TodayView({
         </p>
       </header>
 
-      {/* 40-day plan CTA */}
       <div className="rounded-3xl border border-orange-100 bg-orange-50/50 p-5 dark:border-orange-900/40 dark:bg-orange-950/20">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">40-day calm plan</h2>
             <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
               Spreads your learning path (~90–120m/day) from today (IST) toward Oct 23 access where needed.
-              Core Design Skills stays mid-path; Webflow & freelancing land later.
+              Sep 14–18 stays clear for the Ecommerce AI Sprint.
             </p>
-            {prefs.planGeneratedAt && (
-              <p className="mt-1 text-[11px] text-stone-400">
-                Last generated{' '}
-                {new Date(prefs.planGeneratedAt).toLocaleString(undefined, {
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                })}
-              </p>
-            )}
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              if (
-                Object.keys(schedule).length &&
-                !window.confirm('Replace your current schedule with a fresh 40-day plan?')
-              ) {
-                return;
-              }
-              onGeneratePlan();
-            }}
-            className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white"
-          >
-            Generate 40-day plan
-          </button>
+          <PlanGenerateControl
+            hasPlan={Boolean(prefs.planGeneratedAt) || Object.keys(schedule).length > 0}
+            planGeneratedAt={prefs.planGeneratedAt}
+            onGenerate={onGeneratePlan}
+          />
         </div>
       </div>
+
+      {isEcommerceFocusClearDay(todayIST) && (
+        <div className="rounded-3xl border border-sky-100 bg-sky-50/70 p-4 dark:border-sky-900/40 dark:bg-sky-950/30">
+          <p className="text-sm text-sky-900 dark:text-sky-200">
+            Ecommerce AI Sprint focus week (Sep 14–18) — your 40-day plan leaves today clear on purpose.
+            Join the live sprint when you’re ready; regular lessons resume after.
+          </p>
+        </div>
+      )}
 
       {daysBehind >= 2 && (
         <div className="rounded-3xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/50 dark:bg-amber-950/30">
@@ -258,7 +248,6 @@ export function TodayView({
         </div>
       )}
 
-      {/* Soft daily budget */}
       <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Today’s soft budget</h2>
@@ -393,7 +382,6 @@ export function TodayView({
         </div>
       )}
 
-      {/* Close today ritual */}
       <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
         <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Close today</h2>
         {dayDone ? (

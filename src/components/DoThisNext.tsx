@@ -6,11 +6,13 @@ import { peekCourseModules } from '../utils/storage';
 interface Props {
   queue: QueueBatch;
   multiCourse?: boolean;
+  /** Soften priority pressure (e.g. sprint focus week) */
+  deemphasized?: boolean;
   onOpen: (courseId: string, moduleId: string, lessonId: string) => void;
   onTick: (key: LessonKey) => void;
 }
 
-export function DoThisNext({ queue, multiCourse = true, onOpen, onTick }: Props) {
+export function DoThisNext({ queue, multiCourse = true, deemphasized = false, onOpen, onTick }: Props) {
   const items = queue.keys
     .map((key) => {
       const courses = COURSES.map((c) => ({
@@ -35,10 +37,29 @@ export function DoThisNext({ queue, multiCourse = true, onOpen, onTick }: Props)
   }
 
   return (
-    <div className="rounded-3xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white p-5 shadow-sm dark:border-orange-900/40 dark:from-stone-900 dark:bg-stone-900">
-      <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-        Do this next · {items.length} gentle priorities
+    <div
+      className={`rounded-3xl border p-5 shadow-sm ${
+        deemphasized
+          ? 'border-stone-100 bg-stone-50/60 opacity-80 dark:border-stone-800 dark:bg-stone-900/50'
+          : 'border-orange-100 bg-gradient-to-br from-orange-50 to-white dark:border-orange-900/40 dark:from-stone-900 dark:bg-stone-900'
+      }`}
+    >
+      <p
+        className={`text-xs font-medium uppercase tracking-wider ${
+          deemphasized
+            ? 'text-stone-400 dark:text-stone-500'
+            : 'text-orange-600 dark:text-orange-300'
+        }`}
+      >
+        {deemphasized
+          ? 'Path lessons (optional today)'
+          : `Do this next · ${items.length} gentle priorities`}
       </p>
+      {deemphasized && (
+        <p className="mt-1 text-xs text-stone-400">
+          No pressure — sprint week comes first. These stay available if you want a quiet lesson.
+        </p>
+      )}
       <ul className="mt-3 space-y-3">
         {items.map((item, i) => {
           if (!item) return null;

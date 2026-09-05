@@ -73,3 +73,21 @@ export function daysBetweenISO(a: string, b: string): number {
   const db = new Date(by, bm - 1, bd).getTime();
   return Math.round((db - da) / 86400000);
 }
+
+/** Ecommerce AI Sprint live cohort — keep 40-day plan clear these days. */
+export const ECOMMERCE_FOCUS_CLEAR_START = '2026-09-14';
+export const ECOMMERCE_FOCUS_CLEAR_END = '2026-09-18';
+
+export function isEcommerceFocusClearDay(iso: string): boolean {
+  return iso >= ECOMMERCE_FOCUS_CLEAR_START && iso <= ECOMMERCE_FOCUS_CLEAR_END;
+}
+
+/** Next calendar day that is not an Ecommerce focus-clear day (inclusive of `fromISO`). */
+export function nextSchedulableDayISO(fromISO: string, maxSteps = 60): string {
+  let d = fromISO;
+  for (let i = 0; i < maxSteps; i++) {
+    if (!isEcommerceFocusClearDay(d)) return d;
+    d = addDaysISO(d, 1);
+  }
+  return fromISO;
+}

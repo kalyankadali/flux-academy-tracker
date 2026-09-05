@@ -1,5 +1,3 @@
-# Deploy note
-
-Public app: prefer https://flux-academy-tracker.vercel.app (Vercel project rename from figma-course-tracker).
-
-Commit via GitHub as kalyankadali (never bot@local) so Vercel production builds accept the author.
+Production: https://flux-academy-tracker.vercel.app
+Prefer this Vercel project for deploys.
+Sprint week UX (Sep 14–18), Sunday review (IST), and iPad/PWA tips ship with Today + App wiring.

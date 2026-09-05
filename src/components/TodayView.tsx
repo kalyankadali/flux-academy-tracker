@@ -1,17 +1,24 @@
 import { useMemo, useState } from 'react';
 import { COURSES } from '../data/courses';
 import type { AppPrefs, LessonKey, QueueBatch } from '../types';
-import { todayKey, todayKeyKolkata, addDaysISO, formatMinutes, isSunday, isoWeekKey, isEcommerceFocusClearDay } from '../utils/dates';
+import { todayKey, todayKeyKolkata, addDaysISO, isSunday, isoWeekKey, isEcommerceFocusClearDay, computeStreak } from '../utils/dates';
 import { parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules, loadCourseState } from '../utils/storage';
 import { collectNextLessonKeys } from '../utils/queue';
 import { DoThisNext } from './DoThisNext';
 import { PlanGenerateControl } from './PlanGenerateControl';
+import { IpadTip } from './IpadTip';
+import { SprintWeekBanner } from './SprintWeekBanner';
+import { WeeklyReviewCard } from './WeeklyReviewCard';
+import { TodayScheduledBlock } from './TodayScheduledBlock';
+import { TodayCloseBlock } from './TodayCloseBlock';
+import { TodayBudgetBlock } from './TodayBudgetBlock';
 import { isLessonComplete } from '../utils/progress';
 import { countDaysBehind } from '../utils/plan40';
 import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../utils/dailyBudget';
 import { canUseStreakShield } from '../utils/streakShield';
-import { computeStreak } from '../utils/dates';
+
+const SPRINT_URL = 'https://flux-academy.com/ecommerce-ai-sprint';
 
 interface Props {
   prefs: AppPrefs;
@@ -24,38 +31,26 @@ interface Props {
   onMarkDayDone: () => void;
   onDeferPractice: (v: boolean) => void;
   onDismissWeeklyReview: () => void;
+  onSaveWeeklyFocus: (note: string) => void;
+  onDismissTip: () => void;
   onUseShield: (weekKey: string) => void;
 }
 
 export function TodayView({
-  prefs,
-  queue,
-  onOpen,
-  onTickQueue,
-  onSchedule,
-  onGeneratePlan,
-  onCatchUp,
-  onMarkDayDone,
-  onDeferPractice,
-  onDismissWeeklyReview,
-  onUseShield,
+  prefs, queue, onOpen, onTickQueue, onSchedule, onGeneratePlan, onCatchUp,
+  onMarkDayDone, onDeferPractice, onDismissWeeklyReview, onSaveWeeklyFocus, onDismissTip, onUseShield,
 }: Props) {
   const today = todayKey();
   const todayIST = todayKeyKolkata();
+  const weekKey = isoWeekKey();
+  const sprintFocus = isEcommerceFocusClearDay(todayIST);
   const [showClose, setShowClose] = useState(false);
+  const [focusDraft, setFocusDraft] = useState(prefs.weeklyFocusNote ?? '');
   const schedule = prefs.schedule;
+  const sprintHref = COURSES.find((c) => c.id === 'ecommerce-ai-sprint')?.url || SPRINT_URL;
 
   const scheduledToday = useMemo(() => {
-    const items: {
-      key: LessonKey;
-      title: string;
-      courseTitle: string;
-      label: string;
-      done: boolean;
-      courseId: string;
-      moduleId: string;
-      lessonId: string;
-    }[] = [];
+    const items: { key: LessonKey; title: string; courseTitle: string; label: string; done: boolean; courseId: string; moduleId: string; lessonId: string }[] = [];
     for (const [key, date] of Object.entries(schedule)) {
       if (date !== today && date !== todayIST) continue;
       const parsed = parseLessonKey(key);
@@ -66,50 +61,33 @@ export function TodayView({
       const mod = modules.find((m) => m.id === parsed.moduleId);
       const lesson = mod?.lessons.find((l) => l.id === parsed.lessonId);
       if (!mod || !lesson) continue;
-      items.push({
-        key,
-        title: lesson.title,
-        courseTitle: course.title,
-        label: lessonNumberLabel(mod, lesson),
-        done: isLessonComplete(lesson),
-        courseId: parsed.courseId,
-        moduleId: parsed.moduleId,
-        lessonId: parsed.lessonId,
-      });
+      items.push({ key, title: lesson.title, courseTitle: course.title, label: lessonNumberLabel(mod, lesson), done: isLessonComplete(lesson), ...parsed });
     }
     return items;
   }, [schedule, today, todayIST]);
 
-  const primary = scheduledToday.find((i) => !i.done) ?? null;
+  const primary = sprintFocus ? null : scheduledToday.find((i) => !i.done) ?? null;
 
   const suggestions = useMemo(() => {
-    if (scheduledToday.length) return [];
+    if (sprintFocus || scheduledToday.length) return [];
     return collectNextLessonKeys(COURSES, prefs.pinnedCourseId, 3).map((key) => {
       const parsed = parseLessonKey(key)!;
       const course = COURSES.find((c) => c.id === parsed.courseId)!;
       const modules = peekCourseModules(course.id, course.modules);
       const mod = modules.find((m) => m.id === parsed.moduleId)!;
       const lesson = mod.lessons.find((l) => l.id === parsed.lessonId)!;
-      return {
-        key,
-        title: lesson.title,
-        courseTitle: course.title,
-        label: lessonNumberLabel(mod, lesson),
-      };
+      return { key, title: lesson.title, courseTitle: course.title, label: lessonNumberLabel(mod, lesson) };
     });
-  }, [scheduledToday.length, prefs.pinnedCourseId]);
+  }, [scheduledToday.length, prefs.pinnedCourseId, sprintFocus]);
 
   const streakDates = useMemo(() => {
     const dates = new Set<string>();
     for (const c of COURSES) {
-      const state = loadCourseState(c.id, c.modules);
-      for (const d of state.streakDates) dates.add(d);
+      for (const d of loadCourseState(c.id, c.modules).streakDates) dates.add(d);
     }
     return [...dates];
   }, []);
-
   const streak = useMemo(() => computeStreak(streakDates), [streakDates]);
-
   const logged = useMemo(() => minutesLoggedToday(COURSES, today), []);
   const plannedMins = useMemo(
     () => todayScheduledMinutes(schedule, COURSES, today) || todayScheduledMinutes(schedule, COURSES, todayIST),
@@ -132,7 +110,7 @@ export function TodayView({
       const mod = modules.find((m) => m.id === parsed.moduleId);
       const lesson = mod?.lessons.find((l) => l.id === parsed.lessonId);
       if (!mod || !lesson || isLessonComplete(lesson)) continue;
-      return { key, title: lesson.title, courseTitle: course.title, label: lessonNumberLabel(mod, lesson), ...parsed };
+      return { title: lesson.title, label: lessonNumberLabel(mod, lesson), ...parsed };
     }
     return null;
   }, [schedule, todayIST]);
@@ -140,8 +118,7 @@ export function TodayView({
   const todayWins = useMemo(() => {
     const wins: string[] = [];
     for (const c of COURSES) {
-      const state = loadCourseState(c.id, c.modules);
-      for (const w of state.wins) {
+      for (const w of loadCourseState(c.id, c.modules).wins) {
         if (todayKey(new Date(w.completedAt)) === today) wins.push(w.label);
       }
     }
@@ -155,290 +132,124 @@ export function TodayView({
     today,
   });
 
-  const showWeekly =
-    isSunday() && prefs.weeklyReviewDismissedWeek !== isoWeekKey();
+  const showWeekly = isSunday() && prefs.weeklyReviewDismissedWeek !== weekKey;
 
-  const weekStats = useMemo(() => {
-    let lessons = 0;
+  const weekWins = useMemo(() => {
+    const lessons: string[] = [];
+    const subtasks: string[] = [];
     for (const c of COURSES) {
-      const state = loadCourseState(c.id, c.modules);
-      for (const w of state.wins) {
-        if (w.type !== 'lesson') continue;
-        const d = new Date(w.completedAt);
-        if (isoWeekKey(d) === isoWeekKey()) lessons += 1;
+      for (const w of loadCourseState(c.id, c.modules).wins) {
+        if (isoWeekKey(new Date(w.completedAt)) !== weekKey) continue;
+        if (w.type === 'lesson' || w.type === 'module') lessons.push(w.label);
+        else subtasks.push(w.label);
       }
     }
-    return { lessons };
-  }, []);
+    return { lessons: lessons.slice(0, 6), subtasks: subtasks.slice(0, 4), lessonCount: lessons.length, subtaskCount: subtasks.length };
+  }, [weekKey]);
 
   return (
     <section className="space-y-6">
       <header className="space-y-1">
-        <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-          Today
-        </p>
+        <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Today</p>
         <h1 className="text-2xl font-semibold text-stone-800 dark:text-stone-100">
-          {new Date().toLocaleDateString(undefined, {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric',
-          })}
+          {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
         </h1>
         <p className="text-sm text-stone-500 dark:text-stone-400">
-          {streak === 0
-            ? 'A soft start is still a start — one task lights the streak.'
-            : `${streak}-day streak · showing up is enough.`}
+          {sprintFocus ? 'Sprint week — live learning first; path lessons stay clear.' : streak === 0 ? 'A soft start is still a start — one task lights the streak.' : `${streak}-day streak · showing up is enough.`}
         </p>
       </header>
 
-      <div className="rounded-3xl border border-orange-100 bg-orange-50/50 p-5 dark:border-orange-900/40 dark:bg-orange-950/20">
+      {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
+
+      <div className={`rounded-3xl border p-5 ${sprintFocus ? 'border-stone-100 bg-stone-50/40 opacity-80 dark:border-stone-800' : 'border-orange-100 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/20'}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">40-day calm plan</h2>
             <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-              Spreads your learning path (~90–120m/day) from today (IST) toward Oct 23 access where needed.
-              Sep 14–18 stays clear for the Ecommerce AI Sprint.
+              {sprintFocus ? 'Plan days stay clear Sep 14–18 on purpose — no lesson backlog from today.' : 'Spreads your learning path (~90–120m/day) from today (IST). Sep 14–18 stays clear for the Ecommerce AI Sprint.'}
             </p>
           </div>
-          <PlanGenerateControl
-            hasPlan={Boolean(prefs.planGeneratedAt) || Object.keys(schedule).length > 0}
-            planGeneratedAt={prefs.planGeneratedAt}
-            onGenerate={onGeneratePlan}
-          />
+          {!sprintFocus && (
+            <PlanGenerateControl hasPlan={Boolean(prefs.planGeneratedAt) || Object.keys(schedule).length > 0} planGeneratedAt={prefs.planGeneratedAt} onGenerate={onGeneratePlan} />
+          )}
         </div>
       </div>
 
-      {isEcommerceFocusClearDay(todayIST) && (
-        <div className="rounded-3xl border border-sky-100 bg-sky-50/70 p-4 dark:border-sky-900/40 dark:bg-sky-950/30">
-          <p className="text-sm text-sky-900 dark:text-sky-200">
-            Ecommerce AI Sprint focus week (Sep 14–18) — your 40-day plan leaves today clear on purpose.
-            Join the live sprint when you’re ready; regular lessons resume after.
-          </p>
-        </div>
-      )}
+      {sprintFocus && <SprintWeekBanner href={sprintHref} />}
 
-      {daysBehind >= 2 && (
+      {!sprintFocus && daysBehind >= 2 && (
         <div className="rounded-3xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/50 dark:bg-amber-950/30">
-          <p className="text-sm text-amber-900 dark:text-amber-200">
-            You’re about {daysBehind} days behind — no guilt. Compress the next 3 days?
-            Boss-pinned lessons stay put.
-          </p>
-          <button
-            type="button"
-            onClick={onCatchUp}
-            className="mt-2 rounded-xl bg-amber-600 px-3 py-1.5 text-xs font-medium text-white"
-          >
-            Catch up · compress 3 days
-          </button>
+          <p className="text-sm text-amber-900 dark:text-amber-200">You’re about {daysBehind} days behind — no guilt. Compress the next 3 days? Boss-pinned lessons stay put.</p>
+          <button type="button" onClick={onCatchUp} className="mt-2 rounded-xl bg-amber-600 px-3 py-1.5 text-xs font-medium text-white">Catch up · compress 3 days</button>
         </div>
       )}
 
-      {shield.canShield && !streakDates.includes(addDaysISO(today, -1)) && (
+      {!sprintFocus && shield.canShield && !streakDates.includes(addDaysISO(today, -1)) && (
         <div className="rounded-3xl border border-stone-200 bg-white p-4 dark:border-stone-700 dark:bg-stone-900">
-          <p className="text-sm text-stone-600 dark:text-stone-300">
-            Missed a day? Streak shield is free once this week if you already met budget earlier.
-          </p>
-          <button
-            type="button"
-            onClick={() => onUseShield(shield.weekKey)}
-            className="mt-2 rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
-          >
-            Use streak shield
-          </button>
+          <p className="text-sm text-stone-600 dark:text-stone-300">Missed a day? Streak shield is free once this week if you already met budget earlier.</p>
+          <button type="button" onClick={() => onUseShield(shield.weekKey)} className="mt-2 rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900">Use streak shield</button>
         </div>
       )}
 
-      <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-        <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Today’s soft budget</h2>
-          <span className="text-xs text-stone-400">
-            {formatMinutes(logged)} / {formatMinutes(budget)}
-          </span>
-        </div>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-stone-100 dark:bg-stone-800">
-          <div
-            className={`h-full rounded-full transition-all ${
-              bStatus === 'met' || bStatus === 'over' ? 'bg-emerald-400' : 'bg-orange-400'
-            }`}
-            style={{ width: `${Math.min(100, Math.round((logged / budget) * 100))}%` }}
-          />
-        </div>
-        {(bStatus === 'met' || bStatus === 'over') && (
-          <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
-            Beautiful — budget met. Celebrate and stop. Rest is productive.
-          </p>
-        )}
-        {plannedMins > 0 && (
-          <p className="mt-1 text-xs text-stone-400">Scheduled today ~{formatMinutes(plannedMins)}</p>
-        )}
-        <label className="mt-3 flex cursor-pointer items-center gap-2 text-xs text-stone-500 dark:text-stone-400">
-          <input
-            type="checkbox"
-            checked={prefs.deferPractice}
-            onChange={(e) => onDeferPractice(e.target.checked)}
-            className="rounded border-stone-300 text-orange-600"
-          />
-          Defer practice tasks (prep / watch first)
-        </label>
-      </div>
+      <TodayBudgetBlock
+        sprintFocus={sprintFocus}
+        logged={logged}
+        budget={budget}
+        bStatus={bStatus}
+        plannedMins={plannedMins}
+        prefs={prefs}
+        onDeferPractice={onDeferPractice}
+      />
 
       {primary && (
         <div className="rounded-3xl border border-orange-200 bg-gradient-to-br from-orange-50 to-white p-5 shadow-sm dark:border-orange-900/50 dark:from-orange-950/40 dark:to-stone-900">
-          <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-            Primary focus
-          </p>
+          <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Primary focus</p>
           <p className="mt-1 text-xs text-orange-600/80 dark:text-orange-300/80">{primary.label}</p>
           <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{primary.title}</h2>
           <p className="text-xs text-stone-400">{primary.courseTitle}</p>
-          <button
-            type="button"
-            onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)}
-            className="mt-4 w-full rounded-2xl bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm"
-          >
-            Open current lesson
-          </button>
+          <button type="button" onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)} className="mt-4 w-full rounded-2xl bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm">Open current lesson</button>
         </div>
       )}
 
-      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} />
+      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} deemphasized={sprintFocus} />
 
-      <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Scheduled for today</h2>
-        {scheduledToday.length === 0 ? (
-          <p className="mt-2 text-sm text-stone-400">
-            Nothing dated for today yet. Generate a 40-day plan, or try the suggestions below.
-          </p>
-        ) : (
-          <ul className="mt-3 space-y-2">
-            {scheduledToday.map((item) => (
-              <li
-                key={item.key}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-orange-50/60 px-3 py-2.5 dark:bg-orange-950/30"
-              >
-                <div>
-                  <p className="text-xs text-orange-600 dark:text-orange-300">{item.label}</p>
-                  <p
-                    className={`text-sm font-medium ${
-                      item.done
-                        ? 'text-stone-400 line-through'
-                        : 'text-stone-800 dark:text-stone-100'
-                    }`}
-                  >
-                    {item.title}
-                  </p>
-                  <p className="text-xs text-stone-400">{item.courseTitle}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => onOpen(item.courseId, item.moduleId, item.lessonId)}
-                  className="rounded-xl bg-orange-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Open
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <TodayScheduledBlock
+        sprintFocus={sprintFocus}
+        scheduledToday={scheduledToday}
+        suggestions={suggestions}
+        today={today}
+        onOpen={onOpen}
+        onSchedule={onSchedule}
+      />
 
-      {suggestions.length > 0 && (
-        <div className="rounded-3xl border border-dashed border-orange-200 bg-orange-50/40 p-5 dark:border-orange-900 dark:bg-stone-900">
-          <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">
-            Gentle planner suggestions
-          </h2>
-          <ul className="mt-3 space-y-2">
-            {suggestions.map((s) => (
-              <li
-                key={s.key}
-                className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-white px-3 py-2.5 dark:bg-stone-800"
-              >
-                <div>
-                  <p className="text-xs text-orange-600 dark:text-orange-300">{s.label}</p>
-                  <p className="text-sm font-medium text-stone-800 dark:text-stone-100">{s.title}</p>
-                  <p className="text-xs text-stone-400">{s.courseTitle}</p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => onSchedule(s.key, today)}
-                    className="rounded-xl bg-white px-3 py-1.5 text-xs font-medium text-orange-700 ring-1 ring-orange-200 dark:bg-stone-900 dark:text-orange-300 dark:ring-orange-800"
-                  >
-                    Schedule today
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const p = parseLessonKey(s.key)!;
-                      onOpen(p.courseId, p.moduleId, p.lessonId);
-                    }}
-                    className="rounded-xl bg-orange-500 px-3 py-1.5 text-xs font-medium text-white"
-                  >
-                    Open
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Close today</h2>
-        {dayDone ? (
-          <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-300">Day marked done. Rest well.</p>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              onMarkDayDone();
-              setShowClose(true);
-            }}
-            className="mt-3 rounded-xl bg-stone-800 px-3 py-2 text-sm font-medium text-white dark:bg-stone-200 dark:text-stone-900"
-          >
-            Mark day done
-          </button>
-        )}
-        {showClose && (
-          <div className="mt-3 space-y-2 rounded-2xl bg-orange-50/60 p-3 dark:bg-orange-950/30">
-            <p className="text-xs font-medium text-orange-700 dark:text-orange-300">Today’s wins</p>
-            {todayWins.length === 0 ? (
-              <p className="text-sm text-stone-500">Showing up counted. That’s enough.</p>
-            ) : (
-              <ul className="list-inside list-disc text-sm text-stone-600 dark:text-stone-300">
-                {todayWins.map((w) => (
-                  <li key={w}>{w}</li>
-                ))}
-              </ul>
-            )}
-            {tomorrowFirst && (
-              <div className="mt-2 border-t border-orange-100 pt-2 dark:border-orange-900/40">
-                <p className="text-xs text-stone-400">Tomorrow’s first lesson</p>
-                <p className="text-sm font-medium text-stone-800 dark:text-stone-100">{tomorrowFirst.title}</p>
-                <p className="text-xs text-stone-400">{tomorrowFirst.label}</p>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <TodayCloseBlock
+        dayDone={dayDone}
+        showClose={showClose}
+        todayWins={todayWins}
+        tomorrowFirst={tomorrowFirst}
+        sprintFocus={sprintFocus}
+        onMarkDayDone={onMarkDayDone}
+        onShowClose={() => setShowClose(true)}
+      />
 
       {showWeekly && (
-        <div className="rounded-3xl border border-orange-100 bg-orange-50/40 p-5 dark:border-orange-900/40 dark:bg-stone-900">
-          <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">Sunday · 2‑min weekly review</h2>
-          <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
-            This week you completed about <strong>{weekStats.lessons}</strong> lesson
-            {weekStats.lessons === 1 ? '' : 's'}. Streak: {streak} day{streak === 1 ? '' : 's'}.
-          </p>
-          <p className="mt-1 text-xs text-stone-400">
-            What felt light? What to gently protect next week? No scores — just noticing.
-          </p>
-          <button
-            type="button"
-            onClick={onDismissWeeklyReview}
-            className="mt-3 rounded-xl bg-orange-500 px-3 py-1.5 text-xs font-medium text-white"
-          >
-            Done for this week
-          </button>
-        </div>
+        <WeeklyReviewCard
+          lessonCount={weekWins.lessonCount}
+          subtaskCount={weekWins.subtaskCount}
+          lessonLabels={weekWins.lessons}
+          subtaskLabels={weekWins.subtasks}
+          streak={streak}
+          focusDraft={focusDraft}
+          onFocusDraft={setFocusDraft}
+          lastFocusNote={prefs.weeklyFocusNote}
+          showLastFocus={prefs.lastWeeklyReviewWeekKey !== weekKey}
+          onSkip={onDismissWeeklyReview}
+          onSave={() => { onSaveWeeklyFocus(focusDraft); onDismissWeeklyReview(); }}
+        />
+      )}
+
+      {!showWeekly && prefs.weeklyFocusNote && (
+        <p className="text-center text-xs text-stone-400">This week’s gentle focus: <span className="text-stone-600 dark:text-stone-300">{prefs.weeklyFocusNote}</span></p>
       )}
     </section>
   );

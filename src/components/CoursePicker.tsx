@@ -5,6 +5,7 @@ import { peekCourseModules } from '../utils/storage';
 import { formatAccessLabel, calmDaysRemaining } from '../utils/access';
 import { ProgressBar } from './ProgressBar';
 import { DoThisNext } from './DoThisNext';
+import { PlanGenerateControl } from './PlanGenerateControl';
 import { LearningPath } from './LearningPath';
 import { quoteForToday } from '../utils/quotes';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
@@ -86,15 +87,9 @@ export function CoursePicker({
               Learning path
             </p>
             <p className="text-2xl font-semibold text-stone-800 dark:text-stone-100">{pathPct.pct}%</p>
-            <p className="text-xs text-stone-400">Core path progress (excludes later electives)</p>
+            <p className="text-xs text-stone-400">Core path progress (coming-soon courses count once seeded)</p>
           </div>
-          <button
-            type="button"
-            onClick={onGeneratePlan}
-            className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white"
-          >
-            {hasPlan ? 'Regenerate 40-day plan' : 'Generate 40-day plan'}
-          </button>
+          <PlanGenerateControl hasPlan={hasPlan} onGenerate={onGeneratePlan} />
         </div>
       </div>
 
@@ -176,7 +171,11 @@ export function CoursePicker({
               )}
 
               {comingSoon ? (
-                <p className="mt-3 text-sm text-stone-400">Curriculum seed pending.</p>
+                <p className="mt-3 text-sm text-stone-400">
+                  {course.id === 'ecommerce-ai-sprint'
+                    ? 'Coming soon · live cohort Sep 14–18, 2026.'
+                    : 'Curriculum seed pending.'}
+                </p>
               ) : (
                 <button type="button" onClick={() => onSelect(course.id)} className="mt-3 w-full space-y-2 text-left">
                   <div className="flex items-baseline justify-between gap-2 text-sm">

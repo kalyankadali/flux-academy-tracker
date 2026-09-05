@@ -1,14 +1,26 @@
-import { useEffect, useMemo, useState } from 'react';
-import { CoursePicker } from './components/CoursePicker';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Dashboard } from './components/Dashboard';
 import { ModuleList } from './components/ModuleList';
 import { LessonDetail } from './components/LessonDetail';
 import { ToastStack } from './components/ToastStack';
 import { TopNav } from './components/TopNav';
-import { TodayView } from './components/TodayView';
-import { UpcomingView } from './components/UpcomingView';
-import { CalendarView } from './components/CalendarView';
-import { SyncPanel } from './components/SyncPanel';
+
+const CoursePicker = lazy(() =>
+  import('./components/CoursePicker').then((m) => ({ default: m.CoursePicker })),
+);
+const TodayView = lazy(() =>
+  import('./components/TodayView').then((m) => ({ default: m.TodayView })),
+);
+const UpcomingView = lazy(() =>
+  import('./components/UpcomingView').then((m) => ({ default: m.UpcomingView })),
+);
+const CalendarView = lazy(() =>
+  import('./components/CalendarView').then((m) => ({ default: m.CalendarView })),
+);
+const SyncPanel = lazy(() =>
+  import('./components/SyncPanel').then((m) => ({ default: m.SyncPanel })),
+);
+
 import { useCourseStore } from './hooks/useCourseStore';
 import { useAppPrefs } from './hooks/useAppPrefs';
 import { makeLessonKey } from './utils/lessonKeys';
@@ -18,6 +30,14 @@ import { COURSES } from './data/courses';
 import { loadCourseState, saveCourseState } from './utils/storage';
 import { applyStreakShield } from './utils/streakShield';
 import { addDaysISO, todayKey } from './utils/dates';
+
+function TabFallback() {
+  return (
+    <div className="rounded-3xl border border-stone-100 bg-white/80 p-8 text-center text-sm text-stone-400 shadow-sm dark:border-stone-800 dark:bg-stone-900/80 dark:text-stone-500">
+      Loading…
+    </div>
+  );
+}
 
 const DEEP_LINK_KEY = 'flux-open-lesson';
 
@@ -188,7 +208,9 @@ function CourseWorkspace({
             {store.courseTitle}
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm text-stone-500 dark:text-stone-400">
-            This course is listed so you can find it later.
+            {courseId === 'ecommerce-ai-sprint'
+              ? 'Live cohort Sep 14–18, 2026. Curriculum fills in closer to the sprint — your 40-day plan keeps those days clear.'
+              : 'This course is listed so you can find it later.'}
           </p>
           <a
             href={store.courseUrl}
@@ -378,6 +400,7 @@ export default function App() {
           </div>
         )}
 
+        <Suspense fallback={<TabFallback />}>
         {tab === 'home' && !showCourse && (
           <CoursePicker
             onSelect={openCourse}
@@ -455,6 +478,8 @@ export default function App() {
             onMorningPing={prefsApi.setMorningPing}
           />
         )}
+
+        </Suspense>
 
         <footer className="mt-12 pb-6 text-center text-xs text-stone-400">
           Progress saved in your browser · built for calm focus, never guilt

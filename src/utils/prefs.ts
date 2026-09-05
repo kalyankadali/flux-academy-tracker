@@ -35,6 +35,9 @@ export function defaultPrefs(): AppPrefs {
     morningPingEnabled: false,
     planGeneratedAt: null,
     weeklyReviewDismissedWeek: null,
+    lastWeeklyReviewWeekKey: null,
+    weeklyFocusNote: null,
+    tipDismissed: false,
     catchUpCompressedUntil: null,
   };
 }
@@ -80,6 +83,9 @@ export function loadPrefs(): AppPrefs {
       morningPingEnabled: !!parsed.morningPingEnabled,
       planGeneratedAt: parsed.planGeneratedAt ?? null,
       weeklyReviewDismissedWeek: parsed.weeklyReviewDismissedWeek ?? null,
+      lastWeeklyReviewWeekKey: parsed.lastWeeklyReviewWeekKey ?? null,
+      weeklyFocusNote: typeof parsed.weeklyFocusNote === 'string' ? parsed.weeklyFocusNote : null,
+      tipDismissed: !!parsed.tipDismissed,
       catchUpCompressedUntil: parsed.catchUpCompressedUntil ?? null,
     };
   } catch {

@@ -16,6 +16,18 @@ export function todayKeyKolkata(d = new Date()): string {
   }).format(d);
 }
 
+/** Kolkata calendar Y/M/D as numbers */
+function kolkataYmd(d = new Date()): { y: number; m: number; day: number } {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(d);
+  const get = (t: string) => Number(parts.find((p) => p.type === t)?.value);
+  return { y: get('year'), m: get('month'), day: get('day') };
+}
+
 export function addDaysISO(iso: string, days: number): string {
   const [y, m, d] = iso.split('-').map(Number);
   const dt = new Date(y, m - 1, d);
@@ -52,9 +64,10 @@ export function computeStreak(streakDates: string[]): number {
   return streak;
 }
 
-/** ISO week key like 2026-W36 */
+/** ISO week key like 2026-W36 — computed from Asia/Kolkata calendar date */
 export function isoWeekKey(d = new Date()): string {
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const { y, m, day } = kolkataYmd(d);
+  const date = new Date(Date.UTC(y, m - 1, day));
   const dayNum = date.getUTCDay() || 7;
   date.setUTCDate(date.getUTCDate() + 4 - dayNum);
   const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
@@ -62,8 +75,13 @@ export function isoWeekKey(d = new Date()): string {
   return `${date.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
 }
 
+/** Sunday in Asia/Kolkata */
 export function isSunday(d = new Date()): boolean {
-  return d.getDay() === 0;
+  const weekday = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Kolkata',
+    weekday: 'short',
+  }).format(d);
+  return weekday === 'Sun';
 }
 
 export function daysBetweenISO(a: string, b: string): number {

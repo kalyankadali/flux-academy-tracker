@@ -106,6 +106,12 @@ export interface AppPrefs {
   planGeneratedAt: string | null;
   /** ISO week when weekly review was dismissed */
   weeklyReviewDismissedWeek: string | null;
+  /** ISO week key when weekly review was last completed/saved */
+  lastWeeklyReviewWeekKey: string | null;
+  /** Optional one-line focus note from Sunday review */
+  weeklyFocusNote: string | null;
+  /** One-time iPad home-screen tip dismissed */
+  tipDismissed: boolean;
   /** Catch-up compress applied for these dates */
   catchUpCompressedUntil: string | null;
 }

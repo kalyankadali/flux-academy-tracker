@@ -18,6 +18,8 @@ import { isLessonComplete } from '../utils/progress';
 import { countDaysBehind } from '../utils/plan40';
 import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../utils/dailyBudget';
 import { canUseStreakShield } from '../utils/streakShield';
+import { aggregateLearningPathPct } from '../utils/pathProgress';
+import { ProgressBar } from './ProgressBar';
 
 const SPRINT_URL = 'https://flux-academy.com/ecommerce-ai-sprint';
 
@@ -135,6 +137,8 @@ export function TodayView({
 
   const showWeekly = isSunday() && prefs.weeklyReviewDismissedWeek !== weekKey;
 
+  const pathAgg = useMemo(() => aggregateLearningPathPct(COURSES), []);
+
   const weekWins = useMemo(() => {
     const lessons: string[] = [];
     const subtasks: string[] = [];
@@ -166,6 +170,16 @@ export function TodayView({
       </header>
 
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
+
+      <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 shadow-sm dark:border-stone-800 dark:bg-stone-900/80">
+        <div className="mb-1.5 flex items-baseline justify-between gap-2">
+          <p className="text-xs font-medium text-stone-600 dark:text-stone-300">
+            Learning path · {pathAgg.pct}%
+          </p>
+          <p className="text-[11px] text-stone-400">{pathAgg.subtasksDone}/{pathAgg.subtasksTotal} tasks</p>
+        </div>
+        <ProgressBar pct={pathAgg.pct} size="sm" />
+      </div>
 
       <div className={`rounded-3xl border p-5 ${sprintFocus ? 'border-stone-100 bg-stone-50/40 opacity-80 dark:border-stone-800' : 'border-orange-100 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/20'}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">

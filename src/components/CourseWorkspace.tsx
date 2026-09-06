@@ -32,6 +32,7 @@ export function CourseWorkspace({
   onOpenQueueLesson,
   onPinLesson,
   onRecordUndo,
+  onFirstWinOfDay,
   focusMode,
   onExitFocus,
 }: {
@@ -48,10 +49,14 @@ export function CourseWorkspace({
     lessonId: string;
     subtaskId: string;
   }) => void;
+  onFirstWinOfDay: (dayISO: string) => void;
   focusMode: boolean;
   onExitFocus: () => void;
 }) {
-  const store = useCourseStore(courseId);
+  const store = useCourseStore(courseId, {
+    lastFirstWinDayISO: prefs.lastFirstWinDayISO,
+    onFirstWinOfDay,
+  });
   const [view, setView] = useState<View>(() => readDeepLink(courseId));
   const [menuOpen, setMenuOpen] = useState(false);
 

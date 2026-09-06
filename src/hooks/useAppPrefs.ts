@@ -8,7 +8,7 @@ import {
 } from '../utils/prefs';
 import { markQueueLessonDone, refreshQueueBatch } from '../utils/queue';
 import { compressCatchUp, generate40DayPlan } from '../utils/plan40';
-import { todayKey, isoWeekKey, isEcommerceFocusClearDay, nextSchedulableDayISO, addDaysISO } from '../utils/dates';
+import { todayKey, todayKeyKolkata, isoWeekKey, isEcommerceFocusClearDay, nextSchedulableDayISO, addDaysISO } from '../utils/dates';
 
 export function useAppPrefs() {
   const [prefs, setPrefs] = useState<AppPrefs>(() => loadPrefs());
@@ -222,6 +222,13 @@ export function useAppPrefs() {
     setPrefs((p) => ({ ...p, tipDismissed: true }));
   }, []);
 
+  const markFirstWinDay = useCallback((day = todayKeyKolkata()) => {
+    setPrefs((p) => {
+      if (p.lastFirstWinDayISO === day) return p;
+      return { ...p, lastFirstWinDayISO: day };
+    });
+  }, []);
+
   const patchPrefs = useCallback((partial: Partial<AppPrefs>) => {
     setPrefs((p) => ({ ...p, ...partial }));
   }, []);
@@ -272,6 +279,7 @@ export function useAppPrefs() {
     dismissWeeklyReview,
     saveWeeklyFocusNote,
     dismissTip,
+    markFirstWinDay,
     patchPrefs,
     visibleHomeCourseIds,
   };

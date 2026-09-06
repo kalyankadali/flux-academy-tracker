@@ -13,6 +13,7 @@ import { WeeklyReviewCard } from './WeeklyReviewCard';
 import { TodayScheduledBlock } from './TodayScheduledBlock';
 import { TodayCloseBlock } from './TodayCloseBlock';
 import { TodayBudgetBlock } from './TodayBudgetBlock';
+import { WeekExportButton } from './WeekExportButton';
 import { isLessonComplete } from '../utils/progress';
 import { countDaysBehind } from '../utils/plan40';
 import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../utils/dailyBudget';
@@ -150,13 +151,18 @@ export function TodayView({
   return (
     <section className="space-y-6">
       <header className="space-y-1">
-        <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Today</p>
-        <h1 className="text-2xl font-semibold text-stone-800 dark:text-stone-100">
-          {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
-        </h1>
-        <p className="text-sm text-stone-500 dark:text-stone-400">
-          {sprintFocus ? 'Sprint week — live learning first; path lessons stay clear.' : streak === 0 ? 'A soft start is still a start — one task lights the streak.' : `${streak}-day streak · showing up is enough.`}
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="space-y-1">
+            <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Today</p>
+            <h1 className="text-2xl font-semibold text-stone-800 dark:text-stone-100">
+              {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
+            </h1>
+            <p className="text-sm text-stone-500 dark:text-stone-400">
+              {sprintFocus ? 'Sprint week — live learning first; path lessons stay clear.' : streak === 0 ? 'A soft start is still a start — one task lights the streak.' : `${streak}-day streak · showing up is enough.`}
+            </p>
+          </div>
+          <WeekExportButton schedule={schedule} />
+        </div>
       </header>
 
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}

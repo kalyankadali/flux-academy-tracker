@@ -6,6 +6,7 @@ import { parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules } from '../utils/storage';
 import { accessUntilISO, formatAccessLabel, calmDaysRemaining } from '../utils/access';
 import { isLessonComplete } from '../utils/progress';
+import { WeekExportButton } from './WeekExportButton';
 
 interface Props {
   schedule: Record<string, string>;
@@ -82,13 +83,18 @@ export function UpcomingView({ schedule, onOpen }: Props) {
   return (
     <section className="space-y-6">
       <header className="space-y-1">
-        <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-          Upcoming
-        </p>
-        <h1 className="text-2xl font-semibold text-stone-800 dark:text-stone-100">What’s ahead</h1>
-        <p className="text-sm text-stone-500 dark:text-stone-400">
-          Scheduled lessons and access windows — no pressure, just visibility.
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="space-y-1">
+            <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
+              Upcoming
+            </p>
+            <h1 className="text-2xl font-semibold text-stone-800 dark:text-stone-100">What’s ahead</h1>
+            <p className="text-sm text-stone-500 dark:text-stone-400">
+              Scheduled lessons and access windows — no pressure, just visibility.
+            </p>
+          </div>
+          <WeekExportButton schedule={schedule} compact />
+        </div>
       </header>
 
       <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">

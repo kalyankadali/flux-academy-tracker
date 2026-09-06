@@ -109,3 +109,55 @@ export function nextSchedulableDayISO(fromISO: string, maxSteps = 60): string {
   }
   return fromISO;
 }
+
+/** Monday–Sunday bounds for the ISO week containing `d` (Asia/Kolkata calendar). */
+export function weekBoundsKolkata(d = new Date()): {
+  monday: string;
+  sunday: string;
+  weekKey: string;
+} {
+  const { y, m, day } = kolkataYmd(d);
+  const date = new Date(Date.UTC(y, m - 1, day));
+  const dayNum = date.getUTCDay() || 7; // Mon=1 … Sun=7
+  const monday = new Date(date);
+  monday.setUTCDate(date.getUTCDate() - (dayNum - 1));
+  const sunday = new Date(monday);
+  sunday.setUTCDate(monday.getUTCDate() + 6);
+  const toISO = (dt: Date) => {
+    const yy = dt.getUTCFullYear();
+    const mm = String(dt.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(dt.getUTCDate()).padStart(2, '0');
+    return `${yy}-${mm}-${dd}`;
+  };
+  return { monday: toISO(monday), sunday: toISO(sunday), weekKey: isoWeekKey(d) };
+}
+
+/** Seven YYYY-MM-DD keys Mon→Sun starting at `monday`. */
+export function weekDayKeys(monday: string): string[] {
+  return Array.from({ length: 7 }, (_, i) => addDaysISO(monday, i));
+}
+
+/** Friendly “Week of Mon D–Sun D, YYYY” for print sheet titles (Kolkata week). */
+export function formatWeekOfLabel(monday: string, sunday: string): string {
+  const fmt = (iso: string, withYear: boolean) => {
+    const [y, m, d] = iso.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    return dt.toLocaleDateString('en-US', {
+      timeZone: 'UTC',
+      month: 'short',
+      day: 'numeric',
+      ...(withYear ? { year: 'numeric' as const } : {}),
+    });
+  };
+  const sameMonth = monday.slice(0, 7) === sunday.slice(0, 7);
+  if (sameMonth) {
+    const [y, m, d1] = monday.split('-').map(Number);
+    const d2 = Number(sunday.slice(8));
+    const month = new Date(Date.UTC(y, m - 1, d1)).toLocaleDateString('en-US', {
+      timeZone: 'UTC',
+      month: 'short',
+    });
+    return `${month} ${d1}–${d2}, ${y}`;
+  }
+  return `${fmt(monday, false)} – ${fmt(sunday, true)}`;
+}

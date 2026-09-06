@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCourseById } from '../data/courses';
 import type { AppState, CourseData, Lesson, WinEntry } from '../types';
-import { todayKey, computeStreak } from '../utils/dates';
+import { todayKey, todayKeyKolkata, computeStreak } from '../utils/dates';
 import { isLessonComplete, overallProgress, findNextIncompleteLesson } from '../utils/progress';
 import { celebrate } from '../utils/celebrate';
 import { loadCourseState, saveCourseState } from '../utils/storage';
+import { loadPrefs, savePrefs } from '../utils/prefs';
 
 function syncLessonCompletion(lesson: Lesson): boolean {
   const complete = isLessonComplete(lesson);
@@ -23,7 +24,12 @@ const EMPTY_COURSE: CourseData = {
 
 export type Toast = { id: string; message: string; tone: 'soft' | 'win' };
 
-export function useCourseStore(courseId: string) {
+export type FirstWinOpts = {
+  lastFirstWinDayISO: string | null;
+  onFirstWinOfDay: (dayISO: string) => void;
+};
+
+export function useCourseStore(courseId: string, firstWin?: FirstWinOpts) {
   const course = useMemo(() => getCourseById(courseId) ?? EMPTY_COURSE, [courseId]);
 
   const [state, setState] = useState<AppState>(() =>
@@ -104,9 +110,20 @@ export function useCourseStore(courseId: string) {
         if (becomingComplete) {
           streakDates = markStreakDay(streakDates);
           wins = recordWin(wins, { label: sub.label, type: 'subtask' });
+          const dayIST = todayKeyKolkata();
+          const prefsSnap = loadPrefs();
+          const isFirstWin = prefsSnap.lastFirstWinDayISO !== dayIST;
+          if (isFirstWin) {
+            savePrefs({ ...prefsSnap, lastFirstWinDayISO: dayIST });
+          }
           queueMicrotask(() => {
             celebrate('subtask');
-            pushToast(`Nice — “${sub.label}” checked off.`, 'win');
+            if (isFirstWin) {
+              firstWin?.onFirstWinOfDay(dayIST);
+              pushToast('Nice — first win today. That’s enough momentum.', 'soft');
+            } else {
+              pushToast(`Nice — “${sub.label}” checked off.`, 'win');
+            }
           });
         }
 
@@ -134,7 +151,7 @@ export function useCourseStore(courseId: string) {
         return { ...prev, modules, wins, streakDates };
       });
     },
-    [pushToast],
+    [pushToast, firstWin],
   );
 
   const startTimer = useCallback((moduleId: string, lessonId: string, subtaskId: string) => {

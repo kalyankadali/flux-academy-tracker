@@ -39,6 +39,7 @@ export function defaultPrefs(): AppPrefs {
     weeklyFocusNote: null,
     tipDismissed: false,
     catchUpCompressedUntil: null,
+    lastFirstWinDayISO: null,
   };
 }
 
@@ -87,6 +88,8 @@ export function loadPrefs(): AppPrefs {
       weeklyFocusNote: typeof parsed.weeklyFocusNote === 'string' ? parsed.weeklyFocusNote : null,
       tipDismissed: !!parsed.tipDismissed,
       catchUpCompressedUntil: parsed.catchUpCompressedUntil ?? null,
+      lastFirstWinDayISO:
+        typeof parsed.lastFirstWinDayISO === 'string' ? parsed.lastFirstWinDayISO : null,
     };
   } catch {
     return defaultPrefs();

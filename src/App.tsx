@@ -173,6 +173,7 @@ export default function App() {
             onOpenQueueLesson={openLessonNav}
             onPinLesson={prefsApi.pinLesson}
             onRecordUndo={prefsApi.recordUndo}
+            onFirstWinOfDay={prefsApi.markFirstWinDay}
             focusMode={focusMode}
             onExitFocus={exitFocusToToday}
           />

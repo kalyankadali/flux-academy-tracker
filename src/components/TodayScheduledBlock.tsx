@@ -19,12 +19,13 @@ interface Props {
   scheduledToday: Item[];
   suggestions: Suggestion[];
   today: string;
+  highlightLessonKey?: LessonKey | null;
   onOpen: (courseId: string, moduleId: string, lessonId: string) => void;
   onSchedule: (key: LessonKey, date: string | null) => void;
 }
 
 export function TodayScheduledBlock({
-  sprintFocus, scheduledToday, suggestions, today, onOpen, onSchedule,
+  sprintFocus, scheduledToday, suggestions, today, highlightLessonKey = null, onOpen, onSchedule,
 }: Props) {
   return (
     <>
@@ -35,7 +36,17 @@ export function TodayScheduledBlock({
         ) : (
           <ul className="mt-3 space-y-2">
             {scheduledToday.map((item) => (
-              <li key={item.key} className={`flex flex-wrap items-center justify-between gap-2 rounded-2xl px-3 py-2.5 ${sprintFocus ? 'bg-stone-50 dark:bg-stone-800/50' : 'bg-orange-50/60 dark:bg-orange-950/30'}`}>
+              <li
+                key={item.key}
+                id={highlightLessonKey === item.key ? 'today-highlight-lesson' : undefined}
+                className={`flex flex-wrap items-center justify-between gap-2 rounded-2xl px-3 py-2.5 ${
+                  highlightLessonKey === item.key
+                    ? 'bg-orange-100 ring-2 ring-orange-300/70 dark:bg-orange-950/50 dark:ring-orange-700/60'
+                    : sprintFocus
+                      ? 'bg-stone-50 dark:bg-stone-800/50'
+                      : 'bg-orange-50/60 dark:bg-orange-950/30'
+                }`}
+              >
                 <div>
                   <p className={`text-xs ${sprintFocus ? 'text-stone-400' : 'text-orange-600 dark:text-orange-300'}`}>{item.label}</p>
                   <p className={`text-sm font-medium ${item.done ? 'text-stone-400 line-through' : 'text-stone-800 dark:text-stone-100'}`}>{item.title}</p>

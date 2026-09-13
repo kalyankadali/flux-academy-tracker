@@ -73,6 +73,13 @@ export interface UndoSnapshot {
   expiresAt: number;
 }
 
+export interface MainShare {
+  dateISO: string;
+  lessonKey: LessonKey;
+  title: string;
+  done: boolean;
+}
+
 export interface AppPrefs {
   version: 2;
   syncId: string;
@@ -116,6 +123,8 @@ export interface AppPrefs {
   catchUpCompressedUntil: string | null;
   /** Asia/Kolkata YYYY-MM-DD when first-win cheer was shown */
   lastFirstWinDayISO: string | null;
+  /** Clear Home “Main” — today’s primary scheduled lesson (IST) */
+  mainShare: MainShare | null;
 }
 
 export type TopTab = 'home' | 'today' | 'upcoming' | 'calendar' | 'sync';

@@ -19,7 +19,8 @@ const SyncPanel = lazy(() =>
 );
 
 import { useAppPrefs } from './hooks/useAppPrefs';
-import type { TopTab } from './types';
+import type { LessonKey, TopTab } from './types';
+import { parseLessonKey } from './utils/lessonKeys';
 import { isLessonComplete } from './utils/progress';
 import { COURSES } from './data/courses';
 import { loadCourseState, saveCourseState } from './utils/storage';
@@ -40,6 +41,8 @@ export default function App() {
   const [tab, setTab] = useState<TopTab>(() => (hasPlan ? 'today' : 'home'));
   const [courseId, setCourseId] = useState<string | null>(null);
   const [focusMode, setFocusMode] = useState(false);
+  const [highlightPrimary, setHighlightPrimary] = useState(false);
+  const [highlightLessonKey, setHighlightLessonKey] = useState<LessonKey | null>(null);
 
   // Prefer Today when a plan exists (initial tab already set; nudge from bare home)
   useEffect(() => {
@@ -47,6 +50,69 @@ export default function App() {
       setTab('today');
     }
   }, [hasPlan]); // eslint-disable-line react-hooks/exhaustive-deps -- mount / plan-create only
+
+  // Deep links: ?main=1 → Today + primary highlight; ?lesson=<key> → open lesson or Today highlight
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const main = params.get('main');
+    const lessonRaw = params.get('lesson');
+    if (!main && !lessonRaw) return;
+
+    const cleanUrl = () => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('main');
+      url.searchParams.delete('lesson');
+      const next = url.pathname + (url.searchParams.toString() ? `?${url.searchParams}` : '') + url.hash;
+      window.history.replaceState({}, '', next);
+    };
+
+    if (lessonRaw) {
+      let key = lessonRaw;
+      try {
+        key = decodeURIComponent(lessonRaw);
+      } catch {
+        /* keep raw */
+      }
+      const parsed = parseLessonKey(key);
+      const course = parsed ? COURSES.find((c) => c.id === parsed.courseId) : undefined;
+      const mod = course && !course.comingSoon
+        ? course.modules.find((m) => m.id === parsed!.moduleId)
+        : undefined;
+      const lesson = mod?.lessons.find((l) => l.id === parsed!.lessonId);
+      if (parsed && course && mod && lesson) {
+        prefsApi.touchRecent(parsed.courseId);
+        sessionStorage.setItem(
+          DEEP_LINK_KEY,
+          JSON.stringify({
+            courseId: parsed.courseId,
+            moduleId: parsed.moduleId,
+            lessonId: parsed.lessonId,
+          }),
+        );
+        setCourseId(parsed.courseId);
+        setTab('home');
+        setFocusMode(true);
+        prefsApi.setFocusLessonMode(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setCourseId(null);
+        setTab('today');
+        setHighlightLessonKey(key);
+        setHighlightPrimary(false);
+      }
+      cleanUrl();
+      return;
+    }
+
+    if (main === '1') {
+      setCourseId(null);
+      setTab('today');
+      setHighlightPrimary(true);
+      setFocusMode(false);
+      prefsApi.setFocusLessonMode(false);
+      cleanUrl();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- boot only
 
   const openCourse = (id: string) => {
     prefsApi.touchRecent(id);
@@ -194,6 +260,9 @@ export default function App() {
             onSaveWeeklyFocus={prefsApi.saveWeeklyFocusNote}
             onDismissTip={prefsApi.dismissTip}
             onUseShield={useShield}
+            onPatchPrefs={prefsApi.patchPrefs}
+            highlightPrimary={highlightPrimary}
+            highlightLessonKey={highlightLessonKey}
           />
         )}
 

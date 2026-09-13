@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { COURSES } from '../data/courses';
 import type { AppPrefs, LessonKey, QueueBatch } from '../types';
 import { todayKey, todayKeyKolkata, addDaysISO, isSunday, isoWeekKey, isEcommerceFocusClearDay, computeStreak } from '../utils/dates';
@@ -21,6 +21,7 @@ import { canUseStreakShield } from '../utils/streakShield';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
 import { ProgressBar } from './ProgressBar';
 import { THIS_OR_NOTHING } from '../utils/quotes';
+import { computeMainShare, mainShareEquals } from '../utils/mainShare';
 
 const SPRINT_URL = 'https://flux-academy.com/ecommerce-ai-sprint';
 
@@ -38,11 +39,17 @@ interface Props {
   onSaveWeeklyFocus: (note: string) => void;
   onDismissTip: () => void;
   onUseShield: (weekKey: string) => void;
+  onPatchPrefs: (partial: Partial<AppPrefs>) => void;
+  /** Scroll/highlight primary (from ?main=1) */
+  highlightPrimary?: boolean;
+  /** Highlight a lesson key on Today (from ?lesson= when route missing) */
+  highlightLessonKey?: LessonKey | null;
 }
 
 export function TodayView({
   prefs, queue, onOpen, onTickQueue, onSchedule, onGeneratePlan, onCatchUp,
   onMarkDayDone, onDeferPractice, onDismissWeeklyReview, onSaveWeeklyFocus, onDismissTip, onUseShield,
+  onPatchPrefs, highlightPrimary = false, highlightLessonKey = null,
 }: Props) {
   const today = todayKey();
   const todayIST = todayKeyKolkata();
@@ -71,6 +78,30 @@ export function TodayView({
   }, [schedule, today, todayIST]);
 
   const primary = sprintFocus ? null : scheduledToday.find((i) => !i.done) ?? null;
+
+  // Clear Home Main — keep prefs.mainShare in sync with Kolkata today's primary
+  useEffect(() => {
+    const next = computeMainShare(scheduledToday, todayIST, { clearDay: sprintFocus });
+    if (!mainShareEquals(prefs.mainShare, next)) {
+      onPatchPrefs({ mainShare: next });
+    }
+  }, [scheduledToday, todayIST, sprintFocus, prefs.mainShare, onPatchPrefs]);
+
+  const primaryRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!highlightPrimary && !highlightLessonKey) return;
+    const matchPrimary =
+      highlightPrimary ||
+      (highlightLessonKey && primary && primary.key === highlightLessonKey);
+    if (matchPrimary && primaryRef.current) {
+      primaryRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (highlightLessonKey) {
+      const el = document.getElementById('today-highlight-lesson');
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [highlightPrimary, highlightLessonKey, primary, scheduledToday]);
 
   const suggestions = useMemo(() => {
     if (sprintFocus || scheduledToday.length) return [];
@@ -224,7 +255,15 @@ export function TodayView({
       />
 
       {primary && (
-        <div className="rounded-3xl border border-orange-200 bg-gradient-to-br from-orange-50 to-white p-5 shadow-sm dark:border-orange-900/50 dark:from-orange-950/40 dark:to-stone-900">
+        <div
+          ref={primaryRef}
+          id="today-primary"
+          className={`rounded-3xl border bg-gradient-to-br from-orange-50 to-white p-5 shadow-sm dark:from-orange-950/40 dark:to-stone-900 ${
+            highlightPrimary || highlightLessonKey === primary.key
+              ? 'border-orange-400 ring-2 ring-orange-300/70 dark:border-orange-500 dark:ring-orange-700/60'
+              : 'border-orange-200 dark:border-orange-900/50'
+          }`}
+        >
           <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Primary focus</p>
           <p className="mt-1 text-xs text-orange-600/80 dark:text-orange-300/80">{primary.label}</p>
           <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{primary.title}</h2>
@@ -241,6 +280,7 @@ export function TodayView({
         scheduledToday={scheduledToday}
         suggestions={suggestions}
         today={today}
+        highlightLessonKey={highlightLessonKey}
         onOpen={onOpen}
         onSchedule={onSchedule}
       />

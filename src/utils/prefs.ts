@@ -13,6 +13,20 @@ export function emptyQueue(): QueueBatch {
   return { keys: [], completedKeys: [] };
 }
 
+function normalizeMainShare(raw: unknown): AppPrefs['mainShare'] {
+  if (!raw || typeof raw !== 'object') return null;
+  const o = raw as Record<string, unknown>;
+  if (typeof o.dateISO !== 'string' || typeof o.lessonKey !== 'string' || typeof o.title !== 'string') {
+    return null;
+  }
+  return {
+    dateISO: o.dateISO,
+    lessonKey: o.lessonKey,
+    title: o.title,
+    done: !!o.done,
+  };
+}
+
 export function defaultPrefs(): AppPrefs {
   return {
     version: 2,
@@ -40,6 +54,7 @@ export function defaultPrefs(): AppPrefs {
     tipDismissed: false,
     catchUpCompressedUntil: null,
     lastFirstWinDayISO: null,
+    mainShare: null,
   };
 }
 
@@ -90,6 +105,7 @@ export function loadPrefs(): AppPrefs {
       catchUpCompressedUntil: parsed.catchUpCompressedUntil ?? null,
       lastFirstWinDayISO:
         typeof parsed.lastFirstWinDayISO === 'string' ? parsed.lastFirstWinDayISO : null,
+      mainShare: normalizeMainShare(parsed.mainShare),
     };
   } catch {
     return defaultPrefs();

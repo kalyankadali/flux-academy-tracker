@@ -2,17 +2,20 @@ import { COURSES } from '../data/courses';
 import type { LessonKey, QueueBatch } from '../types';
 import { resolveQueueItem } from '../utils/lessonKeys';
 import { peekCourseModules } from '../utils/storage';
+import { THIS_OR_NOTHING } from '../utils/quotes';
 
 interface Props {
   queue: QueueBatch;
   multiCourse?: boolean;
   /** Soften priority pressure (e.g. sprint focus week) */
   deemphasized?: boolean;
+  /** Quiet this-or-nothing line under the next-lesson heading */
+  binaryHint?: boolean;
   onOpen: (courseId: string, moduleId: string, lessonId: string) => void;
   onTick: (key: LessonKey) => void;
 }
 
-export function DoThisNext({ queue, multiCourse = true, deemphasized = false, onOpen, onTick }: Props) {
+export function DoThisNext({ queue, multiCourse = true, deemphasized = false, binaryHint = false, onOpen, onTick }: Props) {
   const items = queue.keys
     .map((key) => {
       const courses = COURSES.map((c) => ({
@@ -59,6 +62,9 @@ export function DoThisNext({ queue, multiCourse = true, deemphasized = false, on
         <p className="mt-1 text-xs text-stone-400">
           No pressure — sprint week comes first. These stay available if you want a quiet lesson.
         </p>
+      )}
+      {binaryHint && (
+        <p className="mt-1 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
       )}
       <ul className="mt-3 space-y-3">
         {items.map((item, i) => {

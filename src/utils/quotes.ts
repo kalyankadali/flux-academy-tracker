@@ -18,6 +18,9 @@ export const QUOTES: Quote[] = [
   { text: 'You’re building something real.', plain: 'Each module grows a usable craft.' },
 ];
 
+/** Calm binary — one lesson at a time, no guilt. */
+export const THIS_OR_NOTHING = 'This lesson — or nothing.';
+
 export function quoteForToday(): Quote {
   const d = new Date();
   const idx = (d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) % QUOTES.length;

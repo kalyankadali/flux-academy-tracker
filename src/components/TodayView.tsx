@@ -20,6 +20,7 @@ import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../util
 import { canUseStreakShield } from '../utils/streakShield';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
 import { ProgressBar } from './ProgressBar';
+import { THIS_OR_NOTHING } from '../utils/quotes';
 
 const SPRINT_URL = 'https://flux-academy.com/ecommerce-ai-sprint';
 
@@ -171,6 +172,7 @@ export function TodayView({
 
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
 
+
       <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 shadow-sm dark:border-stone-800 dark:bg-stone-900/80">
         <div className="mb-1.5 flex items-baseline justify-between gap-2">
           <p className="text-xs font-medium text-stone-600 dark:text-stone-300">
@@ -227,11 +229,12 @@ export function TodayView({
           <p className="mt-1 text-xs text-orange-600/80 dark:text-orange-300/80">{primary.label}</p>
           <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{primary.title}</h2>
           <p className="text-xs text-stone-400">{primary.courseTitle}</p>
+          <p className="mt-2 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
           <button type="button" onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)} className="mt-4 w-full rounded-2xl bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm">Open current lesson</button>
         </div>
       )}
 
-      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} deemphasized={sprintFocus} />
+      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} deemphasized={sprintFocus} binaryHint={!primary && !sprintFocus} />
 
       <TodayScheduledBlock
         sprintFocus={sprintFocus}

@@ -1,5 +1,5 @@
 import type { CourseData, LessonKey } from '../types';
-import { DEFAULT_ACCESS_UNTIL, hasAccessDeadline } from './access';
+import { hasAccessDeadline } from './access';
 import {
   addDaysISO,
   daysBetweenISO,
@@ -12,14 +12,24 @@ import { makeLessonKey } from './lessonKeys';
 import { isLessonComplete } from './progress';
 import { peekCourseModules } from './storage';
 
-const PLAN_DAYS = 40;
-const TARGET_MIN_PER_DAY = 105; // soft mid of 90–120
+/** Locked plan end (user lock). Access label may stay Oct 23 separately. */
+export const PLAN_END_ISO = '2026-10-22';
+/** Soft cap for incomplete lessons when regenerating on Kolkata "today". */
+export const TODAY_SOFT_MINUTES = 30;
 
 export interface PlanLesson {
   key: LessonKey;
   courseId: string;
   estimatedMinutes: number;
   hasDeadline: boolean;
+}
+
+export interface GeneratePlanResult {
+  schedule: Record<string, string>;
+  /** Equal-day soft target for full days (ceil remainingMinutes / fullDays). */
+  avgFullDayMinutes: number;
+  /** Calendar days from start through PLAN_END_ISO inclusive. */
+  planDays: number;
 }
 
 /** Flatten incomplete lessons in learning-path order (includes Core Design Skills mid-path). */
@@ -50,115 +60,116 @@ export function collectPlanLessons(courses: CourseData[]): PlanLesson[] {
   return out;
 }
 
-function dayISO(start: string, dayIndex: number): string {
-  return addDaysISO(start, dayIndex);
+/** Inclusive day count from start → end (derived, not hard-coded 40). */
+export function planDaysBetween(startISO: string, endISO = PLAN_END_ISO): number {
+  if (startISO > endISO) return 0;
+  return daysBetweenISO(startISO, endISO) + 1;
 }
 
-/** Find a non-focus-clear day index in [0, effectiveDays), preferring `preferred`. */
-function findOpenDayIndex(
-  start: string,
-  preferred: number,
-  effectiveDays: number,
-  hasDeadline: boolean,
-  endCap: string,
-): number | null {
-  const tryIndex = (d: number) => {
-    if (d < 0 || d >= effectiveDays) return false;
-    const date = dayISO(start, d);
-    if (isEcommerceFocusClearDay(date)) return false;
-    if (hasDeadline && date > endCap) return false;
-    return true;
-  };
-
-  if (tryIndex(preferred)) return preferred;
-  for (let offset = 1; offset < effectiveDays; offset++) {
-    if (tryIndex(preferred + offset)) return preferred + offset;
-    if (tryIndex(preferred - offset)) return preferred - offset;
+function enumerateDaysInclusive(from: string, to: string): string[] {
+  if (from > to) return [];
+  const days: string[] = [];
+  let d = from;
+  while (d <= to) {
+    days.push(d);
+    d = addDaysISO(d, 1);
   }
-  // Last resort: any open day in range
-  for (let d = 0; d < effectiveDays; d++) {
-    if (tryIndex(d)) return d;
-  }
-  return null;
+  return days;
 }
 
 /**
- * Generate a 40-day schedule from today (Asia/Kolkata).
- * Packs incomplete lessons from LEARNING_PATH_IDS in order (~105 min/day soft budget).
- * Never schedules on Ecommerce AI Sprint focus-clear days (2026-09-14 … 2026-09-18).
+ * Generate a locked schedule from start through PLAN_END_ISO (Asia/Kolkata).
+ * - When start is Kolkata today: soft-cap ~TODAY_SOFT_MINUTES of whole lessons, then
+ *   pack remaining equally across every calendar day through end (no Ecommerce skip).
+ * - Boss/protectKeys: skipped here; caller restores pinned dates.
  */
 export function generate40DayPlan(
   courses: CourseData[],
   options?: { startISO?: string; protectKeys?: Set<LessonKey> },
-): Record<string, string> {
+): GeneratePlanResult {
   const start = options?.startISO ?? todayKeyKolkata();
+  const end = PLAN_END_ISO;
+  const today = todayKeyKolkata();
   const protect = options?.protectKeys ?? new Set<LessonKey>();
-  const lessons = collectPlanLessons(courses);
+  const allLessons = collectPlanLessons(courses);
   const schedule: Record<string, string> = {};
+  const planDays = planDaysBetween(start, end);
 
-  const endCap = DEFAULT_ACCESS_UNTIL;
-  const daysToDeadline = Math.max(1, daysBetweenISO(start, endCap) + 1);
-  const effectiveDays = Math.min(PLAN_DAYS, Math.max(daysToDeadline, PLAN_DAYS));
-
-  const dayBudgets = Array.from({ length: effectiveDays }, () => 0);
-
-  const assignToDay = (lesson: PlanLesson, preferredDay: number) => {
-    const day = findOpenDayIndex(
-      start,
-      Math.max(0, Math.min(effectiveDays - 1, preferredDay)),
-      effectiveDays,
-      lesson.hasDeadline,
-      endCap,
-    );
-    if (day == null) {
-      // Extremely defensive: park just after focus week / past end of window
-      schedule[lesson.key] = nextSchedulableDayISO(addDaysISO(start, effectiveDays));
-      return;
-    }
-    dayBudgets[day] += lesson.estimatedMinutes;
-    schedule[lesson.key] = dayISO(start, day);
-  };
-
-  const totalMin = lessons.reduce((n, l) => n + l.estimatedMinutes, 0);
-  const avgPerDay = Math.max(TARGET_MIN_PER_DAY, Math.ceil(totalMin / effectiveDays));
-
-  let cursorDay = 0;
-  let cursorLoad = 0;
-
-  // Skip starting on a focus-clear day
-  while (cursorDay < effectiveDays - 1 && isEcommerceFocusClearDay(dayISO(start, cursorDay))) {
-    cursorDay += 1;
+  if (planDays === 0) {
+    return { schedule, avgFullDayMinutes: 0, planDays: 0 };
   }
 
-  for (const lesson of lessons) {
-    // Boss-pin: leave for caller to restore an existing date (never place here)
-    if (protect.has(lesson.key)) continue;
+  // Path order; leave protected lessons for caller to restore
+  const lessons = allLessons.filter((l) => !protect.has(l.key));
+  let cursor = 0;
 
-    if (cursorLoad + lesson.estimatedMinutes > avgPerDay * 1.15 && cursorDay < effectiveDays - 1) {
-      cursorDay += 1;
-      cursorLoad = 0;
-      while (cursorDay < effectiveDays - 1 && isEcommerceFocusClearDay(dayISO(start, cursorDay))) {
-        cursorDay += 1;
+  // --- Today soft cap (only when plan starts on Kolkata today) ---
+  let fullDayStart = start;
+  if (start === today && start <= end && lessons.length > 0) {
+    const first = lessons[0];
+    if (first.estimatedMinutes > TODAY_SOFT_MINUTES) {
+      // Prefer skip today and start tomorrow for oversized first lesson
+      // (even ≤45 — only pack today when the first lesson fits the soft cap)
+    } else {
+      let load = 0;
+      while (cursor < lessons.length) {
+        const lesson = lessons[cursor];
+        if (load + lesson.estimatedMinutes <= TODAY_SOFT_MINUTES) {
+          schedule[lesson.key] = start;
+          load += lesson.estimatedMinutes;
+          cursor += 1;
+        } else {
+          break;
+        }
+      }
+      if (cursor > 0) {
+        fullDayStart = addDaysISO(start, 1);
       }
     }
-
-    if (lesson.hasDeadline) {
-      const maxDay = Math.min(effectiveDays - 1, daysBetweenISO(start, endCap));
-      if (cursorDay > maxDay) cursorDay = Math.max(0, maxDay);
-    }
-
-    assignToDay(lesson, cursorDay);
-    cursorLoad += lesson.estimatedMinutes;
   }
 
-  // Final scrub: never leave anything on focus-clear days
-  for (const [key, date] of Object.entries(schedule)) {
-    if (isEcommerceFocusClearDay(date)) {
-      schedule[key] = nextSchedulableDayISO(addDaysISO(date, 1));
-    }
+  const remaining = lessons.slice(cursor);
+  let fullDays = enumerateDaysInclusive(fullDayStart, end);
+  // If today consumed the only day, park leftovers on end
+  if (remaining.length > 0 && fullDays.length === 0) {
+    fullDays = [end];
   }
 
-  return schedule;
+  const remainingMinutes = remaining.reduce((n, l) => n + l.estimatedMinutes, 0);
+  const avgFullDayMinutes =
+    fullDays.length > 0 ? Math.ceil(remainingMinutes / fullDays.length) : 0;
+  const softCap = avgFullDayMinutes * 1.25;
+
+  // Equal pack in path order: bucket by cumulative minutes so every full day
+  // gets a share. Allow up to softCap on a day; oversized lessons may sit alone.
+  const dayLoads = fullDays.map(() => 0);
+  let placedMinutes = 0;
+
+  for (const lesson of remaining) {
+    let dayIndex =
+      avgFullDayMinutes > 0
+        ? Math.min(
+            fullDays.length - 1,
+            Math.floor(placedMinutes / avgFullDayMinutes),
+          )
+        : 0;
+
+    // If this day is already past softCap and we still have later days, nudge forward
+    // (unless the lesson would be alone on an empty day — oversized alone is OK).
+    while (
+      dayIndex < fullDays.length - 1 &&
+      dayLoads[dayIndex] > 0 &&
+      dayLoads[dayIndex] + lesson.estimatedMinutes > softCap
+    ) {
+      dayIndex += 1;
+    }
+
+    schedule[lesson.key] = fullDays[dayIndex];
+    dayLoads[dayIndex] += lesson.estimatedMinutes;
+    placedMinutes += lesson.estimatedMinutes;
+  }
+
+  return { schedule, avgFullDayMinutes, planDays };
 }
 
 /** How many scheduled days before today still have incomplete lessons? */

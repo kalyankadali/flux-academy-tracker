@@ -101,16 +101,21 @@ export function useAppPrefs() {
     setPrefs((p) => {
       const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
       // Keep boss lesson date if already scheduled (never on Ecommerce focus-clear days)
-      const schedule = generate40DayPlan(COURSES, { protectKeys: protect });
+      const { schedule, avgFullDayMinutes } = generate40DayPlan(COURSES, { protectKeys: protect });
       if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
         const kept = p.schedule[p.pinnedLessonKey];
         schedule[p.pinnedLessonKey] = isEcommerceFocusClearDay(kept)
           ? nextSchedulableDayISO(addDaysISO(kept, 1))
           : kept;
       }
+      const dailyBudgetMinutes =
+        avgFullDayMinutes > 0
+          ? Math.min(300, Math.max(60, avgFullDayMinutes))
+          : p.dailyBudgetMinutes;
       return {
         ...p,
         schedule,
+        dailyBudgetMinutes,
         planGeneratedAt: new Date().toISOString(),
         catchUpCompressedUntil: null,
       };
@@ -182,7 +187,7 @@ export function useAppPrefs() {
   const setDailyBudget = useCallback((dailyBudgetMinutes: number) => {
     setPrefs((p) => ({
       ...p,
-      dailyBudgetMinutes: Math.min(180, Math.max(60, dailyBudgetMinutes)),
+      dailyBudgetMinutes: Math.min(300, Math.max(60, dailyBudgetMinutes)),
     }));
   }, []);
 
@@ -228,6 +233,7 @@ export function useAppPrefs() {
       return { ...p, lastFirstWinDayISO: day };
     });
   }, []);
+
 
   const patchPrefs = useCallback((partial: Partial<AppPrefs>) => {
     setPrefs((p) => ({ ...p, ...partial }));

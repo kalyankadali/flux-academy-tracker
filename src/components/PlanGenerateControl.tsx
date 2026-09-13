@@ -9,7 +9,7 @@ export function PlanGenerateControl({ hasPlan, planGeneratedAt, onGenerate }: Pr
   const regenerate = () => {
     if (
       !window.confirm(
-        'This replaces your current 40-day dates. Boss-pinned lessons stay protected. Continue?',
+        'This replaces your current plan dates. Today gets ~30 minutes of incomplete lessons, then equal days through Oct 22. Boss-pinned lessons stay protected. Continue?',
       )
     ) {
       return;
@@ -24,7 +24,7 @@ export function PlanGenerateControl({ hasPlan, planGeneratedAt, onGenerate }: Pr
         onClick={onGenerate}
         className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-orange-600"
       >
-        Generate 40-day plan
+        Generate plan through Oct 22
       </button>
     );
   }

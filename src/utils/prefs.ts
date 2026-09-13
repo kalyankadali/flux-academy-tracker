@@ -35,11 +35,7 @@ export function defaultPrefs(): AppPrefs {
     morningPingEnabled: false,
     planGeneratedAt: null,
     weeklyReviewDismissedWeek: null,
-    lastWeeklyReviewWeekKey: null,
-    weeklyFocusNote: null,
-    tipDismissed: false,
     catchUpCompressedUntil: null,
-    lastFirstWinDayISO: null,
   };
 }
 
@@ -74,7 +70,7 @@ export function loadPrefs(): AppPrefs {
       remoteBlobId: parsed.remoteBlobId ?? null,
       dailyBudgetMinutes:
         typeof parsed.dailyBudgetMinutes === 'number'
-          ? Math.min(180, Math.max(60, parsed.dailyBudgetMinutes))
+          ? Math.min(300, Math.max(60, parsed.dailyBudgetMinutes))
           : base.dailyBudgetMinutes,
       deferPractice: !!parsed.deferPractice,
       focusLessonMode: !!parsed.focusLessonMode,
@@ -84,12 +80,7 @@ export function loadPrefs(): AppPrefs {
       morningPingEnabled: !!parsed.morningPingEnabled,
       planGeneratedAt: parsed.planGeneratedAt ?? null,
       weeklyReviewDismissedWeek: parsed.weeklyReviewDismissedWeek ?? null,
-      lastWeeklyReviewWeekKey: parsed.lastWeeklyReviewWeekKey ?? null,
-      weeklyFocusNote: typeof parsed.weeklyFocusNote === 'string' ? parsed.weeklyFocusNote : null,
-      tipDismissed: !!parsed.tipDismissed,
       catchUpCompressedUntil: parsed.catchUpCompressedUntil ?? null,
-      lastFirstWinDayISO:
-        typeof parsed.lastFirstWinDayISO === 'string' ? parsed.lastFirstWinDayISO : null,
     };
   } catch {
     return defaultPrefs();

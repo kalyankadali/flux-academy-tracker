@@ -7,6 +7,7 @@ import { lessonProgress } from '../utils/progress';
 import { classifySubtask, kindLabel } from '../utils/subtaskKind';
 import { fluxLessonUrl } from '../utils/fluxUrl';
 import { makeLessonKey } from '../utils/lessonKeys';
+import { THIS_OR_NOTHING } from '../utils/quotes';
 
 interface Props {
   course: CourseData;
@@ -99,6 +100,9 @@ export function LessonDetail({
         </p>
         <p className="mt-1 text-xs text-stone-400 dark:text-stone-500">{module.title}</p>
         <h1 className="mt-1 text-2xl font-semibold text-stone-800 dark:text-stone-100">{lesson.title}</h1>
+        {!lesson.completed && (
+          <p className="mt-2 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
+        )}
         <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
           Video {lesson.duration} · ~{lesson.durationMinutes} min watch
         </p>

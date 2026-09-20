@@ -130,10 +130,14 @@ export function SyncPanel({
     setBusy(false);
     if (!res.ok) {
       setStatus(res.error);
+      window.alert(res.error);
       return;
     }
     onMarkSynced();
-    setStatus('Pushed snapshot to Appwrite. Pull on your other device with the same email.');
+    const okMsg =
+      'Pushed snapshot to Appwrite. Pull on your other device with the same email.';
+    setStatus(okMsg);
+    window.alert(okMsg);
   };
 
   const doPull = async () => {
@@ -142,20 +146,26 @@ export function SyncPanel({
     setBusy(false);
     if (!res.ok) {
       setStatus(res.error);
+      window.alert(res.error);
       return;
     }
     if (!res.row) {
-      setStatus('No cloud snapshot yet — push from this device first.');
+      const msg = 'No cloud snapshot yet — push from this device first.';
+      setStatus(msg);
+      window.alert(msg);
       return;
     }
     const applied = applySyncPayload(res.row.payload);
     if (!applied.ok) {
       setStatus(applied.error);
+      window.alert(applied.error);
       return;
     }
     onImported(loadPrefs());
     onMarkSynced();
-    setStatus('Pulled latest snapshot from Appwrite.');
+    const okMsg = 'Pulled latest snapshot from Appwrite.';
+    setStatus(okMsg);
+    window.alert(okMsg);
   };
 
   const doMerge = async () => {

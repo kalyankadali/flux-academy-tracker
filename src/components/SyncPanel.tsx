@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { AppPrefs } from '../types';
-import type { Session } from '@supabase/supabase-js';
 import {
   applySyncPayload,
   buildSyncPayload,
@@ -9,15 +8,16 @@ import {
   parseSyncJson,
 } from '../lib/sync';
 import {
+  completeMagicUrlIfPresent,
   getSession,
-  getSupabase,
-  isSupabaseConfigured,
+  isCloudConfigured,
   mergeSyncPayloads,
   pullSnapshot,
   pushSnapshot,
   signInWithMagicLink,
   signOut,
-} from '../lib/supabase';
+  type AuthSession,
+} from '../lib/appwrite';
 import { loadPrefs } from '../utils/prefs';
 import { IpadTip } from './IpadTip';
 
@@ -44,24 +44,24 @@ export function SyncPanel({
   const [paste, setPaste] = useState('');
   const [busy, setBusy] = useState(false);
   const [email, setEmail] = useState('');
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<AuthSession | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  const supabaseReady = isSupabaseConfigured();
+  const cloudReady = isCloudConfigured();
+
+  const refreshSession = useCallback(async () => {
+    await completeMagicUrlIfPresent();
+    const s = await getSession();
+    setSession(s);
+  }, []);
 
   useEffect(() => {
-    let unsub: (() => void) | undefined;
-    (async () => {
-      const s = await getSession();
-      setSession(s);
-      const sb = getSupabase();
-      if (!sb) return;
-      const { data } = sb.auth.onAuthStateChange((_event, next) => {
-        setSession(next);
-      });
-      unsub = () => data.subscription.unsubscribe();
-    })();
-    return () => unsub?.();
-  }, []);
+    void refreshSession();
+    const onFocus = () => {
+      void refreshSession();
+    };
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, [refreshSession]);
 
   const exportNow = () => {
     const payload = buildSyncPayload(prefs);
@@ -127,7 +127,7 @@ export function SyncPanel({
       return;
     }
     onMarkSynced();
-    setStatus('Pushed snapshot to Supabase. Pull on your other device with the same email.');
+    setStatus('Pushed snapshot to Appwrite. Pull on your other device with the same email.');
   };
 
   const doPull = async () => {
@@ -149,7 +149,7 @@ export function SyncPanel({
     }
     onImported(loadPrefs());
     onMarkSynced();
-    setStatus('Pulled latest snapshot from Supabase.');
+    setStatus('Pulled latest snapshot from Appwrite.');
   };
 
   const doMerge = async () => {
@@ -219,10 +219,10 @@ export function SyncPanel({
       </div>
 
       <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Supabase · magic link</h2>
-        {!supabaseReady ? (
+        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Appwrite · magic link</h2>
+        {!cloudReady ? (
           <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
-            Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable cloud sync.
+            Add VITE_APPWRITE_ENDPOINT and VITE_APPWRITE_PROJECT_ID to enable cloud sync.
           </p>
         ) : session?.user ? (
           <>
@@ -262,6 +262,7 @@ export function SyncPanel({
                 disabled={busy}
                 onClick={async () => {
                   await signOut();
+                  setSession(null);
                   setStatus('Signed out.');
                 }}
                 className="rounded-xl px-3 py-2 text-sm text-stone-400 hover:text-stone-600"

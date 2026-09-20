@@ -20,7 +20,8 @@ import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../util
 import { canUseStreakShield } from '../utils/streakShield';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
 import { ProgressBar } from './ProgressBar';
-import { THIS_OR_NOTHING } from '../utils/quotes';
+import { THIS_OR_NOTHING } from '../utils/quotes'
+import { fluxWindowCopy, getFluxWindow } from '../utils/dayWindows';
 import { computeMainShare, mainShareEquals } from '../utils/mainShare';
 
 const SPRINT_URL = 'https://flux-academy.com/ecommerce-ai-sprint';
@@ -214,6 +215,26 @@ export function TodayView({
         <ProgressBar pct={pathAgg.pct} size="sm" />
       </div>
 
+      {(() => {
+        const w = getFluxWindow()
+        const copy = fluxWindowCopy(w)
+        const deep = w === 'deep'
+        return (
+          <div
+            className={`rounded-3xl border p-4 ${
+              deep
+                ? 'border-orange-200 bg-orange-50/80 dark:border-orange-800/60 dark:bg-orange-950/30'
+                : w === 'wind_down'
+                  ? 'border-stone-200 bg-stone-50/80 dark:border-stone-700 dark:bg-stone-900/50'
+                  : 'border-stone-100 bg-white/70 dark:border-stone-800 dark:bg-stone-900/40'
+            }`}
+          >
+            <p className="text-xs font-medium uppercase tracking-wider text-stone-500">{copy.title}</p>
+            <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">{copy.body}</p>
+          </div>
+        )
+      })()}
+
       <div className={`rounded-3xl border p-5 ${sprintFocus ? 'border-stone-100 bg-stone-50/40 opacity-80 dark:border-stone-800' : 'border-orange-100 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/20'}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -273,7 +294,7 @@ export function TodayView({
         </div>
       )}
 
-      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} deemphasized={sprintFocus} binaryHint={!primary && !sprintFocus} />
+      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} deemphasized={sprintFocus} binaryHint={(!primary && !sprintFocus) || getFluxWindow() === 'deep'} />
 
       <TodayScheduledBlock
         sprintFocus={sprintFocus}

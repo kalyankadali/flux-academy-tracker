@@ -104,7 +104,9 @@ export function SyncPanel({
 
   const sendMagic = async () => {
     if (!email.trim()) {
-      setStatus('Enter the email you use on Mac and iPad.');
+      const msg = 'Enter the email you use on Mac and iPad.';
+      setStatus(msg);
+      window.alert(msg);
       return;
     }
     setBusy(true);
@@ -112,9 +114,13 @@ export function SyncPanel({
     setBusy(false);
     if (!res.ok) {
       setStatus(res.error);
+      window.alert(res.error);
       return;
     }
-    setStatus('Magic link sent — check your email on this device. Same email pairs Mac + iPad.');
+    const okMsg =
+      'Magic link sent — check inbox + Spam for Appwrite. Same email pairs Mac + iPad.';
+    setStatus(okMsg);
+    window.alert(okMsg);
   };
 
   const doPush = async () => {
@@ -370,7 +376,10 @@ export function SyncPanel({
       </div>
 
       {status && (
-        <p className="rounded-2xl bg-stone-100 px-4 py-3 text-sm text-stone-600 dark:bg-stone-800 dark:text-stone-300">
+        <p
+          role="status"
+          className="rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3 text-sm font-medium text-stone-800 dark:border-orange-900/50 dark:bg-orange-950/40 dark:text-stone-100"
+        >
           {status}
         </p>
       )}

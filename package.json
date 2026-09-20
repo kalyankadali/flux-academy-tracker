@@ -11,7 +11,7 @@
     "import:curriculum": "bun scripts/import-curriculum.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.115.0",
+    "appwrite": "^27.0.0",
     "canvas-confetti": "^1.9.4",
     "react": "18",
     "react-dom": "18"

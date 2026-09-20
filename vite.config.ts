@@ -9,7 +9,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('@supabase')) return 'supabase'
+            if (id.includes('appwrite')) return 'appwrite'
             if (id.includes('canvas-confetti')) return 'confetti'
             if (id.includes('react-dom') || id.includes('/react/')) return 'react-vendor'
             return 'vendor'

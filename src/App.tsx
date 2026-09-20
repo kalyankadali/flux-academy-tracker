@@ -19,6 +19,7 @@ const SyncPanel = lazy(() =>
 );
 
 import { useAppPrefs } from './hooks/useAppPrefs';
+import { useAutoCloudSync } from './hooks/useAutoCloudSync';
 import type { LessonKey, TopTab } from './types';
 import { parseLessonKey } from './utils/lessonKeys';
 import { isLessonComplete } from './utils/progress';
@@ -37,6 +38,7 @@ function TabFallback() {
 
 export default function App() {
   const prefsApi = useAppPrefs();
+  useAutoCloudSync(prefsApi.prefs, prefsApi.replacePrefs, () => prefsApi.markSynced());
   const hasPlan = prefsApi.hasPlan;
   const [tab, setTab] = useState<TopTab>(() => (hasPlan ? 'today' : 'home'));
   const [courseId, setCourseId] = useState<string | null>(null);

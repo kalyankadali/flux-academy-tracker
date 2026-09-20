@@ -1,3 +1,4 @@
+import { notifyFluxLocalChanged } from '../lib/syncEvents';
 import type { AppPrefs, QueueBatch, ThemeMode } from '../types';
 
 export const PREFS_KEY = 'flux-course-tracker:prefs:v2';
@@ -114,6 +115,7 @@ export function loadPrefs(): AppPrefs {
 
 export function savePrefs(prefs: AppPrefs): void {
   localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+  notifyFluxLocalChanged();
 }
 
 export function applyTheme(theme: ThemeMode): void {

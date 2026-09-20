@@ -1,3 +1,4 @@
+import { notifyFluxLocalChanged } from '../lib/syncEvents';
 import type { AppState, Module } from '../types';
 
 export const OLD_STORAGE_KEY = 'figma-course-tracker-v1';
@@ -50,6 +51,7 @@ export function loadCourseState(courseId: string, seedModules: Module[]): AppSta
 
 export function saveCourseState(courseId: string, state: AppState): void {
   localStorage.setItem(courseStorageKey(courseId), JSON.stringify(state));
+  notifyFluxLocalChanged();
 }
 
 /** Peek saved modules for home-screen progress without mutating storage. */

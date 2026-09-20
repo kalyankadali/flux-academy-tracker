@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { COURSES } from '../data/courses';
 import type { AppPrefs, LessonKey, QueueBatch } from '../types';
-import { todayKey, todayKeyKolkata, addDaysISO, isSunday, isoWeekKey, isEcommerceFocusClearDay, computeStreak } from '../utils/dates';
+import { todayKey, todayKeyKolkata, addDaysISO, isSunday, isoWeekKey, isEcommerceFocusClearDay } from '../utils/dates';
 import { parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules, loadCourseState } from '../utils/storage';
 import { collectNextLessonKeys } from '../utils/queue';
@@ -18,6 +18,8 @@ import { isLessonComplete } from '../utils/progress';
 import { countDaysBehind } from '../utils/plan40';
 import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../utils/dailyBudget';
 import { canUseStreakShield } from '../utils/streakShield';
+import { shouldShowSoftBanner, viewStreak } from '../utils/streak';
+import { StreakStrip, StreakWeeklyStrip } from './StreakStrip';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
 import { ProgressBar } from './ProgressBar';
 import { THIS_OR_NOTHING } from '../utils/quotes'
@@ -40,6 +42,8 @@ interface Props {
   onSaveWeeklyFocus: (note: string) => void;
   onDismissTip: () => void;
   onUseShield: (weekKey: string) => void;
+  onUseFreeze?: () => void;
+  onDismissStreakBanner?: () => void;
   onPatchPrefs: (partial: Partial<AppPrefs>) => void;
   /** Scroll/highlight primary (from ?main=1) */
   highlightPrimary?: boolean;
@@ -50,6 +54,7 @@ interface Props {
 export function TodayView({
   prefs, queue, onOpen, onTickQueue, onSchedule, onGeneratePlan, onCatchUp,
   onMarkDayDone, onDeferPractice, onDismissWeeklyReview, onSaveWeeklyFocus, onDismissTip, onUseShield,
+  onUseFreeze, onDismissStreakBanner,
   onPatchPrefs, highlightPrimary = false, highlightLessonKey = null,
 }: Props) {
   const today = todayKey();
@@ -123,7 +128,16 @@ export function TodayView({
     }
     return [...dates];
   }, []);
-  const streak = useMemo(() => computeStreak(streakDates), [streakDates]);
+  const dailyView = useMemo(
+    () => viewStreak(prefs.dailyStreak, todayIST),
+    [prefs.dailyStreak, todayIST],
+  );
+  const showSoftStreakBanner = shouldShowSoftBanner(prefs.dailyStreak, todayIST);
+  const yesterdayIST = addDaysISO(todayIST, -1);
+  const yesterdayOpen =
+    (prefs.dailyStreak.finishesByDay[yesterdayIST] ?? 0) < 1 &&
+    !prefs.dailyStreak.freezeDates.includes(yesterdayIST);
+
   const logged = useMemo(() => minutesLoggedToday(COURSES, today), []);
   const plannedMins = useMemo(
     () => todayScheduledMinutes(schedule, COURSES, today) || todayScheduledMinutes(schedule, COURSES, todayIST),
@@ -195,7 +209,7 @@ export function TodayView({
               {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
             </h1>
             <p className="text-sm text-stone-500 dark:text-stone-400">
-              {sprintFocus ? 'Sprint week — live learning first; path lessons stay clear.' : streak === 0 ? 'A soft start is still a start — one task lights the streak.' : `${streak}-day streak · showing up is enough.`}
+              {sprintFocus ? 'Sprint week — live learning first; path lessons stay clear.' : dailyView.current === 0 ? 'A soft start is still a start — one lesson lights the streak.' : `${dailyView.current}-day streak · showing up is enough.`}
             </p>
           </div>
           <WeekExportButton schedule={schedule} />
@@ -204,6 +218,28 @@ export function TodayView({
 
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
 
+      {!sprintFocus && (
+        <StreakStrip
+          view={dailyView}
+          onUseFreeze={yesterdayOpen && onUseFreeze ? onUseFreeze : undefined}
+          freezeHintDay={yesterdayOpen ? yesterdayIST : null}
+        />
+      )}
+
+      {!sprintFocus && showSoftStreakBanner && (
+        <div className="rounded-3xl border border-stone-200 bg-white/90 p-4 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-sm text-stone-600 dark:text-stone-300">One lesson keeps the streak.</p>
+            <button
+              type="button"
+              className="shrink-0 text-xs text-stone-400 underline underline-offset-2"
+              onClick={() => onDismissStreakBanner?.()}
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 shadow-sm dark:border-stone-800 dark:bg-stone-900/80">
         <div className="mb-1.5 flex items-baseline justify-between gap-2">
@@ -316,13 +352,15 @@ export function TodayView({
         onShowClose={() => setShowClose(true)}
       />
 
+      <StreakWeeklyStrip current={dailyView.current} longest={dailyView.longest} compact={!isSunday()} />
+
       {showWeekly && (
         <WeeklyReviewCard
           lessonCount={weekWins.lessonCount}
           subtaskCount={weekWins.subtaskCount}
           lessonLabels={weekWins.lessons}
           subtaskLabels={weekWins.subtasks}
-          streak={streak}
+          streak={dailyView.current}
           focusDraft={focusDraft}
           onFocusDraft={setFocusDraft}
           lastFocusNote={prefs.weeklyFocusNote}

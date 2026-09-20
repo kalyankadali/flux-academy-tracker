@@ -6,6 +6,8 @@ import { isLessonComplete, overallProgress, findNextIncompleteLesson } from '../
 import { celebrate } from '../utils/celebrate';
 import { loadCourseState, saveCourseState } from '../utils/storage';
 import { loadPrefs, savePrefs } from '../utils/prefs';
+import { recordFinish } from '../utils/streak';
+import type { DailyStreakState, MainShare } from '../types';
 
 function syncLessonCompletion(lesson: Lesson): boolean {
   const complete = isLessonComplete(lesson);
@@ -27,6 +29,8 @@ export type Toast = { id: string; message: string; tone: 'soft' | 'win' };
 export type FirstWinOpts = {
   lastFirstWinDayISO: string | null;
   onFirstWinOfDay: (dayISO: string) => void;
+  /** Fired when a lesson flips to complete (calm daily streak). */
+  onLessonFinish?: (patch: { dailyStreak: DailyStreakState; mainShare: MainShare | null }) => void;
 };
 
 export function useCourseStore(courseId: string, firstWin?: FirstWinOpts) {
@@ -131,6 +135,20 @@ export function useCourseStore(courseId: string, firstWin?: FirstWinOpts) {
         if (lessonJustDone) {
           wins = recordWin(wins, { label: lesson.title, type: 'lesson' });
           queueMicrotask(() => {
+            try {
+              const prefsSnap = loadPrefs();
+              const { state } = recordFinish(prefsSnap.dailyStreak);
+              const key = `${courseId}::${moduleId}::${lessonId}`;
+              let mainShare = prefsSnap.mainShare;
+              if (mainShare && mainShare.lessonKey === key && !mainShare.done) {
+                mainShare = { ...mainShare, done: true };
+              }
+              const next = { ...prefsSnap, dailyStreak: state, mainShare };
+              savePrefs(next);
+              firstWin?.onLessonFinish?.({ dailyStreak: state, mainShare });
+            } catch {
+              /* streak persist is best-effort */
+            }
             celebrate('lesson');
             pushToast(`Lesson complete: ${lesson.title}. Beautiful.`, 'win');
           });
@@ -151,7 +169,7 @@ export function useCourseStore(courseId: string, firstWin?: FirstWinOpts) {
         return { ...prev, modules, wins, streakDates };
       });
     },
-    [pushToast, firstWin],
+    [pushToast, firstWin, courseId],
   );
 
   const startTimer = useCallback((moduleId: string, lessonId: string, subtaskId: string) => {

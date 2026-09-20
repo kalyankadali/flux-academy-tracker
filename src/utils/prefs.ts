@@ -1,5 +1,6 @@
 import { notifyFluxLocalChanged } from '../lib/syncEvents';
 import type { AppPrefs, QueueBatch, ThemeMode } from '../types';
+import { defaultDailyStreak, normalizeDailyStreak } from './streak';
 
 export const PREFS_KEY = 'flux-course-tracker:prefs:v2';
 
@@ -56,6 +57,7 @@ export function defaultPrefs(): AppPrefs {
     catchUpCompressedUntil: null,
     lastFirstWinDayISO: null,
     mainShare: null,
+    dailyStreak: defaultDailyStreak(),
   };
 }
 
@@ -107,6 +109,7 @@ export function loadPrefs(): AppPrefs {
       lastFirstWinDayISO:
         typeof parsed.lastFirstWinDayISO === 'string' ? parsed.lastFirstWinDayISO : null,
       mainShare: normalizeMainShare(parsed.mainShare),
+      dailyStreak: normalizeDailyStreak(parsed.dailyStreak),
     };
   } catch {
     return defaultPrefs();

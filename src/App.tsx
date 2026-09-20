@@ -39,6 +39,18 @@ function TabFallback() {
 export default function App() {
   const prefsApi = useAppPrefs();
   useAutoCloudSync(prefsApi.prefs, prefsApi.replacePrefs, () => prefsApi.markSynced());
+  useEffect(() => {
+    prefsApi.rolloverDailyStreak();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once on mount
+  }, []);
+  useEffect(() => {
+    const onVis = () => {
+      if (document.visibilityState === 'visible') prefsApi.rolloverDailyStreak();
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const hasPlan = prefsApi.hasPlan;
   const [tab, setTab] = useState<TopTab>(() => (hasPlan ? 'today' : 'home'));
   const [courseId, setCourseId] = useState<string | null>(null);
@@ -242,6 +254,7 @@ export default function App() {
             onPinLesson={prefsApi.pinLesson}
             onRecordUndo={prefsApi.recordUndo}
             onFirstWinOfDay={prefsApi.markFirstWinDay}
+            onLessonFinish={(patch) => prefsApi.patchPrefs(patch)}
             focusMode={focusMode}
             onExitFocus={exitFocusToToday}
           />
@@ -262,6 +275,8 @@ export default function App() {
             onSaveWeeklyFocus={prefsApi.saveWeeklyFocusNote}
             onDismissTip={prefsApi.dismissTip}
             onUseShield={useShield}
+            onUseFreeze={() => prefsApi.applyStreakFreeze()}
+            onDismissStreakBanner={prefsApi.dismissStreakSoftBanner}
             onPatchPrefs={prefsApi.patchPrefs}
             highlightPrimary={highlightPrimary}
             highlightLessonKey={highlightLessonKey}

@@ -5,7 +5,7 @@ import { LessonDetail } from './LessonDetail';
 import { ToastStack } from './ToastStack';
 import { useCourseStore } from '../hooks/useCourseStore';
 import { makeLessonKey } from '../utils/lessonKeys';
-import type { AppPrefs, LessonKey, View } from '../types';
+import type { AppPrefs, DailyStreakState, LessonKey, MainShare, View } from '../types';
 import { isLessonComplete } from '../utils/progress';
 
 export const DEEP_LINK_KEY = 'flux-open-lesson';
@@ -33,6 +33,7 @@ export function CourseWorkspace({
   onPinLesson,
   onRecordUndo,
   onFirstWinOfDay,
+  onLessonFinish,
   focusMode,
   onExitFocus,
 }: {
@@ -50,12 +51,14 @@ export function CourseWorkspace({
     subtaskId: string;
   }) => void;
   onFirstWinOfDay: (dayISO: string) => void;
+  onLessonFinish?: (patch: { dailyStreak: DailyStreakState; mainShare: MainShare | null }) => void;
   focusMode: boolean;
   onExitFocus: () => void;
 }) {
   const store = useCourseStore(courseId, {
     lastFirstWinDayISO: prefs.lastFirstWinDayISO,
     onFirstWinOfDay,
+    onLessonFinish,
   });
   const [view, setView] = useState<View>(() => readDeepLink(courseId));
   const [menuOpen, setMenuOpen] = useState(false);

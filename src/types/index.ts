@@ -80,6 +80,16 @@ export interface MainShare {
   done: boolean;
 }
 
+/** Calm Duolingo-style daily streak (IST). Embedded in prefs JSON. */
+export interface DailyStreakState {
+  finishesByDay: Record<string, number>;
+  freezeDates: string[];
+  current: number;
+  longest: number;
+  rolledThroughDay: string | null;
+  softBannerDismissedDay: string | null;
+}
+
 export interface AppPrefs {
   version: 2;
   syncId: string;
@@ -125,6 +135,8 @@ export interface AppPrefs {
   lastFirstWinDayISO: string | null;
   /** Clear Home “Main” — today’s primary scheduled lesson (IST) */
   mainShare: MainShare | null;
+  /** Calm daily streak (IST) — synced via existing Appwrite prefs blob */
+  dailyStreak: DailyStreakState;
 }
 
 export type TopTab = 'home' | 'today' | 'upcoming' | 'calendar' | 'sync';

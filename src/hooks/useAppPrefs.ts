@@ -9,6 +9,12 @@ import {
 import { markQueueLessonDone, refreshQueueBatch } from '../utils/queue';
 import { compressCatchUp, generate40DayPlan } from '../utils/plan40';
 import { todayKey, todayKeyKolkata, isoWeekKey, isEcommerceFocusClearDay, nextSchedulableDayISO, addDaysISO } from '../utils/dates';
+import {
+  dismissSoftBanner,
+  maybeUseFreeze,
+  recordFinish,
+  rollover,
+} from '../utils/streak';
 
 export function useAppPrefs() {
   const [prefs, setPrefs] = useState<AppPrefs>(() => loadPrefs());
@@ -283,6 +289,49 @@ export function useAppPrefs() {
   }, []);
 
 
+
+  const recordStreakFinish = useCallback(() => {
+    setPrefs((p) => {
+      const { state } = recordFinish(p.dailyStreak, todayKeyKolkata());
+      return { ...p, dailyStreak: state };
+    });
+  }, []);
+
+  const applyStreakFreeze = useCallback((dayISO?: string) => {
+    const day = dayISO ?? addDaysISO(todayKeyKolkata(), -1);
+    let used = false;
+    let reason: string | undefined;
+    setPrefs((p) => {
+      const res = maybeUseFreeze(p.dailyStreak, day, todayKeyKolkata());
+      used = res.used;
+      reason = res.reason;
+      return { ...p, dailyStreak: res.state };
+    });
+    return { used, reason };
+  }, []);
+
+  const rolloverDailyStreak = useCallback(() => {
+    setPrefs((p) => {
+      const next = rollover(p.dailyStreak, todayKeyKolkata());
+      if (
+        next.current === p.dailyStreak.current &&
+        next.longest === p.dailyStreak.longest &&
+        next.rolledThroughDay === p.dailyStreak.rolledThroughDay &&
+        next.freezeDates.length === p.dailyStreak.freezeDates.length
+      ) {
+        return p;
+      }
+      return { ...p, dailyStreak: next };
+    });
+  }, []);
+
+  const dismissStreakSoftBanner = useCallback(() => {
+    setPrefs((p) => ({
+      ...p,
+      dailyStreak: dismissSoftBanner(p.dailyStreak, todayKeyKolkata()),
+    }));
+  }, []);
+
   const patchPrefs = useCallback((partial: Partial<AppPrefs>) => {
     setPrefs((p) => ({ ...p, ...partial }));
   }, []);
@@ -334,6 +383,10 @@ export function useAppPrefs() {
     saveWeeklyFocusNote,
     dismissTip,
     markFirstWinDay,
+    recordStreakFinish,
+    applyStreakFreeze,
+    rolloverDailyStreak,
+    dismissStreakSoftBanner,
     patchPrefs,
     visibleHomeCourseIds,
   };

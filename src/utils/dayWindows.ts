@@ -16,7 +16,7 @@ export function kolkataMinutes(d = new Date()): number {
 /**
  * Deep: 7:00–8:30 cabin + 11:00–18:00 home office.
  * Light: other waking hours before 18:00.
- * Wind-down: 18:00–22:00.
+ * Wind-down: 18:00–22:00 (includes 6–7 PM walk).
  */
 export function getFluxWindow(now = new Date()): FluxWindow {
   const m = kolkataMinutes(now)
@@ -43,7 +43,7 @@ export function fluxWindowCopy(w: FluxWindow): { title: string; body: string } {
     case 'wind_down':
       return {
         title: 'Wind down',
-        body: 'No more grind after 6:00. Rest protects tomorrow’s 4:00.',
+        body: '6–7 PM walk at home office, then rest. No more lesson grind.',
       }
     default:
       return {

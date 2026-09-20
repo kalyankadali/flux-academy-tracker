@@ -43,7 +43,7 @@ export function fluxWindowCopy(w: FluxWindow): { title: string; body: string } {
     case 'wind_down':
       return {
         title: 'Wind down',
-        body: '6–7 PM walk at home office, then rest. No more lesson grind.',
+        body: 'Dinner, meds, walk, then evening tasks & Zebra Learn. No more Flux grind.',
       }
     default:
       return {

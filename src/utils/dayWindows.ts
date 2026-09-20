@@ -14,15 +14,16 @@ export function kolkataMinutes(d = new Date()): number {
 }
 
 /**
- * Deep: 7:00–8:30 cabin + 11:00–18:00 home office.
- * Light: other waking hours before 18:00.
- * Wind-down: 18:00–22:00 (includes 6–7 PM walk).
+ * Deep: 7:00–8:30 cabin · 11:00–15:00 home office · 15:30–18:00 cabin afternoon.
+ * Light: other waking hours before 18:00 (includes 15:00–15:30 travel to cabin).
+ * Wind-down: 18:00–22:00 (walk at cabin, home dinner, evening tasks, Zebra).
  */
 export function getFluxWindow(now = new Date()): FluxWindow {
   const m = kolkataMinutes(now)
-  if ((m >= 7 * 60 && m < 8 * 60 + 30) || (m >= 11 * 60 && m < 18 * 60)) {
-    return 'deep'
-  }
+  const deepMorning = m >= 7 * 60 && m < 8 * 60 + 30
+  const deepHome = m >= 11 * 60 && m < 15 * 60
+  const deepCabinPm = m >= 15 * 60 + 30 && m < 18 * 60
+  if (deepMorning || deepHome || deepCabinPm) return 'deep'
   if (m >= 18 * 60 && m < 22 * 60) return 'wind_down'
   if (m >= 4 * 60 && m < 18 * 60) return 'light'
   return 'off'
@@ -38,12 +39,12 @@ export function fluxWindowCopy(w: FluxWindow): { title: string; body: string } {
     case 'light':
       return {
         title: 'Between blocks',
-        body: 'Day spine first. Deep Flux returns at 7:00 and 11:00.',
+        body: 'Day spine first. Deep Flux: 7:00 cabin, 11:00 home office, 3:30 cabin again.',
       }
     case 'wind_down':
       return {
         title: 'Wind down',
-        body: 'Dinner, meds, walk, then evening tasks & Zebra Learn. No more Flux grind.',
+        body: 'Walk at cabin, home for dinner, then evening tasks & Zebra Learn. No more Flux grind.',
       }
     default:
       return {

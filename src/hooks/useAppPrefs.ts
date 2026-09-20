@@ -18,6 +18,48 @@ export function useAppPrefs() {
     savePrefs(prefs);
   }, [prefs]);
 
+  /** One-shot: rebuild schedule from tomorrow through Oct 22 (user restart 2026-09-20). */
+  useEffect(() => {
+    const SEED = 'flux-plan-seed-2026-09-21';
+    try {
+      if (localStorage.getItem(SEED) === '1') return;
+    } catch {
+      return;
+    }
+    const startISO = addDaysISO(todayKeyKolkata(), 1);
+    setPrefs((p) => {
+      const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
+      const { schedule, avgFullDayMinutes } = generate40DayPlan(COURSES, {
+        startISO,
+        protectKeys: protect,
+      });
+      if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
+        const kept = p.schedule[p.pinnedLessonKey];
+        schedule[p.pinnedLessonKey] =
+          kept >= startISO && !isEcommerceFocusClearDay(kept)
+            ? kept
+            : nextSchedulableDayISO(startISO);
+      }
+      const dailyBudgetMinutes =
+        avgFullDayMinutes > 0
+          ? Math.min(300, Math.max(60, avgFullDayMinutes))
+          : p.dailyBudgetMinutes;
+      return {
+        ...p,
+        schedule,
+        dailyBudgetMinutes,
+        planGeneratedAt: new Date().toISOString(),
+        catchUpCompressedUntil: null,
+      };
+    });
+    try {
+      localStorage.setItem(SEED, '1');
+    } catch {
+      /* ignore */
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot on mount
+  }, []);
+
   useEffect(() => {
     // Ensure queue is populated on first load
     setPrefs((p) => {
@@ -100,13 +142,19 @@ export function useAppPrefs() {
   const generatePlan = useCallback(() => {
     setPrefs((p) => {
       const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
-      // Keep boss lesson date if already scheduled (never on Ecommerce focus-clear days)
-      const { schedule, avgFullDayMinutes } = generate40DayPlan(COURSES, { protectKeys: protect });
+      // Restart from tomorrow (IST) through PLAN_END — equal daily load, no soft "today" cap.
+      const startISO = addDaysISO(todayKeyKolkata(), 1);
+      const { schedule, avgFullDayMinutes } = generate40DayPlan(COURSES, {
+        startISO,
+        protectKeys: protect,
+      });
       if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
         const kept = p.schedule[p.pinnedLessonKey];
-        schedule[p.pinnedLessonKey] = isEcommerceFocusClearDay(kept)
-          ? nextSchedulableDayISO(addDaysISO(kept, 1))
-          : kept;
+        // If boss was pinned before tomorrow, move it onto the new window start
+        schedule[p.pinnedLessonKey] =
+          kept >= startISO && !isEcommerceFocusClearDay(kept)
+            ? kept
+            : nextSchedulableDayISO(startISO);
       }
       const dailyBudgetMinutes =
         avgFullDayMinutes > 0

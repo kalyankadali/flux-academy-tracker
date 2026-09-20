@@ -219,7 +219,7 @@ export function TodayView({
           <div>
             <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">40-day calm plan</h2>
             <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-              {sprintFocus ? 'Plan days stay clear Sep 14–18 on purpose — no lesson backlog from today.' : 'Spreads your learning path (~90–120m/day) from today (IST). Sep 14–18 stays clear for the Ecommerce AI Sprint.'}
+              {sprintFocus ? 'Plan days stay clear Sep 14–18 on purpose — no lesson backlog from today.' : 'Spreads remaining path lessons evenly from tomorrow through Oct 22 (IST). Open Flux in your 7:00–8:30 and 11:00–18:00 blocks.'}
             </p>
           </div>
           {!sprintFocus && (

@@ -185,6 +185,17 @@ export function TodayView({
   const showWeekly = isSunday() && prefs.weeklyReviewDismissedWeek !== weekKey;
 
   const pathAgg = useMemo(() => aggregateLearningPathPct(COURSES), []);
+  const todayLeft = useMemo(
+    () => scheduledToday.filter((i) => !i.done).length,
+    [scheduledToday],
+  );
+  /** Calm daily focus — never hero the lifetime ~1488 task total. */
+  const todayFocusLabel =
+    scheduledToday.length === 0
+      ? 'Today · clear'
+      : todayLeft === 0
+        ? 'Today · done'
+        : `Today · ${todayLeft} left`;
 
   const weekWins = useMemo(() => {
     const lessons: string[] = [];
@@ -244,9 +255,10 @@ export function TodayView({
       <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 shadow-sm dark:border-stone-800 dark:bg-stone-900/80">
         <div className="mb-1.5 flex items-baseline justify-between gap-2">
           <p className="text-xs font-medium text-stone-600 dark:text-stone-300">
-            Learning path · {pathAgg.pct}%
+            {todayFocusLabel}
+            {plannedMins > 0 ? ` · ~${plannedMins}m` : ''}
           </p>
-          <p className="text-[11px] text-stone-400">{pathAgg.subtasksDone}/{pathAgg.subtasksTotal} tasks</p>
+          <p className="text-[11px] text-stone-400">path · {pathAgg.pct}%</p>
         </div>
         <ProgressBar pct={pathAgg.pct} size="sm" />
       </div>

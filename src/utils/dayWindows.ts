@@ -1,4 +1,4 @@
-/** Asia/Calcutta deep-work windows for Kalyan day spine. (build verified 2026-09-20) */
+/** Asia/Calcutta deep-work windows for Kalyan day spine. STREAK_LIVE_MARKER_20260921 */
 export type FluxWindow = 'deep' | 'light' | 'wind_down' | 'off'
 
 export function kolkataMinutes(d = new Date()): number {

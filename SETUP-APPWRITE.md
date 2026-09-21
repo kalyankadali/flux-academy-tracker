@@ -5,14 +5,20 @@ Shared project with Clear Home. Client apps use **only** the public endpoint + p
 - Endpoint: `https://sgp.cloud.appwrite.io/v1`
 - Project ID: `6aafc3d40001cf6b0d6d`
 
-## 1. Auth
+## 1. Auth (Google OAuth2)
 
-1. Open the Appwrite console → **Auth**.
-2. Enable **Email magic URL** (Email OTP / Magic URL).
-3. Under **Settings → Platforms**, add **Web** platforms for your hosts, e.g.:
-   - `https://flux-academy-tracker.vercel.app`
-   - `http://localhost:5173` (local Vite)
-4. Magic links redirect to the app origin; the client completes login with `userId` + `secret` query params (`Account.createSession`, with `updateMagicURLSession` as a fallback on older SDKs).
+1. Open the Appwrite console → **Auth** → **Settings**.
+2. Enable **Google** as an OAuth2 provider.
+3. In [Google Cloud Console](https://console.cloud.google.com/) create an **OAuth 2.0 Client ID** of type **Web application**.
+4. Paste the **Client ID** and **Client Secret** into the Appwrite Google provider fields (secret stays in Appwrite only — **never** put it in this repo or Vercel env).
+5. Set the Google authorized **redirect URI** to exactly:
+   ```
+   https://sgp.cloud.appwrite.io/v1/account/sessions/oauth2/callback/google/6aafc3d40001cf6b0d6d
+   ```
+6. Under Google **Authorized JavaScript origins**, add your production Flux origin(s) and local origins (e.g. `https://flux-academy-tracker.vercel.app`, `http://localhost:5173`).
+7. Under Appwrite **Settings → Platforms**, add **Web** platforms for the same production domain(s) and `http://localhost:5173`.
+
+The app calls `Account.createOAuth2Session` with provider Google; success/failure redirect back to `window.location.origin` (+ current path). After the session exists, auto sync (push/pull) continues as before.
 
 ## 2. Database
 
@@ -43,7 +49,7 @@ VITE_APPWRITE_ENDPOINT=https://sgp.cloud.appwrite.io/v1
 VITE_APPWRITE_PROJECT_ID=6aafc3d40001cf6b0d6d
 ```
 
-Defaults in code match the Singapore endpoint + this project ID if env is omitted. Do **not** set `APPWRITE_API_KEY` in Vercel for these client apps.
+Defaults in code match the Singapore endpoint + this project ID if env is omitted. Do **not** set `APPWRITE_API_KEY` or any Google Client Secret in Vercel for these client apps.
 
 ## 4. Local
 

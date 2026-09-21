@@ -2,7 +2,7 @@ import {
   Client,
   Account,
   Databases,
-  ID,
+  OAuthProvider,
   Permission,
   Role,
 } from 'appwrite';
@@ -89,45 +89,6 @@ function userFromModel(u: { $id: string; email?: string }): AuthUser {
   return { id: u.$id, email: u.email };
 }
 
-/**
- * Complete magic-URL redirect if `userId` + `secret` are in the query string.
- * Uses Account.createSession (current Appwrite API). Falls back to
- * updateMagicURLSession when createSession is unavailable.
- */
-export async function completeMagicUrlIfPresent(): Promise<AuthSession | null> {
-  if (typeof window === 'undefined') return null;
-  const params = new URLSearchParams(window.location.search);
-  const userId = params.get('userId');
-  const secret = params.get('secret');
-  if (!userId || !secret) return null;
-
-  const acc = getAccount();
-  if (!acc) return null;
-
-  try {
-    const createSession = (acc as Account & {
-      createSession?: (params: { userId: string; secret: string }) => Promise<unknown>;
-    }).createSession;
-    if (typeof createSession === 'function') {
-      await createSession.call(acc, { userId, secret });
-    } else {
-      await acc.updateMagicURLSession(userId, secret);
-    }
-  } catch (err) {
-    // If already a session / link reused, try continuing with account.get()
-    console.warn('Magic URL session exchange failed:', appwriteErrorMessage(err, 'unknown'));
-  }
-
-  // Strip auth params from the URL without a reload.
-  params.delete('userId');
-  params.delete('secret');
-  const next = params.toString();
-  const clean = `${window.location.pathname}${next ? `?${next}` : ''}${window.location.hash}`;
-  window.history.replaceState({}, '', clean);
-
-  return getSession();
-}
-
 export async function getSession(): Promise<AuthSession | null> {
   const acc = getAccount();
   if (!acc) return null;
@@ -139,17 +100,26 @@ export async function getSession(): Promise<AuthSession | null> {
   }
 }
 
-export async function signInWithMagicLink(
-  email: string,
-): Promise<{ ok: true } | { ok: false; error: string }> {
+/**
+ * Start Google OAuth2 via Appwrite. Redirects the browser to Google / Appwrite.
+ * success/failure return to the current origin (+ path).
+ */
+export function signInWithGoogle(): { ok: true } | { ok: false; error: string } {
   const acc = getAccount();
   if (!acc) return { ok: false, error: 'Appwrite is not configured.' };
-  const redirectTo = typeof window !== 'undefined' ? window.location.origin : undefined;
+  if (typeof window === 'undefined') {
+    return { ok: false, error: 'Sign-in requires a browser.' };
+  }
+  const redirectTo = `${window.location.origin}${window.location.pathname}`;
   try {
-    await acc.createMagicURLToken(ID.unique(), email.trim(), redirectTo);
+    acc.createOAuth2Session({
+      provider: OAuthProvider.Google,
+      success: redirectTo,
+      failure: redirectTo,
+    });
     return { ok: true };
   } catch (err) {
-    return { ok: false, error: appwriteErrorMessage(err, 'Could not send magic link.') };
+    return { ok: false, error: appwriteErrorMessage(err, 'Could not start Google sign-in.') };
   }
 }
 
@@ -202,7 +172,7 @@ export async function pushSnapshot(
   const db = getDatabases();
   if (!db) return { ok: false, error: 'Appwrite is not configured.' };
   const session = await getSession();
-  if (!session?.user) return { ok: false, error: 'Sign in with magic link first.' };
+  if (!session?.user) return { ok: false, error: 'Sign in with Google first.' };
 
   const userId = session.user.id;
   const updatedAt = new Date().toISOString();
@@ -239,7 +209,7 @@ export async function pullSnapshot(): Promise<
   const db = getDatabases();
   if (!db) return { ok: false, error: 'Appwrite is not configured.' };
   const session = await getSession();
-  if (!session?.user) return { ok: false, error: 'Sign in with magic link first.' };
+  if (!session?.user) return { ok: false, error: 'Sign in with Google first.' };
 
   const userId = session.user.id;
   try {

@@ -8,13 +8,12 @@ import {
   parseSyncJson,
 } from '../lib/sync';
 import {
-  completeMagicUrlIfPresent,
   getSession,
   isCloudConfigured,
   mergeSyncPayloads,
   pullSnapshot,
   pushSnapshot,
-  signInWithMagicLink,
+  signInWithGoogle,
   signOut,
   type AuthSession,
 } from '../lib/appwrite';
@@ -43,13 +42,11 @@ export function SyncPanel({
   const [status, setStatus] = useState<string | null>(null);
   const [paste, setPaste] = useState('');
   const [busy, setBusy] = useState(false);
-  const [email, setEmail] = useState('');
   const [session, setSession] = useState<AuthSession | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const cloudReady = isCloudConfigured();
 
   const refreshSession = useCallback(async () => {
-    await completeMagicUrlIfPresent();
     const s = await getSession();
     setSession(s);
   }, []);
@@ -102,25 +99,17 @@ export function SyncPanel({
     doImportText(text);
   };
 
-  const sendMagic = async () => {
-    if (!email.trim()) {
-      const msg = 'Enter the email you use on Mac and iPad.';
-      setStatus(msg);
-      window.alert(msg);
-      return;
-    }
+  const startGoogle = () => {
     setBusy(true);
-    const res = await signInWithMagicLink(email);
-    setBusy(false);
+    const res = signInWithGoogle();
     if (!res.ok) {
+      setBusy(false);
       setStatus(res.error);
       window.alert(res.error);
       return;
     }
-    const okMsg =
-      'Magic link sent — check inbox + Spam for Appwrite. Same email pairs Mac + iPad.';
-    setStatus(okMsg);
-    window.alert(okMsg);
+    // Browser redirects to Google / Appwrite; keep busy until unload.
+    setStatus('Redirecting to Google…');
   };
 
   const doPush = async () => {
@@ -135,7 +124,7 @@ export function SyncPanel({
     }
     onMarkSynced();
     const okMsg =
-      'Pushed snapshot to Appwrite. Pull on your other device with the same email.';
+      'Pushed snapshot to Appwrite. Pull on your other device with the same Google account.';
     setStatus(okMsg);
     window.alert(okMsg);
   };
@@ -206,7 +195,7 @@ export function SyncPanel({
           Cross-device progress
         </h1>
         <p className="max-w-xl text-sm text-stone-500 dark:text-stone-400">
-          Progress always saves in this browser. Pair Mac + iPad with the same email via magic link,
+          Progress always saves in this browser. Pair Mac + iPad with the same Google account,
           or keep Export / Import as a calm backup.
         </p>
       </header>
@@ -235,7 +224,7 @@ export function SyncPanel({
       </div>
 
       <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Appwrite · magic link</h2>
+        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Appwrite · Google</h2>
         {!cloudReady ? (
           <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
             Add VITE_APPWRITE_ENDPOINT and VITE_APPWRITE_PROJECT_ID to enable cloud sync.
@@ -246,7 +235,7 @@ export function SyncPanel({
               Signed in as <span className="font-medium">{session.user.email}</span>
             </p>
             <p className="mt-1 text-xs text-stone-400">
-              Use this same email on your other device to pair.
+              Use the same Google account on every device.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <button
@@ -290,23 +279,16 @@ export function SyncPanel({
         ) : (
           <>
             <p className="mt-2 text-xs text-stone-400">
-              Magic link only — no passwords. Same email on Mac + iPad.
+              Sign in with Google — no passwords. Same account on Mac + iPad.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@email.com"
-                className="min-w-[200px] flex-1 rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm dark:border-stone-600 dark:bg-stone-950 dark:text-stone-100"
-              />
               <button
                 type="button"
                 disabled={busy}
-                onClick={sendMagic}
+                onClick={startGoogle}
                 className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
               >
-                Send magic link
+                Continue with Google
               </button>
             </div>
           </>

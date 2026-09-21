@@ -173,7 +173,7 @@ export function CoursePicker({
               {comingSoon ? (
                 <p className="mt-3 text-sm text-stone-400">
                   {course.id === 'ecommerce-ai-sprint'
-                    ? 'Coming soon · live cohort Sep 14–18, 2026.'
+                    ? 'Coming soon · curriculum seed pending.'
                     : 'Curriculum seed pending.'}
                 </p>
               ) : (

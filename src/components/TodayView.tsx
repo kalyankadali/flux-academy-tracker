@@ -288,7 +288,7 @@ export function TodayView({
           <div>
             <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">40-day calm plan</h2>
             <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-              {sprintFocus ? 'Plan days stay clear Sep 14–18 on purpose — no lesson backlog from today.' : FLUX_DEEP_BLOCKS_HINT}
+              {sprintFocus ? 'Plan days stay clear on purpose during sprint focus — no lesson backlog from today.' : FLUX_DEEP_BLOCKS_HINT}
             </p>
           </div>
           {!sprintFocus && (

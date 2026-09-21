@@ -29,10 +29,10 @@ export function LearningPath({ pinnedCourseId, onOpenCourse }: Props) {
         </div>
       </div>
       <div className="mt-3">
-        <ProgressBar pct={agg.pct} size="sm" label={`${agg.subtasksDone}/${agg.subtasksTotal} tasks on core path`} />
+        <ProgressBar pct={agg.pct} size="sm" label={`path · ${agg.pct}%`} />
       </div>
       <p className="mt-2 text-[11px] text-stone-400">
-        Finishers: Ecommerce AI Sprint (coming soon · live Sep 14–18), then Webflow AI and Magnific. Library holds off-path courses.
+        Finishers: Ecommerce AI Sprint, then Webflow AI and Magnific. Library holds off-path courses.
       </p>
       <ol className="mt-4 space-y-4">
         {LEARNING_PATH_GROUPS.map((group) => (
@@ -69,9 +69,7 @@ export function LearningPath({ pinnedCourseId, onOpenCourse }: Props) {
                       <span className="text-xs text-stone-400">
                         {ready
                           ? `${stats.pct}% · ${stats.lessonsDone}/${stats.lessonsTotal} lessons`
-                          : id === 'ecommerce-ai-sprint'
-                            ? 'Coming soon · live Sep 14–18'
-                            : 'Coming soon'}
+                          : 'Coming soon'}
                       </span>
                     </span>
                     <span className="text-xs text-orange-500">Open</span>

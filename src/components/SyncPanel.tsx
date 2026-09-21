@@ -8,6 +8,7 @@ import {
   parseSyncJson,
 } from '../lib/sync';
 import {
+  completeOAuthFromUrl,
   getSession,
   isCloudConfigured,
   mergeSyncPayloads,
@@ -47,7 +48,8 @@ export function SyncPanel({
   const cloudReady = isCloudConfigured();
 
   const refreshSession = useCallback(async () => {
-    const s = await getSession();
+    const fromOauth = await completeOAuthFromUrl();
+    const s = fromOauth ?? (await getSession());
     setSession(s);
   }, []);
 

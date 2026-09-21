@@ -101,8 +101,8 @@ export async function getSession(): Promise<AuthSession | null> {
 }
 
 /**
- * Start Google OAuth2 via Appwrite. Redirects the browser to Google / Appwrite.
- * success/failure return to the current origin (+ path).
+ * Start Google OAuth2 via Appwrite token flow (Safari/ITP-safe).
+ * Redirects to Google; success returns with ?userId=&secret= for createSession.
  */
 export function signInWithGoogle(): { ok: true } | { ok: false; error: string } {
   const acc = getAccount();
@@ -110,9 +110,10 @@ export function signInWithGoogle(): { ok: true } | { ok: false; error: string } 
   if (typeof window === 'undefined') {
     return { ok: false, error: 'Sign-in requires a browser.' };
   }
-  const redirectTo = `${window.location.origin}${window.location.pathname}`;
+  // Land on Sync tab after OAuth so UI refreshes to signed-in state.
+  const redirectTo = `${window.location.origin}${window.location.pathname}?tab=sync`;
   try {
-    acc.createOAuth2Session({
+    acc.createOAuth2Token({
       provider: OAuthProvider.Google,
       success: redirectTo,
       failure: redirectTo,
@@ -121,6 +122,36 @@ export function signInWithGoogle(): { ok: true } | { ok: false; error: string } 
   } catch (err) {
     return { ok: false, error: appwriteErrorMessage(err, 'Could not start Google sign-in.') };
   }
+}
+
+/**
+ * After OAuth redirect: exchange userId+secret for a session (localStorage fallback),
+ * then strip those query params. Safe to call on every boot.
+ */
+export async function completeOAuthFromUrl(): Promise<AuthSession | null> {
+  if (typeof window === 'undefined') return null;
+  const acc = getAccount();
+  if (!acc) return null;
+
+  const url = new URL(window.location.href);
+  const userId = url.searchParams.get('userId');
+  const secret = url.searchParams.get('secret');
+  if (!userId || !secret) return null;
+
+  try {
+    await acc.createSession({ userId, secret });
+  } catch (err) {
+    console.warn('[flux auth] createSession after OAuth failed', err);
+    // Still strip secrets from the URL.
+  }
+
+  url.searchParams.delete('userId');
+  url.searchParams.delete('secret');
+  const next =
+    url.pathname + (url.searchParams.toString() ? `?${url.searchParams}` : '') + url.hash;
+  window.history.replaceState({}, '', next);
+
+  return getSession();
 }
 
 export async function signOut(): Promise<void> {

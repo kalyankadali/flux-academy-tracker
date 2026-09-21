@@ -19,6 +19,7 @@ const SyncPanel = lazy(() =>
 );
 
 import { useAppPrefs } from './hooks/useAppPrefs';
+import { completeOAuthFromUrl } from './lib/appwrite';
 import { useAutoCloudSync } from './hooks/useAutoCloudSync';
 import type { LessonKey, TopTab } from './types';
 import { parseLessonKey } from './utils/lessonKeys';
@@ -53,6 +54,22 @@ export default function App() {
   }, []);
   const hasPlan = prefsApi.hasPlan;
   const [tab, setTab] = useState<TopTab>(() => (hasPlan ? 'today' : 'home'));
+
+  // OAuth token callback (Safari-safe): must run even if Sync tab is not mounted yet.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const wantSync = params.get('tab') === 'sync' || (params.get('userId') && params.get('secret'));
+    void completeOAuthFromUrl().then(() => {
+      if (wantSync) {
+        setTab('sync');
+        const url = new URL(window.location.href);
+        url.searchParams.delete('tab');
+        const next =
+          url.pathname + (url.searchParams.toString() ? `?${url.searchParams}` : '') + url.hash;
+        window.history.replaceState({}, '', next);
+      }
+    });
+  }, []);
   const [courseId, setCourseId] = useState<string | null>(null);
   const [focusMode, setFocusMode] = useState(false);
   const [highlightPrimary, setHighlightPrimary] = useState(false);

@@ -11,9 +11,6 @@ import {
   completeOAuthFromUrl,
   getSession,
   isCloudConfigured,
-  mergeSyncPayloads,
-  pullSnapshot,
-  pushSnapshot,
   signInWithGoogle,
   signOut,
   type AuthSession,
@@ -34,7 +31,7 @@ interface Props {
 export function SyncPanel({
   prefs,
   onImported,
-  onMarkSynced,
+  onMarkSynced: _onMarkSynced,
   morningPingEnabled,
   onMorningPing,
   tipDismissed = true,
@@ -74,11 +71,6 @@ export function SyncPanel({
     setStatus(ok ? 'Sync payload copied. Paste it on your other device.' : 'Could not copy — try Download instead.');
   };
 
-  const copySyncId = async () => {
-    const ok = await copyText(prefs.syncId);
-    setStatus(ok ? 'Sync code copied.' : 'Could not copy sync code.');
-  };
-
   const doImportText = (text: string) => {
     const parsed = parseSyncJson(text);
     if (!parsed.ok) {
@@ -114,78 +106,12 @@ export function SyncPanel({
     setStatus('Redirecting to Google…');
   };
 
-  const doPush = async () => {
-    setBusy(true);
-    const payload = buildSyncPayload(prefs);
-    const res = await pushSnapshot(prefs.syncId, payload);
-    setBusy(false);
-    if (!res.ok) {
-      setStatus(res.error);
-      window.alert(res.error);
-      return;
-    }
-    onMarkSynced();
-    const okMsg =
-      'Pushed snapshot to Appwrite. Pull on your other device with the same Google account.';
-    setStatus(okMsg);
-    window.alert(okMsg);
-  };
-
-  const doPull = async () => {
-    setBusy(true);
-    const res = await pullSnapshot();
-    setBusy(false);
-    if (!res.ok) {
-      setStatus(res.error);
-      window.alert(res.error);
-      return;
-    }
-    if (!res.row) {
-      const msg = 'No cloud snapshot yet — push from this device first.';
-      setStatus(msg);
-      window.alert(msg);
-      return;
-    }
-    const applied = applySyncPayload(res.row.payload);
-    if (!applied.ok) {
-      setStatus(applied.error);
-      window.alert(applied.error);
-      return;
-    }
-    onImported(loadPrefs());
-    onMarkSynced();
-    const okMsg = 'Pulled latest snapshot from Appwrite.';
-    setStatus(okMsg);
-    window.alert(okMsg);
-  };
-
-  const doMerge = async () => {
-    setBusy(true);
-    const res = await pullSnapshot();
-    if (!res.ok) {
-      setBusy(false);
-      setStatus(res.error);
-      return;
-    }
-    const local = buildSyncPayload(prefs);
-    const merged = res.row ? mergeSyncPayloads(local, res.row.payload) : local;
-    const applied = applySyncPayload(merged);
-    if (!applied.ok) {
-      setBusy(false);
-      setStatus(applied.error);
-      return;
-    }
-    const push = await pushSnapshot(merged.syncId, merged);
-    setBusy(false);
-    if (!push.ok) {
-      setStatus(`Merged locally but push failed: ${push.error}`);
-      onImported(loadPrefs());
-      return;
-    }
-    onImported(loadPrefs());
-    onMarkSynced();
-    setStatus('Auto-merged local + cloud, then pushed the combined snapshot.');
-  };
+  const lastSyncedLabel = prefs.lastSyncAt
+    ? new Date(prefs.lastSyncAt).toLocaleString(undefined, {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      })
+    : null;
 
   return (
     <section className="space-y-6">
@@ -197,33 +123,10 @@ export function SyncPanel({
           Cross-device progress
         </h1>
         <p className="max-w-xl text-sm text-stone-500 dark:text-stone-400">
-          Progress always saves in this browser. Pair Mac + iPad with the same Google account,
-          or keep Export / Import as a calm backup.
+          Progress always saves in this browser. Sign in with the same Google account on every
+          device — sync runs automatically. Export / Import stays as a calm backup.
         </p>
       </header>
-
-      <div className="rounded-3xl border border-orange-100 bg-orange-50/50 p-5 dark:border-orange-900/40 dark:bg-orange-950/20">
-        <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-          Your sync code
-        </p>
-        <p className="mt-2 break-all font-mono text-sm text-stone-800 dark:text-stone-100">{prefs.syncId}</p>
-        <button
-          type="button"
-          onClick={copySyncId}
-          className="mt-3 rounded-xl bg-orange-500 px-3 py-1.5 text-xs font-medium text-white"
-        >
-          Copy sync code
-        </button>
-        {prefs.lastSyncAt && (
-          <p className="mt-2 text-xs text-stone-400">
-            Last sync:{' '}
-            {new Date(prefs.lastSyncAt).toLocaleString(undefined, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            })}
-          </p>
-        )}
-      </div>
 
       <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
         <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Appwrite · Google</h2>
@@ -236,34 +139,17 @@ export function SyncPanel({
             <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
               Signed in as <span className="font-medium">{session.user.email}</span>
             </p>
+            <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+              Syncing automatically…
+            </p>
+            {lastSyncedLabel && (
+              <p className="mt-1 text-xs text-stone-400">Last synced: {lastSyncedLabel}</p>
+            )}
             <p className="mt-1 text-xs text-stone-400">
-              Use the same Google account on every device.
+              Use the same Google account on every device. Changes push in the background; opening
+              the app pulls the latest.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <button
-                type="button"
-                disabled={busy}
-                onClick={doPush}
-                className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
-              >
-                Push snapshot
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={doPull}
-                className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-stone-600 ring-1 ring-stone-200 disabled:opacity-50 dark:bg-stone-800 dark:text-stone-200 dark:ring-stone-600"
-              >
-                Pull snapshot
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={doMerge}
-                className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-orange-700 ring-1 ring-orange-200 disabled:opacity-50 dark:bg-stone-800 dark:text-orange-300 dark:ring-orange-800"
-              >
-                Auto-merge
-              </button>
               <button
                 type="button"
                 disabled={busy}
@@ -281,7 +167,8 @@ export function SyncPanel({
         ) : (
           <>
             <p className="mt-2 text-xs text-stone-400">
-              Sign in with Google — no passwords. Same account on Mac + iPad.
+              Sign in with Google — no passwords. Same account on Mac + iPad. Sync runs
+              automatically after you’re signed in.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <button
@@ -301,7 +188,7 @@ export function SyncPanel({
         <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
           <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">Export backup</h2>
           <p className="mt-1 text-xs text-stone-400">
-            Download or copy everything (prefs + all course progress).
+            Optional — download or copy everything (prefs + all course progress).
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <button

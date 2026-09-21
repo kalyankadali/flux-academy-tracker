@@ -49,7 +49,10 @@ export function buildSyncPayload(prefs?: AppPrefs): SyncPayload {
   };
 }
 
-export function applySyncPayload(payload: SyncPayload): { ok: true } | { ok: false; error: string } {
+export function applySyncPayload(
+  payload: SyncPayload,
+  opts?: { quiet?: boolean },
+): { ok: true } | { ok: false; error: string } {
   if (!payload || payload.version !== SYNC_PAYLOAD_VERSION) {
     return { ok: false, error: 'Unrecognized sync file version.' };
   }
@@ -76,7 +79,7 @@ export function applySyncPayload(payload: SyncPayload): { ok: true } | { ok: fal
       syncId: payload.syncId || payload.prefs.syncId,
       lastSyncAt: new Date().toISOString(),
     };
-    savePrefs(prefs);
+    savePrefs(prefs, { quiet: opts?.quiet });
     localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
     return { ok: true };
   } catch (e) {

@@ -116,9 +116,9 @@ export function loadPrefs(): AppPrefs {
   }
 }
 
-export function savePrefs(prefs: AppPrefs): void {
+export function savePrefs(prefs: AppPrefs, opts?: { quiet?: boolean }): void {
   localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
-  notifyFluxLocalChanged();
+  if (!opts?.quiet) notifyFluxLocalChanged();
 }
 
 export function applyTheme(theme: ThemeMode): void {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { AppPrefs, LessonKey, ThemeMode, UndoSnapshot } from '../types';
 import { COURSES } from '../data/courses';
 import {
@@ -18,10 +18,12 @@ import {
 
 export function useAppPrefs() {
   const [prefs, setPrefs] = useState<AppPrefs>(() => loadPrefs());
+  const quietPersistRef = useRef(false);
 
   useEffect(() => {
     applyTheme(prefs.theme);
-    savePrefs(prefs);
+    savePrefs(prefs, { quiet: quietPersistRef.current });
+    quietPersistRef.current = false;
   }, [prefs]);
 
   /** One-shot: rebuild schedule from tomorrow through Oct 22 (user restart 2026-09-20). */
@@ -212,6 +214,7 @@ export function useAppPrefs() {
   }, []);
 
   const markSynced = useCallback((remoteBlobId?: string | null) => {
+    quietPersistRef.current = true;
     setPrefs((p) => ({
       ...p,
       lastSyncAt: new Date().toISOString(),

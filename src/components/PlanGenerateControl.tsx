@@ -9,7 +9,7 @@ export function PlanGenerateControl({ hasPlan, planGeneratedAt, onGenerate }: Pr
   const regenerate = () => {
     if (
       !window.confirm(
-        'This replaces your plan dates. Incomplete lessons are spread evenly from tomorrow through Oct 22 (IST). Boss-pinned lessons stay protected. Continue?',
+        'Fresh start from today through Oct 22 (IST). Completed lessons stay checked — remaining work spreads evenly across the days left. Boss-pinned lessons stay protected. Ready?',
       )
     ) {
       return;
@@ -24,7 +24,7 @@ export function PlanGenerateControl({ hasPlan, planGeneratedAt, onGenerate }: Pr
         onClick={onGenerate}
         className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-orange-600"
       >
-        Generate plan · tomorrow → Oct 22
+        Restart plan from today → Oct 22
       </button>
     );
   }
@@ -49,7 +49,7 @@ export function PlanGenerateControl({ hasPlan, planGeneratedAt, onGenerate }: Pr
           onClick={regenerate}
           className="mt-2 rounded-xl px-3 py-1.5 text-xs font-medium text-stone-600 ring-1 ring-stone-200 hover:bg-white dark:text-stone-300 dark:ring-stone-700 dark:hover:bg-stone-800"
         >
-          Regenerate plan…
+          Restart plan from today…
         </button>
       </details>
     </div>

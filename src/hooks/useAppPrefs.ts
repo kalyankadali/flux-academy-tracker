@@ -26,20 +26,21 @@ export function useAppPrefs() {
     quietPersistRef.current = false;
   }, [prefs]);
 
-  /** One-shot: rebuild schedule from tomorrow through Oct 22 (user restart 2026-09-20). */
+  /** One-shot: rebuild schedule from today (IST) through Oct 22 — equal daily load (restart 2026-09-29). */
   useEffect(() => {
-    const SEED = 'flux-plan-seed-2026-09-21';
+    const SEED = 'flux-plan-seed-2026-09-29';
     try {
       if (localStorage.getItem(SEED) === '1') return;
     } catch {
       return;
     }
-    const startISO = addDaysISO(todayKeyKolkata(), 1);
+    const startISO = todayKeyKolkata();
     setPrefs((p) => {
       const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
       const { schedule, avgFullDayMinutes } = generate40DayPlan(COURSES, {
         startISO,
         protectKeys: protect,
+        softCapToday: false,
       });
       if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
         const kept = p.schedule[p.pinnedLessonKey];
@@ -150,15 +151,16 @@ export function useAppPrefs() {
   const generatePlan = useCallback(() => {
     setPrefs((p) => {
       const protect = p.pinnedLessonKey ? new Set([p.pinnedLessonKey]) : new Set<LessonKey>();
-      // Restart from tomorrow (IST) through PLAN_END — equal daily load, no soft "today" cap.
-      const startISO = addDaysISO(todayKeyKolkata(), 1);
+      // Restart from today (IST) through PLAN_END — equal daily load across remaining days.
+      const startISO = todayKeyKolkata();
       const { schedule, avgFullDayMinutes } = generate40DayPlan(COURSES, {
         startISO,
         protectKeys: protect,
+        softCapToday: false,
       });
       if (p.pinnedLessonKey && p.schedule[p.pinnedLessonKey]) {
         const kept = p.schedule[p.pinnedLessonKey];
-        // If boss was pinned before tomorrow, move it onto the new window start
+        // If boss was pinned before today, move it onto the new window start
         schedule[p.pinnedLessonKey] =
           kept >= startISO && !isEcommerceFocusClearDay(kept)
             ? kept

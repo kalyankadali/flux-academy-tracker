@@ -79,18 +79,25 @@ function enumerateDaysInclusive(from: string, to: string): string[] {
 
 /**
  * Generate a locked schedule from start through PLAN_END_ISO (Asia/Kolkata).
- * - When start is Kolkata today: soft-cap ~TODAY_SOFT_MINUTES of whole lessons, then
- *   pack remaining equally across every calendar day through end (no Ecommerce skip).
+ * - Default: pack incomplete lessons equally across every calendar day from start→end
+ *   (completed ticks stay out via collectPlanLessons; no Ecommerce skip).
+ * - softCapToday: optional gentle ~TODAY_SOFT_MINUTES on Kolkata "today" before equal pack.
  * - Boss/protectKeys: skipped here; caller restores pinned dates.
  */
 export function generate40DayPlan(
   courses: CourseData[],
-  options?: { startISO?: string; protectKeys?: Set<LessonKey> },
+  options?: {
+    startISO?: string;
+    protectKeys?: Set<LessonKey>;
+    /** When true and start is Kolkata today, soft-cap ~TODAY_SOFT_MINUTES before equal pack. Default false = equal load from start day. */
+    softCapToday?: boolean;
+  },
 ): GeneratePlanResult {
   const start = options?.startISO ?? todayKeyKolkata();
   const end = PLAN_END_ISO;
   const today = todayKeyKolkata();
   const protect = options?.protectKeys ?? new Set<LessonKey>();
+  const softCapToday = options?.softCapToday === true;
   const allLessons = collectPlanLessons(courses);
   const schedule: Record<string, string> = {};
   const planDays = planDaysBetween(start, end);
@@ -103,9 +110,9 @@ export function generate40DayPlan(
   const lessons = allLessons.filter((l) => !protect.has(l.key));
   let cursor = 0;
 
-  // --- Today soft cap (only when plan starts on Kolkata today) ---
+  // --- Optional today soft cap (restart/regenerate uses equal days including today) ---
   let fullDayStart = start;
-  if (start === today && start <= end && lessons.length > 0) {
+  if (softCapToday && start === today && start <= end && lessons.length > 0) {
     const first = lessons[0];
     if (first.estimatedMinutes > TODAY_SOFT_MINUTES) {
       // Prefer skip today and start tomorrow for oversized first lesson

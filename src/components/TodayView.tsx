@@ -115,6 +115,7 @@ export function TodayView({
             dateKey: g.dateKey,
             tomorrowLinchpin: g.tomorrowLinchpin ?? null,
             lifeDerailed: !!g.lifeDerailed,
+            restartedAt: typeof g.restartedAt === 'string' ? g.restartedAt : null,
             fluxDone: !!g.fluxDone,
             cabinMode:
               g.cabinMode === 'heading' || g.cabinMode === 'arrived' ? g.cabinMode : null,
@@ -307,24 +308,37 @@ export function TodayView({
 
       {prefs.clearHomeDay?.lifeDerailed && prefs.clearHomeDay.dateKey === todayIST && (
         <div className="rounded-3xl border border-stone-200 bg-stone-50/80 p-4 dark:border-stone-700 dark:bg-stone-900/60">
-          <p className="text-sm text-stone-600 dark:text-stone-300">
-            Better Home is in recovery — no shame. Finish one calm lesson here, or reopen the fixed-window plan.
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            <a
-              href={clearHomeRecoveryUrl()}
-              className="rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
-            >
-              Back to Better Home
-            </a>
-            <button
-              type="button"
-              onClick={onCatchUp}
-              className="rounded-xl border border-stone-300 px-3 py-1.5 text-xs font-medium text-stone-600 dark:border-stone-600 dark:text-stone-300"
-            >
-              Calm catch-up here
-            </button>
-          </div>
+          {prefs.clearHomeDay.restartedAt ? (
+            <>
+              <p className="text-sm font-medium text-stone-700 dark:text-stone-200">
+                Day restarted from Better Home · pack adjusted
+              </p>
+              <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
+                One calm lesson is still enough inside today’s window.
+              </p>
+              {primary ? (
+                <button
+                  type="button"
+                  onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)}
+                  className="mt-3 rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
+                >
+                  Open today’s lesson
+                </button>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-stone-600 dark:text-stone-300">
+                Better Home is in recovery — no shame. One calm lesson here is enough.
+              </p>
+              <a
+                href={clearHomeRecoveryUrl()}
+                className="mt-3 inline-flex rounded-xl border border-stone-300 px-3 py-1.5 text-xs font-medium text-stone-600 dark:border-stone-600 dark:text-stone-300"
+              >
+                Reopen Better Home plan
+              </a>
+            </>
+          )}
         </div>
       )}
 
@@ -360,7 +374,7 @@ export function TodayView({
         </div>
       )}
 
-      {prefs.clearHomeDay?.energyPackMinutes && prefs.clearHomeDay.dateKey === todayIST && !prefs.clearHomeDay.fluxDone && (
+      {prefs.clearHomeDay?.energyPackMinutes && prefs.clearHomeDay.dateKey === todayIST && !prefs.clearHomeDay.fluxDone && !prefs.clearHomeDay.restartedAt && (
         <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
           <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · energy pack</p>
           <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">

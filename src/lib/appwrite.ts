@@ -40,7 +40,7 @@ let client: Client | null = null;
 let account: Account | null = null;
 let databases: Databases | null = null;
 
-function getClient(): Client | null {
+export function getClient(): Client | null {
   if (!isCloudConfigured()) return null;
   if (!client) {
     client = new Client().setEndpoint(endpoint).setProject(projectId);
@@ -318,6 +318,7 @@ export type ClearHomeDayGraph = {
   fluxMinutesHint?: number;
   tomorrowLinchpin?: string | null;
   lifeDerailed?: boolean;
+  restartedAt?: string | null;
   fluxLessonKey?: string | null;
   fluxTitle?: string | null;
   cabinMode?: 'heading' | 'arrived' | null;

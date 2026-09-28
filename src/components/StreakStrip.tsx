@@ -22,20 +22,20 @@ export function StreakStrip({ view, onUseFreeze, freezeHintDay, lifeDay }: Props
         : `${view.current}-day streak`;
 
   return (
-    <div className="rounded-3xl border border-orange-100 bg-orange-50/60 p-4 shadow-sm dark:border-orange-900/40 dark:bg-orange-950/25">
+    <div className="rounded-2xl border border-stone-100 bg-white/70 px-4 py-3 dark:border-stone-800 dark:bg-stone-900/50">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/90 px-3 py-1 text-xs font-semibold text-white shadow-sm">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-stone-800/90 px-3 py-1 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900">
             <span aria-hidden>✦</span>
             {label}
           </span>
           {view.doubleFinish && (
-            <span className="inline-flex items-center rounded-full border border-orange-200 bg-white/80 px-2.5 py-0.5 text-[11px] font-medium text-orange-700 dark:border-orange-800 dark:bg-stone-900/60 dark:text-orange-200">
+            <span className="inline-flex items-center rounded-full border border-stone-200 bg-white/80 px-2.5 py-0.5 text-[11px] font-medium text-stone-600 dark:border-stone-700 dark:bg-stone-900/60 dark:text-stone-300">
               Double finish · nice pace
             </span>
           )}
         </div>
-        <p className="text-[11px] text-stone-500 dark:text-stone-400">
+        <p className="text-[11px] text-stone-400">
           {view.freezesLeftThisWeek === 0
             ? 'Freezes used this week'
             : `${view.freezesLeftThisWeek} freeze${view.freezesLeftThisWeek === 1 ? '' : 's'} left`}
@@ -76,7 +76,7 @@ export function StreakStrip({ view, onUseFreeze, freezeHintDay, lifeDay }: Props
       </div>
 
       {onUseFreeze && freezeHintDay && view.freezesLeftThisWeek > 0 && (
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-orange-100/80 pt-3 dark:border-orange-900/40">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-stone-100 pt-3 dark:border-stone-800">
           <p className="text-xs text-stone-600 dark:text-stone-300">
             {lifeDay
               ? 'Life day from Better Home — a freeze keeps the streak gentle.'

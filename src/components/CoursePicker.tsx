@@ -80,14 +80,14 @@ export function CoursePicker({
         </p>
       </header>
 
-      <div className="rounded-3xl border border-orange-100 bg-orange-50/60 px-5 py-4 dark:border-orange-900/40 dark:bg-orange-950/20">
+      <div className="rounded-2xl border border-stone-100 bg-white/80 px-5 py-4 dark:border-stone-800 dark:bg-stone-900/70">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-              Learning path
+            <p className="text-xs font-medium uppercase tracking-wider text-stone-400">
+              Path
             </p>
-            <p className="text-2xl font-semibold text-stone-800 dark:text-stone-100">{pathPct.pct}%</p>
-            <p className="text-xs text-stone-400">Core path progress (coming-soon courses count once seeded)</p>
+            <p className="text-lg font-semibold text-stone-800 dark:text-stone-100">{pathPct.pct}%</p>
+            <p className="text-xs text-stone-400">24-day calm plan · detail lives here, not on Today</p>
           </div>
           <PlanGenerateControl hasPlan={hasPlan} onGenerate={onGeneratePlan} />
         </div>

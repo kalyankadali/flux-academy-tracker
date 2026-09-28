@@ -24,7 +24,6 @@ import { canUseStreakShield } from '../utils/streakShield';
 import { shouldShowSoftBanner, viewStreak } from '../utils/streak';
 import { StreakStrip, StreakWeeklyStrip } from './StreakStrip';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
-import { ProgressBar } from './ProgressBar';
 import { THIS_OR_NOTHING } from '../utils/quotes'
 import { fluxWindowCopy, getFluxWindow, FLUX_DEEP_BLOCKS_HINT } from '../utils/dayWindows';
 import { computeMainShare, mainShareEquals } from '../utils/mainShare';
@@ -249,12 +248,20 @@ export function TodayView({
     [scheduledToday],
   );
   /** Calm daily focus — never hero the lifetime ~1488 task total. */
-  const todayFocusLabel =
-    scheduledToday.length === 0
-      ? 'Today · clear'
-      : todayLeft === 0
-        ? 'Today · done'
-        : `Today · ${todayLeft} left`;
+  const energyPackMins =
+    prefs.clearHomeDay?.dateKey === todayIST && prefs.clearHomeDay.energyPackMinutes
+      ? prefs.clearHomeDay.energyPackMinutes
+      : null;
+  const focusMinutes = energyPackMins ?? (plannedMins > 0 ? plannedMins : null);
+  const todayFocusLabel = (() => {
+    if (scheduledToday.length === 0) {
+      if (focusMinutes) return `Today · ~${focusMinutes}m`;
+      return 'Today · clear';
+    }
+    if (todayLeft === 0) return 'Today · done';
+    const lessonBit = todayLeft === 1 ? '1 lesson' : `${todayLeft} lessons`;
+    return focusMinutes ? `Today · ${lessonBit} · ~${focusMinutes}m` : `Today · ${lessonBit}`;
+  })();
 
   const weekWins = useMemo(() => {
     const lessons: string[] = [];
@@ -279,12 +286,73 @@ export function TodayView({
               {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
             </h1>
             <p className="text-sm text-stone-500 dark:text-stone-400">
-              {sprintFocus ? 'Sprint week — live learning first; path lessons stay clear.' : dailyView.current === 0 ? 'A soft start is still a start — one lesson lights the streak.' : `${dailyView.current}-day streak · showing up is enough.`}
+              {sprintFocus
+                ? 'Sprint week — live learning first; path lessons stay clear.'
+                : dailyView.current === 0
+                  ? 'A soft start is still a start — one lesson is enough.'
+                  : `${dailyView.current}-day streak · showing up is enough.`}
             </p>
           </div>
           <WeekExportButton schedule={schedule} />
         </div>
       </header>
+
+      {/* P0 #5–#6: one lesson CTA first paint — no 1488 / guilt numbers above the fold */}
+      {primary && (
+        <div
+          ref={primaryRef}
+          id="today-primary"
+          className={`rounded-3xl border bg-gradient-to-br from-orange-50 to-white p-5 shadow-sm dark:from-orange-950/40 dark:to-stone-900 ${
+            highlightPrimary || highlightLessonKey === primary.key
+              ? 'border-orange-400 ring-2 ring-orange-300/70 dark:border-orange-500 dark:ring-orange-700/60'
+              : 'border-orange-200 dark:border-orange-900/50'
+          }`}
+        >
+          <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Today’s lesson</p>
+          <p className="mt-1 text-xs text-orange-600/80 dark:text-orange-300/80">{primary.label}</p>
+          <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{primary.title}</h2>
+          <p className="text-xs text-stone-400">{primary.courseTitle}</p>
+          {focusMinutes ? (
+            <p className="mt-1 text-[11px] text-stone-400">~{focusMinutes}m · soft fit for today’s energy</p>
+          ) : null}
+          <p className="mt-2 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
+          <button type="button" onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)} className="mt-4 w-full rounded-2xl bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm">Open today’s lesson</button>
+        </div>
+      )}
+
+      {!primary && !sprintFocus && suggestions[0] && (
+        <div className="rounded-3xl border border-orange-100 bg-orange-50/40 p-5 dark:border-orange-900/40 dark:bg-orange-950/20">
+          <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">One calm start</p>
+          <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{suggestions[0].title}</h2>
+          <p className="text-xs text-stone-400">{suggestions[0].courseTitle}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                const p = parseLessonKey(suggestions[0].key)!;
+                onOpen(p.courseId, p.moduleId, p.lessonId);
+              }}
+              className="rounded-2xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm"
+            >
+              Open one lesson
+            </button>
+            <button
+              type="button"
+              onClick={() => onSchedule(suggestions[0].key, today)}
+              className="rounded-2xl bg-white px-4 py-2.5 text-sm font-medium text-orange-700 ring-1 ring-orange-200 dark:bg-stone-900 dark:text-orange-300"
+            >
+              Schedule today
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="rounded-2xl border border-stone-100 bg-white/70 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/60">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <p className="text-sm font-medium text-stone-700 dark:text-stone-200">{todayFocusLabel}</p>
+          <p className="text-[11px] text-stone-400">Path · {pathAgg.pct}%</p>
+        </div>
+      </div>
 
       {(() => {
         const ch = prefs.clearHomeDay;
@@ -297,17 +365,17 @@ export function TodayView({
             : null;
         if (!linchpin) return null;
         return (
-          <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-            <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home</p>
-            <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
-              Today&apos;s linchpin · <span className="font-medium">{linchpin}</span>
+          <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/70">
+            <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">From Better Home</p>
+            <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
+              Linchpin · <span className="font-medium text-stone-800 dark:text-stone-100">{linchpin}</span>
             </p>
           </div>
         );
       })()}
 
       {prefs.clearHomeDay?.lifeDerailed && prefs.clearHomeDay.dateKey === todayIST && (
-        <div className="rounded-3xl border border-stone-200 bg-stone-50/80 p-4 dark:border-stone-700 dark:bg-stone-900/60">
+        <div className="rounded-2xl border border-stone-200 bg-stone-50/80 px-4 py-3 dark:border-stone-700 dark:bg-stone-900/60">
           {prefs.clearHomeDay.restartedAt ? (
             <>
               <p className="text-sm font-medium text-stone-700 dark:text-stone-200">
@@ -316,15 +384,6 @@ export function TodayView({
               <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
                 One calm lesson is still enough inside today’s window.
               </p>
-              {primary ? (
-                <button
-                  type="button"
-                  onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)}
-                  className="mt-3 rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
-                >
-                  Open today’s lesson
-                </button>
-              ) : null}
             </>
           ) : (
             <>
@@ -333,7 +392,7 @@ export function TodayView({
               </p>
               <a
                 href={clearHomeRecoveryUrl()}
-                className="mt-3 inline-flex rounded-xl border border-stone-300 px-3 py-1.5 text-xs font-medium text-stone-600 dark:border-stone-600 dark:text-stone-300"
+                className="mt-2 inline-flex text-xs font-medium text-stone-500 underline underline-offset-2"
               >
                 Reopen Better Home plan
               </a>
@@ -343,90 +402,50 @@ export function TodayView({
       )}
 
       {prefs.clearHomeDay?.cabinMode && prefs.clearHomeDay.dateKey === todayIST && (
-        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · cabin</p>
-          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
+        <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/70">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">Better Home · cabin</p>
+          <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
             {prefs.clearHomeDay.cabinMode === 'arrived'
-              ? 'You arrived at the cabin — this is the deep-work window. One calm lesson is enough.'
-              : 'Heading to cabin — windows soft-shifted on Better Home. Settle in, then one lesson here.'}
+              ? 'Cabin deep-work window — one calm lesson is enough.'
+              : 'Heading to cabin — settle in, then one lesson here.'}
           </p>
-          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
         </div>
       )}
 
       {prefs.clearHomeDay?.lateStart && prefs.clearHomeDay.dateKey === todayIST && !prefs.clearHomeDay.cabinMode && (
-        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · late start</p>
-          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
-            Morning cabin Flux skipped — drop-off still happens (Acchi office by 10:00 every day). Home Flux ~11. Soft is fine.
+        <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/70">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">Better Home · late start</p>
+          <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
+            Morning cabin Flux skipped — home window still open. Soft is fine.
           </p>
-          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
         </div>
       )}
 
       {prefs.clearHomeDay?.dropOffMode && prefs.clearHomeDay.dateKey === todayIST && (
-        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · drop-off</p>
-          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
-            Drop-off mode on — Acchi office by 10:00 every day. Calm Tracker waits for the home window after.
+        <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/70">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">Better Home · drop-off</p>
+          <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
+            Drop-off mode — Calm Tracker waits for the home window after.
           </p>
-          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
         </div>
       )}
 
-      {prefs.clearHomeDay?.energyPackMinutes && prefs.clearHomeDay.dateKey === todayIST && !prefs.clearHomeDay.fluxDone && !prefs.clearHomeDay.restartedAt && (
-        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · energy pack</p>
-          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
-            Suggested pack · ~{prefs.clearHomeDay.energyPackMinutes}m
-            {prefs.clearHomeDay.energyMood === 'low'
+      {energyPackMins && !prefs.clearHomeDay?.fluxDone && !prefs.clearHomeDay?.restartedAt && !primary && (
+        <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/70">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">Better Home · energy pack</p>
+          <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
+            Suggested pack · ~{energyPackMins}m
+            {prefs.clearHomeDay?.energyMood === 'low'
               ? ' — shorter is enough today.'
-              : prefs.clearHomeDay.energyMood === 'high'
-                ? ' — full lesson fits if a window is open.'
+              : prefs.clearHomeDay?.energyMood === 'high'
+                ? ' — a full lesson fits if a window is open.'
                 : ' — steady mid-length is fine.'}
           </p>
-          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">No shame. Soft is fine.</p>
         </div>
       )}
 
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
-
       {!prefs.tipDismissed && <InstallChecklist onDismiss={onDismissTip} />}
-
-      {!sprintFocus && (
-        <StreakStrip
-          view={dailyView}
-          onUseFreeze={yesterdayOpen && onUseFreeze ? onUseFreeze : undefined}
-          freezeHintDay={yesterdayOpen ? yesterdayIST : null}
-          lifeDay={lifeDayFreeze}
-        />
-      )}
-
-      {!sprintFocus && showSoftStreakBanner && (
-        <div className="rounded-3xl border border-stone-200 bg-white/90 p-4 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-          <div className="flex items-start justify-between gap-3">
-            <p className="text-sm text-stone-600 dark:text-stone-300">Evening nudge — one lesson keeps the streak.</p>
-            <button
-              type="button"
-              className="shrink-0 text-xs text-stone-400 underline underline-offset-2"
-              onClick={() => onDismissStreakBanner?.()}
-            >
-              Dismiss
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 shadow-sm dark:border-stone-800 dark:bg-stone-900/80">
-        <div className="mb-1.5 flex items-baseline justify-between gap-2">
-          <p className="text-xs font-medium text-stone-600 dark:text-stone-300">
-            {todayFocusLabel}
-            {plannedMins > 0 ? ` · ~${plannedMins}m` : ''}
-          </p>
-          <p className="text-[11px] text-stone-400">path · {pathAgg.pct}%</p>
-        </div>
-        <ProgressBar pct={pathAgg.pct} size="sm" />
-      </div>
 
       {(() => {
         const w = getFluxWindow()
@@ -434,32 +453,30 @@ export function TodayView({
         const deep = w === 'deep'
         return (
           <div
-            className={`rounded-3xl border p-4 ${
+            className={`rounded-2xl border px-4 py-3 ${
               deep
-                ? 'border-orange-200 bg-orange-50/80 dark:border-orange-800/60 dark:bg-orange-950/30'
-                : w === 'wind_down'
-                  ? 'border-stone-200 bg-stone-50/80 dark:border-stone-700 dark:bg-stone-900/50'
-                  : 'border-stone-100 bg-white/70 dark:border-stone-800 dark:bg-stone-900/40'
+                ? 'border-orange-100 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/20'
+                : 'border-stone-100 bg-white/70 dark:border-stone-800 dark:bg-stone-900/40'
             }`}
           >
-            <p className="text-xs font-medium uppercase tracking-wider text-stone-500">{copy.title}</p>
-            <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">{copy.body}</p>
+            <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">{copy.title}</p>
+            <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">{copy.body}</p>
             <a
               href={clearHomeDayPulseUrl()}
-              className="mt-2 inline-block text-xs font-medium text-stone-500 underline underline-offset-2"
+              className="mt-1.5 inline-block text-[11px] font-medium text-stone-400 underline underline-offset-2"
             >
-              Back to Better Home · A better day, as it happens.
+              Better Home · A better day, as it happens.
             </a>
           </div>
         )
       })()}
 
-      <div className={`rounded-3xl border p-5 ${sprintFocus ? 'border-stone-100 bg-stone-50/40 opacity-80 dark:border-stone-800' : 'border-orange-100 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/20'}`}>
+      <div className={`rounded-2xl border px-4 py-3 ${sprintFocus ? 'border-stone-100 bg-stone-50/40 opacity-80 dark:border-stone-800' : 'border-stone-100 bg-white/80 dark:border-stone-800 dark:bg-stone-900/60'}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">24-day calm plan</h2>
-            <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-              {sprintFocus ? 'Plan days stay clear on purpose during sprint focus — no lesson backlog from today.' : FLUX_DEEP_BLOCKS_HINT}
+            <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">
+              {sprintFocus ? 'Plan days stay clear on purpose during sprint focus.' : FLUX_DEEP_BLOCKS_HINT}
             </p>
           </div>
           {!sprintFocus && (
@@ -471,15 +488,47 @@ export function TodayView({
       {sprintFocus && <SprintWeekBanner href={sprintHref} />}
 
       {!sprintFocus && daysBehind >= 2 && (
-        <div className="rounded-3xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/50 dark:bg-amber-950/30">
-          <p className="text-sm text-amber-900 dark:text-amber-200">You’re about {daysBehind} days behind — no guilt. Compress the next 3 days? Boss-pinned lessons stay put.</p>
-          <button type="button" onClick={onCatchUp} className="mt-2 rounded-xl bg-amber-600 px-3 py-1.5 text-xs font-medium text-white">Catch up · compress 3 days</button>
+        <div className="rounded-2xl border border-stone-200 bg-stone-50/70 px-4 py-3 dark:border-stone-700 dark:bg-stone-900/50">
+          <p className="text-sm text-stone-600 dark:text-stone-300">
+            Optional soft reset — compress the next few plan days if you want. Boss-pinned lessons stay put.
+          </p>
+          <button
+            type="button"
+            onClick={onCatchUp}
+            className="mt-2 rounded-xl border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-700 dark:border-stone-600 dark:bg-stone-800 dark:text-stone-200"
+          >
+            Optional · compress 3 days
+          </button>
+        </div>
+      )}
+
+      {!sprintFocus && (
+        <StreakStrip
+          view={dailyView}
+          onUseFreeze={yesterdayOpen && onUseFreeze ? onUseFreeze : undefined}
+          freezeHintDay={yesterdayOpen ? yesterdayIST : null}
+          lifeDay={lifeDayFreeze}
+        />
+      )}
+
+      {!sprintFocus && showSoftStreakBanner && (
+        <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 dark:border-stone-800 dark:bg-stone-900/70">
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-sm text-stone-500 dark:text-stone-400">Evening nudge — one lesson keeps the streak.</p>
+            <button
+              type="button"
+              className="shrink-0 text-xs text-stone-400 underline underline-offset-2"
+              onClick={() => onDismissStreakBanner?.()}
+            >
+              Dismiss
+            </button>
+          </div>
         </div>
       )}
 
       {!sprintFocus && shield.canShield && !streakDates.includes(addDaysISO(today, -1)) && (
-        <div className="rounded-3xl border border-stone-200 bg-white p-4 dark:border-stone-700 dark:bg-stone-900">
-          <p className="text-sm text-stone-600 dark:text-stone-300">Missed a day? Streak shield is free once this week if you already met budget earlier.</p>
+        <div className="rounded-2xl border border-stone-100 bg-white/80 px-4 py-3 dark:border-stone-800 dark:bg-stone-900/70">
+          <p className="text-sm text-stone-500 dark:text-stone-400">Missed a day? Streak shield is free once this week if you already met budget earlier.</p>
           <button type="button" onClick={() => onUseShield(shield.weekKey)} className="mt-2 rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900">Use streak shield</button>
         </div>
       )}
@@ -493,25 +542,6 @@ export function TodayView({
         prefs={prefs}
         onDeferPractice={onDeferPractice}
       />
-
-      {primary && (
-        <div
-          ref={primaryRef}
-          id="today-primary"
-          className={`rounded-3xl border bg-gradient-to-br from-orange-50 to-white p-5 shadow-sm dark:from-orange-950/40 dark:to-stone-900 ${
-            highlightPrimary || highlightLessonKey === primary.key
-              ? 'border-orange-400 ring-2 ring-orange-300/70 dark:border-orange-500 dark:ring-orange-700/60'
-              : 'border-orange-200 dark:border-orange-900/50'
-          }`}
-        >
-          <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Primary focus</p>
-          <p className="mt-1 text-xs text-orange-600/80 dark:text-orange-300/80">{primary.label}</p>
-          <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{primary.title}</h2>
-          <p className="text-xs text-stone-400">{primary.courseTitle}</p>
-          <p className="mt-2 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
-          <button type="button" onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)} className="mt-4 w-full rounded-2xl bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm">Open current lesson</button>
-        </div>
-      )}
 
       {getFluxWindow() === 'deep' && primary ? (
         <p className="text-center text-xs text-stone-400">Hormozi Deep · primary only. Other lessons wait outside this block.</p>

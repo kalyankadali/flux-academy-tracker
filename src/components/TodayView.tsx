@@ -369,7 +369,7 @@ export function TodayView({
               href={clearHomeDayPulseUrl()}
               className="mt-2 inline-block text-xs font-medium text-stone-500 underline underline-offset-2"
             >
-              Back to Better Home · Day Pulse
+              Back to Better Home · A better day, as it happens.
             </a>
           </div>
         )

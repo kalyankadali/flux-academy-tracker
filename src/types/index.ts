@@ -119,7 +119,7 @@ export interface AppPrefs {
   lastUndo: UndoSnapshot | null;
   /** Stub: morning ping coming later */
   morningPingEnabled: boolean;
-  /** When the calm plan (through Oct 22) was last generated */
+  /** When the 24-day calm plan was last generated */
   planGeneratedAt: string | null;
   /** ISO week when weekly review was dismissed */
   weeklyReviewDismissedWeek: string | null;

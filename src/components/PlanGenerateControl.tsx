@@ -9,7 +9,7 @@ export function PlanGenerateControl({ hasPlan, planGeneratedAt, onGenerate }: Pr
   const regenerate = () => {
     if (
       !window.confirm(
-        'Fresh start from today through Oct 22 (IST). Completed lessons stay checked — remaining work spreads evenly across the days left. Boss-pinned lessons stay protected. Ready?',
+        'Fresh start — 24-day calm plan from today through Oct 22 (IST). Completed lessons stay checked — remaining work spreads evenly across the days left. Boss-pinned lessons stay protected. Ready?',
       )
     ) {
       return;

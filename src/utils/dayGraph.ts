@@ -68,7 +68,7 @@ export function linchpinForToday(
   return null
 }
 
-export const CLEAR_HOME_BASE = 'https://clear-home.vercel.app'
+export const CLEAR_HOME_BASE = 'https://clear-home-live.vercel.app'
 
 export function clearHomeDayPulseUrl(base = CLEAR_HOME_BASE): string {
   return `${base.replace(/\/$/, '')}/?pulse=1`

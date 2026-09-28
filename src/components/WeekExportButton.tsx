@@ -74,7 +74,7 @@ export function WeekExportButton({ schedule, compact = false }: Props) {
         <div className="week-export-sheet">
           <header className="week-export-header">
             <h1 className="week-export-title">
-              Flux Academy Tracker · Week of {data.weekOfLabel}
+              Calm Tracker · Week of {data.weekOfLabel}
             </h1>
             <p className="week-export-sub">
               Mon–Sun · Asia/Kolkata

@@ -39,12 +39,12 @@ export function fluxWindowCopy(w: FluxWindow): { title: string; body: string } {
     case 'light':
       return {
         title: 'Between blocks',
-        body: 'Day spine first. Deep Flux: 7:00 cabin, 11:00 home office, 3:30 cabin again.',
+        body: 'Day spine first. Deep Calm Tracker: 7:00 cabin, 11:00 home office, 3:30 cabin again.',
       }
     case 'wind_down':
       return {
         title: 'Wind down',
-        body: 'Walk at cabin, home for dinner, then evening tasks & Zebra Learn. No more Flux grind.',
+        body: 'Walk at cabin, home for dinner, then evening tasks & Zebra Learn. No more deep grind.',
       }
     default:
       return {
@@ -56,4 +56,4 @@ export function fluxWindowCopy(w: FluxWindow): { title: string; body: string } {
 
 /** Calm copy for 24-day calm plan banner (IST deep windows). */
 export const FLUX_DEEP_BLOCKS_HINT =
-  '24-day calm plan — remaining path lessons spread evenly from today through Oct 22 (IST). Open Flux in 7:00–8:30 cabin, 11:00–15:00 home office, and 15:30–18:00 cabin.'
+  '24-day calm plan — remaining path lessons spread evenly from today through Oct 22 (IST). Open Calm Tracker in 7:00–8:30 cabin, 11:00–15:00 home office, and 15:30–18:00 cabin.'

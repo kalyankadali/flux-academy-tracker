@@ -53,7 +53,7 @@ export function Dashboard({
     <section className="space-y-6">
       <header className="space-y-2">
         <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
-          Flux Academy Tracker
+          Calm Tracker
         </p>
         <h1 className="text-2xl font-semibold tracking-tight text-stone-800 dark:text-stone-100 sm:text-3xl">
           {courseTitle}

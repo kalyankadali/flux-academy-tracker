@@ -1,7 +1,7 @@
 {
-  "name": "Flux Academy Tracker",
-  "short_name": "Flux Tracker",
-  "description": "Calm multi-course second-brain progress tracker for Flux Academy",
+  "name": "Calm Tracker",
+  "short_name": "Calm Tracker",
+  "description": "Calm Tracker — soft multi-course progress for Flux Academy deep work",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fafaf9",

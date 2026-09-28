@@ -282,7 +282,7 @@ export function TodayView({
         if (!linchpin) return null;
         return (
           <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
-            <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Clear Home</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home</p>
             <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
               Today&apos;s linchpin · <span className="font-medium">{linchpin}</span>
             </p>
@@ -293,14 +293,14 @@ export function TodayView({
       {prefs.clearHomeDay?.lifeDerailed && prefs.clearHomeDay.dateKey === todayIST && (
         <div className="rounded-3xl border border-stone-200 bg-stone-50/80 p-4 dark:border-stone-700 dark:bg-stone-900/60">
           <p className="text-sm text-stone-600 dark:text-stone-300">
-            Clear Home is in recovery — no shame. Finish one calm lesson here, or reopen the fixed-window plan.
+            Better Home is in recovery — no shame. Finish one calm lesson here, or reopen the fixed-window plan.
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             <a
               href={clearHomeRecoveryUrl()}
               className="rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
             >
-              Open Clear Home recovery
+              Back to Better Home
             </a>
             <button
               type="button"
@@ -369,7 +369,7 @@ export function TodayView({
               href={clearHomeDayPulseUrl()}
               className="mt-2 inline-block text-xs font-medium text-stone-500 underline underline-offset-2"
             >
-              Open Clear Home · Day Pulse
+              Back to Better Home · Day Pulse
             </a>
           </div>
         )

@@ -355,6 +355,6 @@ export async function pullClearHomeDayGraph(): Promise<
     return { ok: true, dayGraph: graph };
   } catch (err) {
     if (isNotFound(err)) return { ok: true, dayGraph: null };
-    return { ok: false, error: appwriteErrorMessage(err, 'Could not read Clear Home day graph.') };
+    return { ok: false, error: appwriteErrorMessage(err, 'Could not read Better Home day graph.') };
   }
 }

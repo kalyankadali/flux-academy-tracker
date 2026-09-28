@@ -320,6 +320,7 @@ export type ClearHomeDayGraph = {
   lifeDerailed?: boolean;
   fluxLessonKey?: string | null;
   fluxTitle?: string | null;
+  cabinMode?: 'heading' | 'arrived' | null;
   updatedAt?: string;
 };
 

@@ -115,6 +115,8 @@ export function TodayView({
             tomorrowLinchpin: g.tomorrowLinchpin ?? null,
             lifeDerailed: !!g.lifeDerailed,
             fluxDone: !!g.fluxDone,
+            cabinMode:
+              g.cabinMode === 'heading' || g.cabinMode === 'arrived' ? g.cabinMode : null,
             updatedAt: g.updatedAt || new Date().toISOString(),
           },
         });
@@ -310,6 +312,18 @@ export function TodayView({
               Calm catch-up here
             </button>
           </div>
+        </div>
+      )}
+
+      {prefs.clearHomeDay?.cabinMode && prefs.clearHomeDay.dateKey === todayIST && (
+        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
+          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · cabin</p>
+          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
+            {prefs.clearHomeDay.cabinMode === 'arrived'
+              ? 'You arrived at the cabin — this is the deep-work window. One calm lesson is enough.'
+              : 'Heading to cabin — windows soft-shifted on Better Home. Settle in, then one lesson here.'}
+          </p>
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
         </div>
       )}
 

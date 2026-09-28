@@ -143,6 +143,7 @@ export interface AppPrefs {
     tomorrowLinchpin: string | null;
     lifeDerailed: boolean;
     fluxDone: boolean;
+    cabinMode: 'heading' | 'arrived' | null;
     updatedAt: string;
   } | null;
 }

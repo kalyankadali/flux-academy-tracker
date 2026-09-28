@@ -21,6 +21,7 @@ export type SharedDayGraph = {
   lifeDerailed: boolean
   fluxLessonKey: string | null
   fluxTitle: string | null
+  cabinMode: 'heading' | 'arrived' | null
   updatedAt: string
 }
 
@@ -47,6 +48,8 @@ export function normalizeDayGraph(raw: unknown, _dateKey?: string): SharedDayGra
     lifeDerailed: !!o.lifeDerailed,
     fluxLessonKey: typeof o.fluxLessonKey === 'string' ? o.fluxLessonKey : null,
     fluxTitle: typeof o.fluxTitle === 'string' ? o.fluxTitle : null,
+    cabinMode:
+      o.cabinMode === 'heading' || o.cabinMode === 'arrived' ? o.cabinMode : null,
     updatedAt: typeof o.updatedAt === 'string' ? o.updatedAt : new Date().toISOString(),
   }
 }

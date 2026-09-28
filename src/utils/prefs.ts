@@ -124,6 +124,11 @@ export function loadPrefs(): AppPrefs {
                   : null,
               lifeDerailed: !!(parsed.clearHomeDay as { lifeDerailed?: unknown }).lifeDerailed,
               fluxDone: !!(parsed.clearHomeDay as { fluxDone?: unknown }).fluxDone,
+              cabinMode:
+                (parsed.clearHomeDay as { cabinMode?: unknown }).cabinMode === 'heading' ||
+                (parsed.clearHomeDay as { cabinMode?: unknown }).cabinMode === 'arrived'
+                  ? ((parsed.clearHomeDay as { cabinMode: 'heading' | 'arrived' }).cabinMode)
+                  : null,
               updatedAt:
                 typeof (parsed.clearHomeDay as { updatedAt?: unknown }).updatedAt === 'string'
                   ? (parsed.clearHomeDay as { updatedAt: string }).updatedAt

@@ -3,6 +3,7 @@ import type { AppPrefs, QueueBatch, ThemeMode } from '../types';
 import { defaultDailyStreak, normalizeDailyStreak } from './streak';
 
 export const PREFS_KEY = 'flux-course-tracker:prefs:v2';
+export const TIP_DISMISS_KEY = 'ct-tip-install-dismissed';
 
 function uuid(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -105,7 +106,15 @@ export function loadPrefs(): AppPrefs {
       weeklyReviewDismissedWeek: parsed.weeklyReviewDismissedWeek ?? null,
       lastWeeklyReviewWeekKey: parsed.lastWeeklyReviewWeekKey ?? null,
       weeklyFocusNote: typeof parsed.weeklyFocusNote === 'string' ? parsed.weeklyFocusNote : null,
-      tipDismissed: !!parsed.tipDismissed,
+      tipDismissed: (() => {
+        let sticky = false;
+        try {
+          sticky = localStorage.getItem(TIP_DISMISS_KEY) === '1';
+        } catch {
+          /* ignore */
+        }
+        return !!parsed.tipDismissed || sticky;
+      })(),
       catchUpCompressedUntil: parsed.catchUpCompressedUntil ?? null,
       lastFirstWinDayISO:
         typeof parsed.lastFirstWinDayISO === 'string' ? parsed.lastFirstWinDayISO : null,

@@ -300,6 +300,8 @@ export function mergeSyncPayloads(local: SyncPayload, remote: SyncPayload): Sync
       ...newer.prefs,
       schedule,
       syncId: newer.syncId || older.syncId,
+      // Once dismissed, stay dismissed across devices (never resurrect Tip / Install).
+      tipDismissed: !!(older.prefs.tipDismissed || newer.prefs.tipDismissed),
     },
     courseStates,
   };

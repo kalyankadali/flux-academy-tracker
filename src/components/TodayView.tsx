@@ -13,19 +13,14 @@ import { IpadTip } from './IpadTip'
 import { InstallChecklist } from './InstallChecklist';
 import { SprintWeekBanner } from './SprintWeekBanner';
 import { WeeklyReviewCard } from './WeeklyReviewCard';
-import { TodayScheduledBlock } from './TodayScheduledBlock';
 import { TodayCloseBlock } from './TodayCloseBlock';
-import { TodayBudgetBlock } from './TodayBudgetBlock';
 import { WeekExportButton } from './WeekExportButton';
 import { isLessonComplete } from '../utils/progress';
 import { countDaysBehind } from '../utils/plan40';
-import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../utils/dailyBudget';
 import { canUseStreakShield } from '../utils/streakShield';
 import { shouldShowSoftBanner, viewStreak } from '../utils/streak';
 import { StreakStrip, StreakWeeklyStrip } from './StreakStrip';
 import { StreakRing } from './StreakRing';
-import { aggregateLearningPathPct } from '../utils/pathProgress';
-import { THIS_OR_NOTHING } from '../utils/quotes'
 import { fluxWindowCopy, getFluxWindow, FLUX_DEEP_BLOCKS_HINT } from '../utils/dayWindows';
 import { computeMainShare, mainShareEquals } from '../utils/mainShare';
 import { LIFE_GOAL } from '../utils/calmCopy';
@@ -57,7 +52,7 @@ interface Props {
 
 export function TodayView({
   prefs, queue, onOpen, onTickQueue, onSchedule, onGeneratePlan, onCatchUp,
-  onMarkDayDone, onDeferPractice, onDismissWeeklyReview, onSaveWeeklyFocus, onDismissTip, onUseShield,
+  onMarkDayDone, onDeferPractice: _onDeferPractice, onDismissWeeklyReview, onSaveWeeklyFocus, onDismissTip, onUseShield,
   onUseFreeze, onDismissStreakBanner,
   onPatchPrefs, highlightPrimary = false, highlightLessonKey = null,
 }: Props) {
@@ -198,13 +193,6 @@ export function TodayView({
     (prefs.clearHomeDay.dateKey === yesterdayIST || prefs.clearHomeDay.dateKey === todayIST) &&
     yesterdayOpen;
 
-  const logged = useMemo(() => minutesLoggedToday(COURSES, today), []);
-  const plannedMins = useMemo(
-    () => todayScheduledMinutes(schedule, COURSES, today) || todayScheduledMinutes(schedule, COURSES, todayIST),
-    [schedule, today, todayIST],
-  );
-  const budget = prefs.dailyBudgetMinutes;
-  const bStatus = budgetStatus(logged, budget);
   const daysBehind = useMemo(() => countDaysBehind(schedule, COURSES, todayIST), [schedule, todayIST]);
   const dayDone = prefs.dayDoneDates.includes(today) || prefs.dayDoneDates.includes(todayIST);
 
@@ -244,26 +232,11 @@ export function TodayView({
 
   const showWeekly = isSunday() && prefs.weeklyReviewDismissedWeek !== weekKey;
 
-  const pathAgg = useMemo(() => aggregateLearningPathPct(COURSES), []);
-  const todayLeft = useMemo(
-    () => scheduledToday.filter((i) => !i.done).length,
-    [scheduledToday],
-  );
-  /** Calm daily focus — never hero the lifetime ~1488 task total. */
+  /** Calm energy pack from Better Home — never hero calendar minutes. */
   const energyPackMins =
     prefs.clearHomeDay?.dateKey === todayIST && prefs.clearHomeDay.energyPackMinutes
       ? prefs.clearHomeDay.energyPackMinutes
       : null;
-  const focusMinutes = energyPackMins ?? (plannedMins > 0 ? plannedMins : null);
-  const todayFocusLabel = (() => {
-    if (scheduledToday.length === 0) {
-      if (focusMinutes) return `Today · ~${focusMinutes}m`;
-      return 'Today · clear';
-    }
-    if (todayLeft === 0) return 'Today · done';
-    const lessonBit = todayLeft === 1 ? '1 lesson' : `${todayLeft} lessons`;
-    return focusMinutes ? `Today · ${lessonBit} · ~${focusMinutes}m` : `Today · ${lessonBit}`;
-  })();
 
   const weekWins = useMemo(() => {
     const lessons: string[] = [];
@@ -316,10 +289,6 @@ export function TodayView({
           <p className="mt-1 text-xs text-orange-600/80 dark:text-orange-300/80">{primary.label}</p>
           <h2 className="mt-1 text-lg font-semibold text-stone-800 dark:text-stone-100">{primary.title}</h2>
           <p className="text-xs text-stone-400">{primary.courseTitle}</p>
-          {focusMinutes ? (
-            <p className="mt-1 text-[11px] text-stone-400">~{focusMinutes}m · soft fit for today’s energy</p>
-          ) : null}
-          <p className="mt-2 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
           <button type="button" onClick={() => onOpen(primary.courseId, primary.moduleId, primary.lessonId)} className="mt-4 w-full rounded-2xl bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm">Open today’s lesson</button>
         </div>
       )}
@@ -350,13 +319,6 @@ export function TodayView({
           </div>
         </div>
       )}
-
-      <div className="rounded-2xl border border-stone-100 bg-white/70 px-4 py-2.5 dark:border-stone-800 dark:bg-stone-900/60">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <p className="text-sm font-medium text-stone-700 dark:text-stone-200">{todayFocusLabel}</p>
-          <p className="text-[11px] text-stone-400">Path · {pathAgg.pct}%</p>
-        </div>
-      </div>
 
       {(() => {
         const ch = prefs.clearHomeDay;
@@ -537,15 +499,6 @@ export function TodayView({
         </div>
       )}
 
-      <TodayBudgetBlock
-        sprintFocus={sprintFocus}
-        logged={logged}
-        budget={budget}
-        bStatus={bStatus}
-        plannedMins={plannedMins}
-        prefs={prefs}
-        onDeferPractice={onDeferPractice}
-      />
 
       {getFluxWindow() === 'deep' && primary ? (
         <p className="text-center text-xs text-stone-400">Hormozi Deep · primary only. Other lessons wait outside this block.</p>
@@ -559,16 +512,15 @@ export function TodayView({
         binaryHint={(!primary && !sprintFocus) || getFluxWindow() === 'deep'}
       />
 
-      {!(getFluxWindow() === 'deep' && primary) && (
-        <TodayScheduledBlock
-          sprintFocus={sprintFocus}
-          scheduledToday={scheduledToday}
-          suggestions={suggestions}
-          today={today}
-          highlightLessonKey={highlightLessonKey}
-          onOpen={onOpen}
-          onSchedule={onSchedule}
-        />
+      {/* No 20-lesson "Scheduled for today" list — Upcoming / Path only. */}
+      {!(getFluxWindow() === 'deep' && primary) && scheduledToday.length > 0 && (
+        <p className="text-center text-xs text-stone-400">
+          More for today waits on{' '}
+          <span className="font-medium text-stone-500 dark:text-stone-300">Upcoming</span>
+          {' · '}
+          <span className="font-medium text-stone-500 dark:text-stone-300">Path</span>
+          . One lesson here is enough.
+        </p>
       )}
 
       <TodayCloseBlock

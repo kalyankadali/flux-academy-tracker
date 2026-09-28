@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { CourseData, Lesson, LessonKey, Module, Subtask } from '../types';
 import { ProgressBar } from './ProgressBar';
 import { Description } from '../utils/linkify';
@@ -7,7 +7,6 @@ import { lessonProgress } from '../utils/progress';
 import { classifySubtask, kindLabel } from '../utils/subtaskKind';
 import { fluxLessonUrl } from '../utils/fluxUrl';
 import { makeLessonKey } from '../utils/lessonKeys';
-import { THIS_OR_NOTHING } from '../utils/quotes';
 
 interface Props {
   course: CourseData;
@@ -46,13 +45,6 @@ export function LessonDetail({
   const watchDone = lesson.subtasks.some(
     (s) => classifySubtask(s) === 'watch' && s.completed,
   );
-
-  const currentSub = useMemo(
-    () => lesson.subtasks.find((s) => !s.completed) ?? lesson.subtasks[lesson.subtasks.length - 1],
-    [lesson.subtasks],
-  );
-
-  const runningSub = lesson.subtasks.find((s) => s.timerStartedAt);
 
   useEffect(() => {
     const running = lesson.subtasks.some((s) => s.timerStartedAt);
@@ -100,9 +92,6 @@ export function LessonDetail({
         </p>
         <p className="mt-1 text-xs text-stone-400 dark:text-stone-500">{module.title}</p>
         <h1 className="mt-1 text-2xl font-semibold text-stone-800 dark:text-stone-100">{lesson.title}</h1>
-        {!lesson.completed && (
-          <p className="mt-2 text-[11px] text-stone-400 dark:text-stone-500">{THIS_OR_NOTHING}</p>
-        )}
         <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
           Video {lesson.duration} · ~{lesson.durationMinutes} min watch
         </p>
@@ -173,53 +162,7 @@ export function LessonDetail({
         })}
       </div>
 
-      {/* Sticky focus bar */}
-      {currentSub && (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 px-4 py-3 backdrop-blur dark:border-stone-700 dark:bg-stone-950/95">
-          <div className="mx-auto flex max-w-3xl items-center gap-3">
-            <button
-              type="button"
-              onClick={() => onToggleSubtask(currentSub.id)}
-              aria-pressed={currentSub.completed}
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-sm transition ${
-                currentSub.completed
-                  ? 'border-orange-400 bg-orange-400 text-white'
-                  : 'border-stone-300 bg-white text-transparent hover:border-orange-300 dark:border-stone-600 dark:bg-stone-900'
-              }`}
-            >
-              ✓
-            </button>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-stone-800 dark:text-stone-100">
-                {currentSub.label}
-              </p>
-              <p className="text-xs text-stone-400">
-                {runningSub
-                  ? `Timing… ${Math.floor(elapsedMinutes(runningSub.timerStartedAt!))}m`
-                  : `Est ${formatMinutes(currentSub.estimatedMinutes)}`}
-              </p>
-            </div>
-            {runningSub ? (
-              <button
-                type="button"
-                onClick={() => onStopTimer(runningSub.id)}
-                className="rounded-xl bg-orange-100 px-3 py-1.5 text-xs font-medium text-orange-800 dark:bg-orange-950/60 dark:text-orange-200"
-              >
-                Stop
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => onStartTimer(currentSub.id)}
-                disabled={currentSub.completed}
-                className="rounded-xl bg-orange-500 px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
-              >
-                Timer
-              </button>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Sticky Watch bar removed — subtasks own the one Watch control. */}
     </section>
   );
 }

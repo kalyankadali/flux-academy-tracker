@@ -283,6 +283,11 @@ export function useAppPrefs() {
   }, []);
 
   const dismissTip = useCallback(() => {
+    try {
+      localStorage.setItem('ct-tip-install-dismissed', '1');
+    } catch {
+      /* ignore */
+    }
     setPrefs((p) => ({ ...p, tipDismissed: true }));
   }, []);
 

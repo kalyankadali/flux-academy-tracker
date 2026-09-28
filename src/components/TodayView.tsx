@@ -292,7 +292,7 @@ export function TodayView({
       <div className={`rounded-3xl border p-5 ${sprintFocus ? 'border-stone-100 bg-stone-50/40 opacity-80 dark:border-stone-800' : 'border-orange-100 bg-orange-50/50 dark:border-orange-900/40 dark:bg-orange-950/20'}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">Calm plan through Oct 22</h2>
+            <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100">24-day calm plan</h2>
             <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
               {sprintFocus ? 'Plan days stay clear on purpose during sprint focus — no lesson backlog from today.' : FLUX_DEEP_BLOCKS_HINT}
             </p>

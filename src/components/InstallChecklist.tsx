@@ -3,9 +3,10 @@ import { CT_TAGLINE, INSTALL_CHECKLIST_TITLE } from '../utils/calmCopy';
 
 const KEY = 'ct-install-checklist';
 const ITEMS = [
-  { id: 'homescreen', label: 'Add to Home Screen (Share → Add to Home Screen)' },
+  { id: 'homescreen', label: 'Add to Home Screen (Chrome → Install / Add to Home Screen)' },
   { id: 'open-icon', label: 'Open Calm Tracker from the home-screen icon' },
   { id: 'google', label: 'Sign in with Google (same account on every device)' },
+  { id: 'notifs', label: 'Enable notifications on this phone (Android spare)' },
   { id: 'plan', label: 'Generate / confirm 24-day calm plan' },
   { id: 'better-home', label: 'Pair with Better Home morning ritual' },
 ];

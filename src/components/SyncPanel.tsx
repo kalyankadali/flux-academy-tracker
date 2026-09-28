@@ -17,6 +17,13 @@ import {
 } from '../lib/appwrite';
 import { loadPrefs } from '../utils/prefs';
 import { IpadTip } from './IpadTip';
+import {
+  disableWebPush,
+  enableWebPush,
+  isWebPushEnabledLocally,
+  isWebPushSupported,
+  sendTestPush,
+} from '../lib/webPush';
 
 interface Props {
   prefs: AppPrefs;
@@ -40,6 +47,9 @@ export function SyncPanel({
   const [status, setStatus] = useState<string | null>(null);
   const [paste, setPaste] = useState('');
   const [busy, setBusy] = useState(false);
+  const [pushEnabled, setPushEnabled] = useState(() => isWebPushEnabledLocally());
+  const [pushBusy, setPushBusy] = useState(false);
+  const [pushMsg, setPushMsg] = useState<string | null>(null);
   const [session, setSession] = useState<AuthSession | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const cloudReady = isCloudConfigured();
@@ -237,8 +247,86 @@ export function SyncPanel({
 
       {!tipDismissed && onDismissTip && <IpadTip onDismiss={onDismissTip} />}
 
-      <div className="rounded-3xl border border-dashed border-stone-200 bg-stone-50/50 p-5 dark:border-stone-700 dark:bg-stone-900/40">
-        <label className="flex cursor-pointer items-start gap-3">
+      <div className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900">
+        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">
+          Notifications on this phone
+        </h2>
+        <p className="mt-1 text-xs text-stone-400">
+          Soft evening streak nudge (~20:00–21:00 IST) when no lesson is done that day. Sign in
+          with Google, then enable on the Android spare (Chrome → Add to Home Screen). Calm —
+          no shame.
+        </p>
+        {!isWebPushSupported() && (
+          <p className="mt-2 text-sm text-stone-500">Web Push needs Chrome on Android.</p>
+        )}
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            disabled={pushBusy || !isWebPushSupported()}
+            onClick={async () => {
+              setPushBusy(true);
+              setPushMsg(null);
+              try {
+                const res = await enableWebPush();
+                if (!res.ok) {
+                  setPushMsg(res.error);
+                  return;
+                }
+                setPushEnabled(true);
+                onMorningPing(true);
+                setPushMsg('Enabled on this phone. Evening streak nudge is ready.');
+              } finally {
+                setPushBusy(false);
+              }
+            }}
+            className="rounded-xl bg-orange-500 px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+          >
+            {pushEnabled ? 'Re-enable on this phone' : 'Enable notifications on this phone'}
+          </button>
+          {pushEnabled && (
+            <>
+              <button
+                type="button"
+                disabled={pushBusy}
+                onClick={async () => {
+                  setPushBusy(true);
+                  setPushMsg(null);
+                  try {
+                    const res = await sendTestPush();
+                    setPushMsg(res.ok ? 'Test sent — check the notification shade.' : res.error);
+                  } finally {
+                    setPushBusy(false);
+                  }
+                }}
+                className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-stone-600 ring-1 ring-stone-200 dark:bg-stone-800 dark:text-stone-200 dark:ring-stone-600"
+              >
+                Send test notification
+              </button>
+              <button
+                type="button"
+                disabled={pushBusy}
+                onClick={async () => {
+                  setPushBusy(true);
+                  try {
+                    await disableWebPush();
+                    setPushEnabled(false);
+                    onMorningPing(false);
+                    setPushMsg('Phone notifications off.');
+                  } finally {
+                    setPushBusy(false);
+                  }
+                }}
+                className="rounded-xl px-3 py-2 text-sm text-stone-400 hover:text-stone-600"
+              >
+                Turn off
+              </button>
+            </>
+          )}
+        </div>
+        {pushMsg && (
+          <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">{pushMsg}</p>
+        )}
+        <label className="mt-4 flex cursor-pointer items-start gap-3">
           <input
             type="checkbox"
             checked={morningPingEnabled}
@@ -247,10 +335,10 @@ export function SyncPanel({
           />
           <span>
             <span className="block text-sm font-medium text-stone-700 dark:text-stone-200">
-              Morning ping (coming)
+              Keep soft streak preference
             </span>
             <span className="mt-0.5 block text-xs text-stone-400">
-              Soft reminder preference saved — delivery will be enabled later.
+              Saved with sync — delivery uses Web Push above when enabled on this phone.
             </span>
           </span>
         </label>

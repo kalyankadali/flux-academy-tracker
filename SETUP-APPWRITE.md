@@ -59,3 +59,36 @@ Copy `.env.example` → `.env.local` (optional if defaults are fine).
 bun install
 bun run build
 ```
+
+
+## 5. Web Push (`push_subscriptions`)
+
+Table already created in database **`Main` / `main`** (TablesDB):
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `user_id` | string 36 | Appwrite user id |
+| `app` | string 16 | `bh` or `ct` |
+| `endpoint` | string 2048 | Push endpoint URL |
+| `p256dh` | string 256 | Client key |
+| `auth` | string 256 | Client auth |
+| `last_sent` | string 1024 | JSON map slot→IST date (dedupe) |
+| `ct_done_ist` | string 16 | IST date of last CT lesson (streak skip) |
+| `updated_at` | string 64 | ISO |
+| `user_agent` | string 256 | optional |
+
+Row security on; create permission `users`. Server cron uses `APPWRITE_API_KEY` (TablesDB scopes).
+
+### Vercel env (both projects)
+
+```
+VITE_VAPID_PUBLIC_KEY=<public>
+VAPID_PUBLIC_KEY=<public>
+VAPID_PRIVATE_KEY=<private>
+VAPID_SUBJECT=mailto:kalyankadali@users.noreply.github.com
+CRON_SECRET=<random>
+APPWRITE_API_KEY=<server key with tables/rows scopes>
+APPWRITE_ENDPOINT=https://sgp.cloud.appwrite.io/v1
+APPWRITE_PROJECT_ID=6aafc3d40001cf6b0d6d
+APPWRITE_DATABASE_ID=main
+```

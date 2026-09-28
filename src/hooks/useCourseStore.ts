@@ -7,6 +7,7 @@ import { celebrate } from '../utils/celebrate';
 import { loadCourseState, saveCourseState } from '../utils/storage';
 import { FLUX_CLOUD_APPLIED } from '../lib/syncEvents';
 import { loadPrefs, savePrefs } from '../utils/prefs';
+import { markCtLessonDoneToday } from '../lib/webPush';
 import { recordFinish } from '../utils/streak';
 import type { DailyStreakState, MainShare } from '../types';
 
@@ -162,6 +163,7 @@ export function useCourseStore(courseId: string, firstWin?: FirstWinOpts) {
               const next = { ...prefsSnap, dailyStreak: state, mainShare };
               savePrefs(next);
               firstWin?.onLessonFinish?.({ dailyStreak: state, mainShare });
+              void markCtLessonDoneToday();
             } catch {
               /* streak persist is best-effort */
             }

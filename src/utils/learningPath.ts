@@ -12,7 +12,7 @@ export const LEARNING_PATH_IDS: string[] = [
   'client-ready-imagery-with-magnific',
 ];
 
-/** Excluded from aggregate Learning path % (still on path / 40-day plan). Empty: no-deadline long courses were removed from the path. */
+/** Excluded from aggregate Learning path % (still on path / Oct 22 plan). Empty: no-deadline long courses were removed from the path. */
 export const AGGREGATE_PATH_EXCLUDE = new Set<string>([]);
 
 export const AGGREGATE_PATH_IDS = LEARNING_PATH_IDS.filter((id) => !AGGREGATE_PATH_EXCLUDE.has(id));

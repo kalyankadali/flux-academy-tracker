@@ -183,7 +183,7 @@ export function CalendarView({ schedule, pinnedCourseId, onSchedule, onOpen }: P
         </h2>
         {isEcommerceFocusClearDay(selectedDate) && (
           <p className="mt-2 rounded-2xl bg-sky-50 px-3 py-2 text-xs text-sky-800 dark:bg-sky-950/40 dark:text-sky-200">
-            Ecommerce AI Sprint focus day — the 40-day plan keeps this date clear on purpose.
+            Ecommerce AI Sprint focus day — the calm plan keeps this date clear on purpose.
           </p>
         )}
         {itemsOnSelected.length === 0 ? (

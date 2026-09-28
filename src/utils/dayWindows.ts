@@ -54,6 +54,6 @@ export function fluxWindowCopy(w: FluxWindow): { title: string; body: string } {
   }
 }
 
-/** Calm copy for 40-day plan banner (IST deep windows). */
+/** Calm copy for plan-through-Oct-22 banner (IST deep windows). */
 export const FLUX_DEEP_BLOCKS_HINT =
   'Fresh stretch — remaining path lessons spread evenly from today through Oct 22 (IST). Open Flux in 7:00–8:30 cabin, 11:00–15:00 home office, and 15:30–18:00 cabin.'

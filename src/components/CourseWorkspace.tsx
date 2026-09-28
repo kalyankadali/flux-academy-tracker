@@ -186,7 +186,7 @@ export function CourseWorkspace({
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm text-stone-500 dark:text-stone-400">
             {courseId === 'ecommerce-ai-sprint'
-              ? 'Curriculum seed pending. Your 40-day plan already keeps sprint-focus days clear when that window is active.'
+              ? 'Curriculum seed pending. Your plan through Oct 22 already keeps sprint-focus days clear when that window is active.'
               : 'This course is listed so you can find it later.'}
           </p>
           <a

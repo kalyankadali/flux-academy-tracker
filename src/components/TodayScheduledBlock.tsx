@@ -32,7 +32,7 @@ export function TodayScheduledBlock({
       <div className={`rounded-3xl border bg-white p-5 shadow-sm dark:bg-stone-900 dark:border-stone-800 ${sprintFocus ? 'border-stone-100 opacity-60' : 'border-stone-100'}`}>
         <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">{sprintFocus ? 'Path lessons for today (clear / optional)' : 'Scheduled for today'}</h2>
         {scheduledToday.length === 0 ? (
-          <p className="mt-2 text-sm text-stone-400">{sprintFocus ? 'Nothing on the path today — that’s intentional for the live sprint.' : 'Nothing dated for today yet. Generate a 40-day plan, or try the suggestions below.'}</p>
+          <p className="mt-2 text-sm text-stone-400">{sprintFocus ? 'Nothing on the path today — that’s intentional for the live sprint.' : 'Nothing dated for today yet. Restart plan (today → Oct 22), or try the suggestions below.'}</p>
         ) : (
           <ul className="mt-3 space-y-2">
             {scheduledToday.map((item) => (

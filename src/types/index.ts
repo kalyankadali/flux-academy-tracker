@@ -137,6 +137,14 @@ export interface AppPrefs {
   mainShare: MainShare | null;
   /** Calm daily streak (IST) — synced via existing Appwrite prefs blob */
   dailyStreak: DailyStreakState;
+  /** Soft cache of Clear Home SharedDayGraph (linchpin / derailed / clock). */
+  clearHomeDay: {
+    dateKey: string;
+    tomorrowLinchpin: string | null;
+    lifeDerailed: boolean;
+    fluxDone: boolean;
+    updatedAt: string;
+  } | null;
 }
 
 export type TopTab = 'home' | 'today' | 'upcoming' | 'calendar' | 'sync';

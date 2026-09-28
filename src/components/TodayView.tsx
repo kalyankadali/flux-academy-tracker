@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { COURSES } from '../data/courses';
 import type { AppPrefs, LessonKey, QueueBatch } from '../types';
 import { todayKey, todayKeyKolkata, addDaysISO, isSunday, isoWeekKey, isEcommerceFocusClearDay } from '../utils/dates';
+import { pullClearHomeDayGraph } from '../lib/appwrite';
+import { clearHomeDayPulseUrl, clearHomeRecoveryUrl } from '../utils/dayGraph';
 import { parseLessonKey, lessonNumberLabel } from '../utils/lessonKeys';
 import { peekCourseModules, loadCourseState } from '../utils/storage';
 import { collectNextLessonKeys } from '../utils/queue';
@@ -98,6 +100,41 @@ export function TodayView({
       onPatchPrefs({ mainShare: next });
     }
   }, [scheduledToday, todayIST, sprintFocus, prefs.mainShare, onPatchPrefs]);
+
+  // Mirror Clear Home day graph (linchpin / life derailed) from shared Appwrite snapshot.
+  useEffect(() => {
+    let cancelled = false;
+    const pull = async () => {
+      try {
+        const res = await pullClearHomeDayGraph();
+        if (cancelled || !res.ok || !res.dayGraph) return;
+        const g = res.dayGraph;
+        onPatchPrefs({
+          clearHomeDay: {
+            dateKey: g.dateKey,
+            tomorrowLinchpin: g.tomorrowLinchpin ?? null,
+            lifeDerailed: !!g.lifeDerailed,
+            fluxDone: !!g.fluxDone,
+            updatedAt: g.updatedAt || new Date().toISOString(),
+          },
+        });
+      } catch {
+        /* soft fail */
+      }
+    };
+    void pull();
+    const onVis = () => {
+      if (document.visibilityState === 'visible') void pull();
+    };
+    window.addEventListener('focus', onVis);
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      cancelled = true;
+      window.removeEventListener('focus', onVis);
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, [onPatchPrefs]);
+
 
   const primaryRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -233,6 +270,49 @@ export function TodayView({
         </div>
       </header>
 
+      {(() => {
+        const ch = prefs.clearHomeDay;
+        const yesterday = addDaysISO(todayIST, -1);
+        const linchpin =
+          ch &&
+          ((ch.dateKey === yesterday && ch.tomorrowLinchpin) ||
+            (ch.dateKey === todayIST && ch.tomorrowLinchpin))
+            ? ch.tomorrowLinchpin
+            : null;
+        if (!linchpin) return null;
+        return (
+          <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
+            <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Clear Home</p>
+            <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
+              Today&apos;s linchpin · <span className="font-medium">{linchpin}</span>
+            </p>
+          </div>
+        );
+      })()}
+
+      {prefs.clearHomeDay?.lifeDerailed && prefs.clearHomeDay.dateKey === todayIST && (
+        <div className="rounded-3xl border border-stone-200 bg-stone-50/80 p-4 dark:border-stone-700 dark:bg-stone-900/60">
+          <p className="text-sm text-stone-600 dark:text-stone-300">
+            Clear Home is in recovery — no shame. Finish one calm lesson here, or reopen the fixed-window plan.
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <a
+              href={clearHomeRecoveryUrl()}
+              className="rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
+            >
+              Open Clear Home recovery
+            </a>
+            <button
+              type="button"
+              onClick={onCatchUp}
+              className="rounded-xl border border-stone-300 px-3 py-1.5 text-xs font-medium text-stone-600 dark:border-stone-600 dark:text-stone-300"
+            >
+              Calm catch-up here
+            </button>
+          </div>
+        </div>
+      )}
+
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
 
       {!sprintFocus && (
@@ -285,6 +365,12 @@ export function TodayView({
           >
             <p className="text-xs font-medium uppercase tracking-wider text-stone-500">{copy.title}</p>
             <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">{copy.body}</p>
+            <a
+              href={clearHomeDayPulseUrl()}
+              className="mt-2 inline-block text-xs font-medium text-stone-500 underline underline-offset-2"
+            >
+              Open Clear Home · Day Pulse
+            </a>
           </div>
         )
       })()}
@@ -348,17 +434,29 @@ export function TodayView({
         </div>
       )}
 
-      <DoThisNext queue={queue} onOpen={onOpen} onTick={onTickQueue} deemphasized={sprintFocus} binaryHint={(!primary && !sprintFocus) || getFluxWindow() === 'deep'} />
+      {getFluxWindow() === 'deep' && primary ? (
+        <p className="text-center text-xs text-stone-400">Hormozi Deep · primary only. Other lessons wait outside this block.</p>
+      ) : null}
 
-      <TodayScheduledBlock
-        sprintFocus={sprintFocus}
-        scheduledToday={scheduledToday}
-        suggestions={suggestions}
-        today={today}
-        highlightLessonKey={highlightLessonKey}
+      <DoThisNext
+        queue={queue}
         onOpen={onOpen}
-        onSchedule={onSchedule}
+        onTick={onTickQueue}
+        deemphasized={sprintFocus || (getFluxWindow() === 'deep' && !!primary)}
+        binaryHint={(!primary && !sprintFocus) || getFluxWindow() === 'deep'}
       />
+
+      {!(getFluxWindow() === 'deep' && primary) && (
+        <TodayScheduledBlock
+          sprintFocus={sprintFocus}
+          scheduledToday={scheduledToday}
+          suggestions={suggestions}
+          today={today}
+          highlightLessonKey={highlightLessonKey}
+          onOpen={onOpen}
+          onSchedule={onSchedule}
+        />
+      )}
 
       <TodayCloseBlock
         dayDone={dayDone}

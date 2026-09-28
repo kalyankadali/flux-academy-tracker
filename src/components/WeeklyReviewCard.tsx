@@ -65,6 +65,9 @@ export function WeeklyReviewCard({
           Last focus note: <span className="text-stone-600 dark:text-stone-300">{lastFocusNote}</span>
         </p>
       )}
+      <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
+        What worked this week? Noticing counts — skip if nothing comes to mind.
+      </p>
       <label className="mt-3 block text-xs font-medium text-stone-500 dark:text-stone-400">
         One next focus (optional)
         <input

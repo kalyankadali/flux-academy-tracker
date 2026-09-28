@@ -304,3 +304,57 @@ export function mergeSyncPayloads(local: SyncPayload, remote: SyncPayload): Sync
     courseStates,
   };
 }
+
+
+const CLEAR_HOME_COLLECTION_ID = 'clear_home_snapshots';
+
+export type ClearHomeDayGraph = {
+  version?: number;
+  dateKey: string;
+  blockStarts?: Record<string, unknown>;
+  softPlan?: Record<string, number>;
+  fluxDone?: boolean;
+  finishesToday?: number;
+  fluxMinutesHint?: number;
+  tomorrowLinchpin?: string | null;
+  lifeDerailed?: boolean;
+  fluxLessonKey?: string | null;
+  fluxTitle?: string | null;
+  updatedAt?: string;
+};
+
+/**
+ * Pull SharedDayGraph from the same user's clear_home_snapshots row.
+ * Used for linchpin greeting, life-derailed catch-up CTA, and clock handoff.
+ */
+export async function pullClearHomeDayGraph(): Promise<
+  | { ok: true; dayGraph: ClearHomeDayGraph | null }
+  | { ok: false; error: string }
+> {
+  const db = getDatabases();
+  if (!db) return { ok: false, error: 'Appwrite is not configured.' };
+  const session = await getSession();
+  if (!session?.user) return { ok: false, error: 'Sign in with Google first.' };
+
+  const userId = session.user.id;
+  try {
+    const doc = (await db.getDocument(DATABASE_ID, CLEAR_HOME_COLLECTION_ID, userId)) as {
+      payload?: string;
+    };
+    if (!doc.payload) return { ok: true, dayGraph: null };
+    let payload: { data?: { dayGraph?: ClearHomeDayGraph | null } };
+    try {
+      payload = JSON.parse(doc.payload) as { data?: { dayGraph?: ClearHomeDayGraph | null } };
+    } catch {
+      return { ok: true, dayGraph: null };
+    }
+    const graph = payload?.data?.dayGraph ?? null;
+    if (!graph || typeof graph !== 'object' || typeof graph.dateKey !== 'string') {
+      return { ok: true, dayGraph: null };
+    }
+    return { ok: true, dayGraph: graph };
+  } catch (err) {
+    if (isNotFound(err)) return { ok: true, dayGraph: null };
+    return { ok: false, error: appwriteErrorMessage(err, 'Could not read Clear Home day graph.') };
+  }
+}

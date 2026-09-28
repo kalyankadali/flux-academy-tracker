@@ -58,6 +58,7 @@ export function defaultPrefs(): AppPrefs {
     lastFirstWinDayISO: null,
     mainShare: null,
     dailyStreak: defaultDailyStreak(),
+    clearHomeDay: null,
   };
 }
 
@@ -110,6 +111,25 @@ export function loadPrefs(): AppPrefs {
         typeof parsed.lastFirstWinDayISO === 'string' ? parsed.lastFirstWinDayISO : null,
       mainShare: normalizeMainShare(parsed.mainShare),
       dailyStreak: normalizeDailyStreak(parsed.dailyStreak),
+      clearHomeDay:
+        parsed.clearHomeDay &&
+        typeof parsed.clearHomeDay === 'object' &&
+        typeof (parsed.clearHomeDay as { dateKey?: unknown }).dateKey === 'string'
+          ? {
+              dateKey: (parsed.clearHomeDay as { dateKey: string }).dateKey,
+              tomorrowLinchpin:
+                typeof (parsed.clearHomeDay as { tomorrowLinchpin?: unknown }).tomorrowLinchpin ===
+                'string'
+                  ? (parsed.clearHomeDay as { tomorrowLinchpin: string }).tomorrowLinchpin
+                  : null,
+              lifeDerailed: !!(parsed.clearHomeDay as { lifeDerailed?: unknown }).lifeDerailed,
+              fluxDone: !!(parsed.clearHomeDay as { fluxDone?: unknown }).fluxDone,
+              updatedAt:
+                typeof (parsed.clearHomeDay as { updatedAt?: unknown }).updatedAt === 'string'
+                  ? (parsed.clearHomeDay as { updatedAt: string }).updatedAt
+                  : new Date().toISOString(),
+            }
+          : null,
     };
   } catch {
     return defaultPrefs();

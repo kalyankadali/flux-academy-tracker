@@ -1,4 +1,5 @@
 export const FLUX_LOCAL_CHANGED = 'flux-local-changed';
+export const FLUX_CLOUD_APPLIED = 'flux-cloud-applied';
 
 let suppressNotify = 0;
 
@@ -17,4 +18,10 @@ export function notifyFluxLocalChanged(): void {
   if (typeof window === 'undefined') return;
   if (suppressNotify > 0) return;
   window.dispatchEvent(new Event(FLUX_LOCAL_CHANGED));
+}
+
+/** Fire after a cloud pull wrote newer progress into localStorage — remount/refresh UI. */
+export function notifyFluxCloudApplied(): void {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new Event(FLUX_CLOUD_APPLIED));
 }

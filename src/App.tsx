@@ -21,6 +21,7 @@ const SyncPanel = lazy(() =>
 import { useAppPrefs } from './hooks/useAppPrefs';
 import { completeOAuthFromUrl } from './lib/appwrite';
 import { useAutoCloudSync } from './hooks/useAutoCloudSync';
+import { FLUX_CLOUD_APPLIED } from './lib/syncEvents';
 import type { LessonKey, TopTab } from './types';
 import { parseLessonKey } from './utils/lessonKeys';
 import { isLessonComplete } from './utils/progress';
@@ -72,6 +73,13 @@ export default function App() {
   }, []);
   const [courseId, setCourseId] = useState<string | null>(null);
   const [focusMode, setFocusMode] = useState(false);
+  /** Bumps when cloud pull applies — remount open views without full reload. */
+  const [cloudGen, setCloudGen] = useState(0);
+  useEffect(() => {
+    const onCloud = () => setCloudGen((g) => g + 1);
+    window.addEventListener(FLUX_CLOUD_APPLIED, onCloud);
+    return () => window.removeEventListener(FLUX_CLOUD_APPLIED, onCloud);
+  }, []);
   const [highlightPrimary, setHighlightPrimary] = useState(false);
   const [highlightLessonKey, setHighlightLessonKey] = useState<LessonKey | null>(null);
 
@@ -241,6 +249,7 @@ export default function App() {
         <Suspense fallback={<TabFallback />}>
         {tab === 'home' && !showCourse && (
           <CoursePicker
+            key={`home-${cloudGen}`}
             onSelect={openCourse}
             pinnedCourseId={prefsApi.prefs.pinnedCourseId}
             onPin={(id) => prefsApi.pinCourse(id)}
@@ -257,7 +266,7 @@ export default function App() {
 
         {showCourse && courseId && (
           <CourseWorkspace
-            key={courseId}
+            key={`${courseId}-${cloudGen}`}
             courseId={courseId}
             onBackHome={() => {
               setCourseId(null);
@@ -279,6 +288,7 @@ export default function App() {
 
         {tab === 'today' && (
           <TodayView
+            key={`today-${cloudGen}`}
             prefs={prefsApi.prefs}
             queue={prefsApi.prefs.queue}
             onOpen={openLessonNav}

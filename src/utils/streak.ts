@@ -211,8 +211,13 @@ export function kolkataHour(d = new Date()): number {
   return Number(parts.find((p) => p.type === 'hour')?.value ?? '0');
 }
 
+/**
+ * Soft in-app evening nudge ~8–9pm IST when today’s lesson isn’t done yet.
+ * Hour 20 only (20:00–20:59 Asia/Calcutta). Dismissible for the IST day.
+ */
 export function shouldShowSoftBanner(state: DailyStreakState, today = todayKeyKolkata(), now = new Date()): boolean {
-  if (kolkataHour(now) < 20) return false;
+  const hour = kolkataHour(now);
+  if (hour < 20 || hour >= 21) return false;
   if ((state.finishesByDay[today] ?? 0) >= 1) return false;
   if (state.softBannerDismissedDay === today) return false;
   return true;

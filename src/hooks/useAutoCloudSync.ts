@@ -10,14 +10,24 @@ import {
   pushSnapshot,
 } from '../lib/appwrite';
 import { loadPrefs } from '../utils/prefs';
-import { FLUX_LOCAL_CHANGED, withSyncQuiet } from '../lib/syncEvents';
+import {
+  FLUX_LOCAL_CHANGED,
+  notifyFluxCloudApplied,
+  withSyncQuiet,
+} from '../lib/syncEvents';
 
-const PUSH_DEBOUNCE_MS = 2000;
+/** Debounce after tick/untick so device A lands in cloud quickly. */
+const PUSH_DEBOUNCE_MS = 1000;
+/** Live pull while tab visible + signed in — pull only, never a push loop. */
+const LIVE_PULL_MS = 9_000;
 
 /**
- * While signed in: pull/merge on open/focus; debounce-push after local changes.
- * Completes OAuth token callback before getSession so Safari ITP sessions stick.
- * Silent on success.
+ * Invisible auto sync while signed in:
+ * - debounce-push (~1s) after every local progress change
+ * - live pull every ~9s while tab visible
+ * - pull on focus / visibility
+ * - apply remote into UI without full page reload
+ * Completes OAuth token callback before getSession (Safari ITP). Silent on success.
  */
 export function useAutoCloudSync(
   prefs: AppPrefs,
@@ -30,6 +40,7 @@ export function useAutoCloudSync(
   const pushingRef = useRef(false);
   const pullingRef = useRef(false);
   const timerRef = useRef<number | null>(null);
+  const livePullRef = useRef<number | null>(null);
   const onImportedRef = useRef(onImported);
   const onMarkSyncedRef = useRef(onMarkSynced);
   onImportedRef.current = onImported;
@@ -45,14 +56,33 @@ export function useAutoCloudSync(
       }
     };
 
+    const clearLivePull = () => {
+      if (livePullRef.current != null) {
+        window.clearInterval(livePullRef.current);
+        livePullRef.current = null;
+      }
+    };
+
     const ensureSession = async () => {
       // Token flow may still be in the URL on first paint — finish before getSession.
       await completeOAuthFromUrl();
       return getSession();
     };
 
+    const schedulePush = () => {
+      dirtyRef.current = true;
+      clearTimer();
+      timerRef.current = window.setTimeout(() => {
+        timerRef.current = null;
+        void doPush();
+      }, PUSH_DEBOUNCE_MS);
+    };
+
     const doPush = async () => {
-      if (pushingRef.current) return;
+      if (pushingRef.current) {
+        dirtyRef.current = true;
+        return;
+      }
       const session = await ensureSession();
       if (!session?.user) {
         dirtyRef.current = false;
@@ -75,6 +105,8 @@ export function useAutoCloudSync(
         console.warn('[flux auto-sync] push failed', err);
       } finally {
         pushingRef.current = false;
+        // A tick landed during the in-flight push — schedule another.
+        if (dirtyRef.current) schedulePush();
       }
     };
 
@@ -111,14 +143,12 @@ export function useAutoCloudSync(
           onImportedRef.current(loadPrefs());
           onMarkSyncedRef.current();
         });
+        notifyFluxCloudApplied();
 
         // If merge kept local-only progress, push combined snapshot back.
-        const mergedCourseKeys = Object.keys(merged.courseStates).sort().join(',');
-        const remoteCourseKeys = Object.keys(remote.courseStates).sort().join(',');
         const mergedBigger =
           JSON.stringify(merged.courseStates) !== JSON.stringify(remote.courseStates) ||
-          JSON.stringify(merged.prefs.schedule) !== JSON.stringify(remote.prefs.schedule) ||
-          mergedCourseKeys !== remoteCourseKeys;
+          JSON.stringify(merged.prefs.schedule) !== JSON.stringify(remote.prefs.schedule);
         if (mergedBigger) {
           pullingRef.current = false;
           dirtyRef.current = true;
@@ -131,17 +161,18 @@ export function useAutoCloudSync(
       }
     };
 
-    const schedulePush = () => {
-      dirtyRef.current = true;
-      clearTimer();
-      timerRef.current = window.setTimeout(() => {
-        timerRef.current = null;
-        void doPush();
-      }, PUSH_DEBOUNCE_MS);
+    const startLivePull = () => {
+      clearLivePull();
+      if (document.visibilityState !== 'visible') return;
+      livePullRef.current = window.setInterval(() => {
+        if (document.visibilityState !== 'visible') return;
+        void doPull();
+      }, LIVE_PULL_MS);
     };
 
     const onVisibility = () => {
       if (document.visibilityState === 'hidden') {
+        clearLivePull();
         if (dirtyRef.current) {
           clearTimer();
           void doPush();
@@ -149,6 +180,7 @@ export function useAutoCloudSync(
         return;
       }
       void doPull();
+      startLivePull();
     };
 
     const onFocus = () => {
@@ -156,6 +188,7 @@ export function useAutoCloudSync(
     };
 
     void doPull();
+    startLivePull();
 
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('focus', onFocus);
@@ -164,6 +197,7 @@ export function useAutoCloudSync(
 
     return () => {
       clearTimer();
+      clearLivePull();
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('focus', onFocus);
       window.removeEventListener(FLUX_LOCAL_CHANGED, schedulePush);

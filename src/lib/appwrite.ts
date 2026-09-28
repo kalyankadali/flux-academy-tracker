@@ -18,14 +18,9 @@ const endpoint =
 const projectId =
   (import.meta.env.VITE_APPWRITE_PROJECT_ID as string | undefined)?.trim() || DEFAULT_PROJECT_ID;
 
-/** Prefer this name; kept as cloud-agnostic “configured” check. */
+/** Cloud sync ready when Appwrite endpoint + project are set. */
 export function isCloudConfigured(): boolean {
   return Boolean(endpoint && projectId);
-}
-
-/** @deprecated Use isCloudConfigured — shim for older call sites. */
-export function isSupabaseConfigured(): boolean {
-  return isCloudConfigured();
 }
 
 export function isAppwriteConfigured(): boolean {
@@ -37,7 +32,6 @@ export type AuthUser = {
   email?: string;
 };
 
-/** Shape compatible with SyncPanel’s former Supabase Session usage. */
 export type AuthSession = {
   user: AuthUser;
 };

@@ -62,6 +62,12 @@ export function TodayView({
   const weekKey = isoWeekKey();
   const sprintFocus = isEcommerceFocusClearDay(todayIST);
   const [showClose, setShowClose] = useState(false);
+  /** Re-check soft evening streak nudge when the IST hour crosses 20. */
+  const [nowTick, setNowTick] = useState(() => Date.now());
+  useEffect(() => {
+    const id = window.setInterval(() => setNowTick(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
   const [focusDraft, setFocusDraft] = useState(prefs.weeklyFocusNote ?? '');
   const schedule = prefs.schedule;
   const sprintHref = COURSES.find((c) => c.id === 'ecommerce-ai-sprint')?.url || SPRINT_URL;
@@ -132,7 +138,7 @@ export function TodayView({
     () => viewStreak(prefs.dailyStreak, todayIST),
     [prefs.dailyStreak, todayIST],
   );
-  const showSoftStreakBanner = shouldShowSoftBanner(prefs.dailyStreak, todayIST);
+  const showSoftStreakBanner = shouldShowSoftBanner(prefs.dailyStreak, todayIST, new Date(nowTick));
   const yesterdayIST = addDaysISO(todayIST, -1);
   const yesterdayOpen =
     (prefs.dailyStreak.finishesByDay[yesterdayIST] ?? 0) < 1 &&
@@ -240,7 +246,7 @@ export function TodayView({
       {!sprintFocus && showSoftStreakBanner && (
         <div className="rounded-3xl border border-stone-200 bg-white/90 p-4 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
           <div className="flex items-start justify-between gap-3">
-            <p className="text-sm text-stone-600 dark:text-stone-300">One lesson keeps the streak.</p>
+            <p className="text-sm text-stone-600 dark:text-stone-300">Evening nudge — one lesson keeps the streak.</p>
             <button
               type="button"
               className="shrink-0 text-xs text-stone-400 underline underline-offset-2"

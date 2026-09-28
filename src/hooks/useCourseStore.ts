@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getCourseById } from '../data/courses';
 import type { AppState, CourseData, Lesson, WinEntry } from '../types';
 import { todayKey, todayKeyKolkata, computeStreak } from '../utils/dates';
 import { isLessonComplete, overallProgress, findNextIncompleteLesson } from '../utils/progress';
 import { celebrate } from '../utils/celebrate';
 import { loadCourseState, saveCourseState } from '../utils/storage';
+import { FLUX_CLOUD_APPLIED } from '../lib/syncEvents';
 import { loadPrefs, savePrefs } from '../utils/prefs';
 import { recordFinish } from '../utils/streak';
 import type { DailyStreakState, MainShare } from '../types';
@@ -41,10 +42,25 @@ export function useCourseStore(courseId: string, firstWin?: FirstWinOpts) {
   );
   const [toasts, setToasts] = useState<Toast[]>([]);
 
+  const skipPushNotifyRef = useRef(false);
+
   useEffect(() => {
     if (!courseId) return;
-    saveCourseState(courseId, state);
+    const quiet = skipPushNotifyRef.current;
+    skipPushNotifyRef.current = false;
+    saveCourseState(courseId, state, { quiet });
   }, [courseId, state]);
+
+  // Cloud pull wrote newer progress — refresh open course without full page reload.
+  useEffect(() => {
+    const onCloud = () => {
+      if (!courseId) return;
+      skipPushNotifyRef.current = true;
+      setState(loadCourseState(courseId, course.modules));
+    };
+    window.addEventListener(FLUX_CLOUD_APPLIED, onCloud);
+    return () => window.removeEventListener(FLUX_CLOUD_APPLIED, onCloud);
+  }, [courseId, course.modules]);
 
   const pushToast = useCallback((message: string, tone: Toast['tone'] = 'win') => {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;

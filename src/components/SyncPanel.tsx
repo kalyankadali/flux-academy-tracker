@@ -146,8 +146,8 @@ export function SyncPanel({
               <p className="mt-1 text-xs text-stone-400">Last synced: {lastSyncedLabel}</p>
             )}
             <p className="mt-1 text-xs text-stone-400">
-              Use the same Google account on every device. Changes push in the background; opening
-              the app pulls the latest.
+              Use the same Google account on every device. Changes sync in the background while
+              this tab is open; focus refreshes the latest.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <button

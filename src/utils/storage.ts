@@ -49,9 +49,13 @@ export function loadCourseState(courseId: string, seedModules: Module[]): AppSta
   }
 }
 
-export function saveCourseState(courseId: string, state: AppState): void {
+export function saveCourseState(
+  courseId: string,
+  state: AppState,
+  opts?: { quiet?: boolean },
+): void {
   localStorage.setItem(courseStorageKey(courseId), JSON.stringify(state));
-  notifyFluxLocalChanged();
+  if (!opts?.quiet) notifyFluxLocalChanged();
 }
 
 /** Peek saved modules for home-screen progress without mutating storage. */

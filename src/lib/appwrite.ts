@@ -321,6 +321,7 @@ export type ClearHomeDayGraph = {
   fluxLessonKey?: string | null;
   fluxTitle?: string | null;
   cabinMode?: 'heading' | 'arrived' | null;
+  lateStart?: boolean;
   updatedAt?: string;
 };
 

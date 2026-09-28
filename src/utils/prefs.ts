@@ -129,6 +129,7 @@ export function loadPrefs(): AppPrefs {
                 (parsed.clearHomeDay as { cabinMode?: unknown }).cabinMode === 'arrived'
                   ? ((parsed.clearHomeDay as { cabinMode: 'heading' | 'arrived' }).cabinMode)
                   : null,
+              lateStart: !!(parsed.clearHomeDay as { lateStart?: unknown }).lateStart,
               updatedAt:
                 typeof (parsed.clearHomeDay as { updatedAt?: unknown }).updatedAt === 'string'
                   ? (parsed.clearHomeDay as { updatedAt: string }).updatedAt

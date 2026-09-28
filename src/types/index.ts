@@ -144,6 +144,7 @@ export interface AppPrefs {
     lifeDerailed: boolean;
     fluxDone: boolean;
     cabinMode: 'heading' | 'arrived' | null;
+    lateStart: boolean;
     updatedAt: string;
   } | null;
 }

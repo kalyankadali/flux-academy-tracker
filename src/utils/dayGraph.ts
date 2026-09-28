@@ -22,6 +22,7 @@ export type SharedDayGraph = {
   fluxLessonKey: string | null
   fluxTitle: string | null
   cabinMode: 'heading' | 'arrived' | null
+  lateStart: boolean
   updatedAt: string
 }
 
@@ -50,6 +51,7 @@ export function normalizeDayGraph(raw: unknown, _dateKey?: string): SharedDayGra
     fluxTitle: typeof o.fluxTitle === 'string' ? o.fluxTitle : null,
     cabinMode:
       o.cabinMode === 'heading' || o.cabinMode === 'arrived' ? o.cabinMode : null,
+    lateStart: !!o.lateStart,
     updatedAt: typeof o.updatedAt === 'string' ? o.updatedAt : new Date().toISOString(),
   }
 }

@@ -117,6 +117,7 @@ export function TodayView({
             fluxDone: !!g.fluxDone,
             cabinMode:
               g.cabinMode === 'heading' || g.cabinMode === 'arrived' ? g.cabinMode : null,
+            lateStart: !!g.lateStart,
             updatedAt: g.updatedAt || new Date().toISOString(),
           },
         });
@@ -322,6 +323,16 @@ export function TodayView({
             {prefs.clearHomeDay.cabinMode === 'arrived'
               ? 'You arrived at the cabin — this is the deep-work window. One calm lesson is enough.'
               : 'Heading to cabin — windows soft-shifted on Better Home. Settle in, then one lesson here.'}
+          </p>
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
+        </div>
+      )}
+
+      {prefs.clearHomeDay?.lateStart && prefs.clearHomeDay.dateKey === todayIST && !prefs.clearHomeDay.cabinMode && (
+        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
+          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · late start</p>
+          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
+            Morning cabin skipped — Acchi office by 10:00. Pack today&apos;s lesson into the home windows. Soft is fine.
           </p>
           <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
         </div>

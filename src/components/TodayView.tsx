@@ -9,7 +9,8 @@ import { peekCourseModules, loadCourseState } from '../utils/storage';
 import { collectNextLessonKeys } from '../utils/queue';
 import { DoThisNext } from './DoThisNext';
 import { PlanGenerateControl } from './PlanGenerateControl';
-import { IpadTip } from './IpadTip';
+import { IpadTip } from './IpadTip'
+import { InstallChecklist } from './InstallChecklist';
 import { SprintWeekBanner } from './SprintWeekBanner';
 import { WeeklyReviewCard } from './WeeklyReviewCard';
 import { TodayScheduledBlock } from './TodayScheduledBlock';
@@ -190,6 +191,10 @@ export function TodayView({
   const yesterdayOpen =
     (prefs.dailyStreak.finishesByDay[yesterdayIST] ?? 0) < 1 &&
     !prefs.dailyStreak.freezeDates.includes(yesterdayIST);
+  const lifeDayFreeze =
+    !!prefs.clearHomeDay?.lifeDerailed &&
+    (prefs.clearHomeDay.dateKey === yesterdayIST || prefs.clearHomeDay.dateKey === todayIST) &&
+    yesterdayOpen;
 
   const logged = useMemo(() => minutesLoggedToday(COURSES, today), []);
   const plannedMins = useMemo(
@@ -372,11 +377,14 @@ export function TodayView({
 
       {!prefs.tipDismissed && <IpadTip onDismiss={onDismissTip} />}
 
+      {!prefs.tipDismissed && <InstallChecklist onDismiss={onDismissTip} />}
+
       {!sprintFocus && (
         <StreakStrip
           view={dailyView}
           onUseFreeze={yesterdayOpen && onUseFreeze ? onUseFreeze : undefined}
           freezeHintDay={yesterdayOpen ? yesterdayIST : null}
+          lifeDay={lifeDayFreeze}
         />
       )}
 

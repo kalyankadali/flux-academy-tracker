@@ -1,3 +1,5 @@
+import { CT_TAGLINE } from '../utils/calmCopy';
+
 interface Props {
   onDismiss: () => void;
 }
@@ -9,7 +11,7 @@ export function IpadTip({ onDismiss }: Props) {
         <div>
           <p className="text-sm font-medium text-stone-700 dark:text-stone-200">Tip · iPad home screen</p>
           <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
-            On iPad: Share → Add to Home Screen for a calm standalone feel. Opens to Today when you have a plan.
+            On iPad: Share → Add to Home Screen for a calm standalone feel. Opens to Today when you have a plan. · {CT_TAGLINE}
           </p>
         </div>
         <button

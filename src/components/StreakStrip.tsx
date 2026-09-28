@@ -6,12 +6,14 @@ type Props = {
   view: StreakView;
   onUseFreeze?: () => void;
   freezeHintDay?: string | null;
+  /** Better Home life-happens / derail day — softer freeze prompt. */
+  lifeDay?: boolean;
 };
 
 /**
  * Calm streak pill + Mon–Sun dots + optional double-finish badge + freeze affordance.
  */
-export function StreakStrip({ view, onUseFreeze, freezeHintDay }: Props) {
+export function StreakStrip({ view, onUseFreeze, freezeHintDay, lifeDay }: Props) {
   const label =
     view.current === 0
       ? 'Start a calm streak'
@@ -76,14 +78,16 @@ export function StreakStrip({ view, onUseFreeze, freezeHintDay }: Props) {
       {onUseFreeze && freezeHintDay && view.freezesLeftThisWeek > 0 && (
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-orange-100/80 pt-3 dark:border-orange-900/40">
           <p className="text-xs text-stone-600 dark:text-stone-300">
-            Soft day? A freeze keeps the streak gentle.
+            {lifeDay
+              ? 'Life day from Better Home — a freeze keeps the streak gentle.'
+              : 'Soft day? A freeze keeps the streak gentle.'}
           </p>
           <button
             type="button"
             onClick={onUseFreeze}
             className="rounded-xl bg-stone-800 px-3 py-1.5 text-xs font-medium text-white dark:bg-stone-200 dark:text-stone-900"
           >
-            Use a freeze
+            {lifeDay ? 'Life-day freeze' : 'Use a freeze'}
           </button>
         </div>
       )}

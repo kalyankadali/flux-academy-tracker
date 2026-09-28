@@ -23,6 +23,7 @@ import { budgetStatus, minutesLoggedToday, todayScheduledMinutes } from '../util
 import { canUseStreakShield } from '../utils/streakShield';
 import { shouldShowSoftBanner, viewStreak } from '../utils/streak';
 import { StreakStrip, StreakWeeklyStrip } from './StreakStrip';
+import { StreakRing } from './StreakRing';
 import { aggregateLearningPathPct } from '../utils/pathProgress';
 import { THIS_OR_NOTHING } from '../utils/quotes'
 import { fluxWindowCopy, getFluxWindow, FLUX_DEEP_BLOCKS_HINT } from '../utils/dayWindows';
@@ -297,6 +298,7 @@ export function TodayView({
           <WeekExportButton schedule={schedule} />
         </div>
         <p className="text-[13px] leading-5 text-stone-400 dark:text-stone-500">{LIFE_GOAL}</p>
+        <div className="mt-1"><StreakRing days={dailyView.current} /></div>
       </header>
 
       {/* P0 #5–#6: one lesson CTA first paint — no 1488 / guilt numbers above the fold */}

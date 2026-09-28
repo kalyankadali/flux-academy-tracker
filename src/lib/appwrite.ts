@@ -322,6 +322,9 @@ export type ClearHomeDayGraph = {
   fluxTitle?: string | null;
   cabinMode?: 'heading' | 'arrived' | null;
   lateStart?: boolean;
+  dropOffMode?: boolean;
+  energyMood?: 'low' | 'ok' | 'high' | null;
+  energyPackMinutes?: number | null;
   updatedAt?: string;
 };
 

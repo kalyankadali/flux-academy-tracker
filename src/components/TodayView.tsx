@@ -118,6 +118,13 @@ export function TodayView({
             cabinMode:
               g.cabinMode === 'heading' || g.cabinMode === 'arrived' ? g.cabinMode : null,
             lateStart: !!g.lateStart,
+            dropOffMode: !!g.dropOffMode,
+            energyMood:
+              g.energyMood === 'low' || g.energyMood === 'ok' || g.energyMood === 'high'
+                ? g.energyMood
+                : null,
+            energyPackMinutes:
+              typeof g.energyPackMinutes === 'number' ? g.energyPackMinutes : null,
             updatedAt: g.updatedAt || new Date().toISOString(),
           },
         });
@@ -332,9 +339,34 @@ export function TodayView({
         <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
           <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · late start</p>
           <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
-            Morning cabin skipped — Acchi office by 10:00. Pack today&apos;s lesson into the home windows. Soft is fine.
+            Morning cabin Flux skipped — drop-off still happens (Acchi office by 10:00 every day). Home Flux ~11. Soft is fine.
           </p>
           <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
+        </div>
+      )}
+
+      {prefs.clearHomeDay?.dropOffMode && prefs.clearHomeDay.dateKey === todayIST && (
+        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
+          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · drop-off</p>
+          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
+            Drop-off mode on — Acchi office by 10:00 every day. Calm Tracker waits for the home window after.
+          </p>
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">Progress, calmly.</p>
+        </div>
+      )}
+
+      {prefs.clearHomeDay?.energyPackMinutes && prefs.clearHomeDay.dateKey === todayIST && !prefs.clearHomeDay.fluxDone && (
+        <div className="rounded-3xl border border-stone-200 bg-white/90 px-4 py-3 shadow-sm dark:border-stone-700 dark:bg-stone-900/80">
+          <p className="text-xs font-medium uppercase tracking-wider text-stone-500">From Better Home · energy pack</p>
+          <p className="mt-1 text-sm text-stone-700 dark:text-stone-200">
+            Suggested pack · ~{prefs.clearHomeDay.energyPackMinutes}m
+            {prefs.clearHomeDay.energyMood === 'low'
+              ? ' — shorter is enough today.'
+              : prefs.clearHomeDay.energyMood === 'high'
+                ? ' — full lesson fits if a window is open.'
+                : ' — steady mid-length is fine.'}
+          </p>
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">No shame. Soft is fine.</p>
         </div>
       )}
 

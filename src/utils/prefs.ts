@@ -130,6 +130,18 @@ export function loadPrefs(): AppPrefs {
                   ? ((parsed.clearHomeDay as { cabinMode: 'heading' | 'arrived' }).cabinMode)
                   : null,
               lateStart: !!(parsed.clearHomeDay as { lateStart?: unknown }).lateStart,
+              dropOffMode: !!(parsed.clearHomeDay as { dropOffMode?: unknown }).dropOffMode,
+              energyMood:
+                (parsed.clearHomeDay as { energyMood?: unknown }).energyMood === 'low' ||
+                (parsed.clearHomeDay as { energyMood?: unknown }).energyMood === 'ok' ||
+                (parsed.clearHomeDay as { energyMood?: unknown }).energyMood === 'high'
+                  ? ((parsed.clearHomeDay as { energyMood: 'low' | 'ok' | 'high' }).energyMood)
+                  : null,
+              energyPackMinutes:
+                typeof (parsed.clearHomeDay as { energyPackMinutes?: unknown }).energyPackMinutes ===
+                'number'
+                  ? ((parsed.clearHomeDay as { energyPackMinutes: number }).energyPackMinutes)
+                  : null,
               updatedAt:
                 typeof (parsed.clearHomeDay as { updatedAt?: unknown }).updatedAt === 'string'
                   ? (parsed.clearHomeDay as { updatedAt: string }).updatedAt

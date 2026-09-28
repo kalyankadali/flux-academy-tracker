@@ -23,6 +23,9 @@ export type SharedDayGraph = {
   fluxTitle: string | null
   cabinMode: 'heading' | 'arrived' | null
   lateStart: boolean
+  dropOffMode?: boolean
+  energyMood?: 'low' | 'ok' | 'high' | null
+  energyPackMinutes?: number | null
   updatedAt: string
 }
 
@@ -52,6 +55,12 @@ export function normalizeDayGraph(raw: unknown, _dateKey?: string): SharedDayGra
     cabinMode:
       o.cabinMode === 'heading' || o.cabinMode === 'arrived' ? o.cabinMode : null,
     lateStart: !!o.lateStart,
+    dropOffMode: !!o.dropOffMode,
+    energyMood:
+      o.energyMood === 'low' || o.energyMood === 'ok' || o.energyMood === 'high'
+        ? o.energyMood
+        : null,
+    energyPackMinutes: typeof o.energyPackMinutes === 'number' ? o.energyPackMinutes : null,
     updatedAt: typeof o.updatedAt === 'string' ? o.updatedAt : new Date().toISOString(),
   }
 }

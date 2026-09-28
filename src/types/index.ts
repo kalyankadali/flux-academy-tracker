@@ -145,6 +145,9 @@ export interface AppPrefs {
     fluxDone: boolean;
     cabinMode: 'heading' | 'arrived' | null;
     lateStart: boolean;
+    dropOffMode?: boolean;
+    energyMood?: 'low' | 'ok' | 'high' | null;
+    energyPackMinutes?: number | null;
     updatedAt: string;
   } | null;
 }

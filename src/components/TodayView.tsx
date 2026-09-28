@@ -27,6 +27,7 @@ import { aggregateLearningPathPct } from '../utils/pathProgress';
 import { THIS_OR_NOTHING } from '../utils/quotes'
 import { fluxWindowCopy, getFluxWindow, FLUX_DEEP_BLOCKS_HINT } from '../utils/dayWindows';
 import { computeMainShare, mainShareEquals } from '../utils/mainShare';
+import { LIFE_GOAL } from '../utils/calmCopy';
 
 const SPRINT_URL = 'https://flux-academy.com/ecommerce-ai-sprint';
 
@@ -295,6 +296,7 @@ export function TodayView({
           </div>
           <WeekExportButton schedule={schedule} />
         </div>
+        <p className="text-[13px] leading-5 text-stone-400 dark:text-stone-500">{LIFE_GOAL}</p>
       </header>
 
       {/* P0 #5–#6: one lesson CTA first paint — no 1488 / guilt numbers above the fold */}

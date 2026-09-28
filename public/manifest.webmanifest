@@ -1,7 +1,7 @@
 {
   "name": "Calm Tracker",
   "short_name": "Calm Tracker",
-  "description": "Calm Tracker — soft multi-course progress for Flux Academy deep work",
+  "description": "Calm Tracker — Progress, calmly.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fafaf9",

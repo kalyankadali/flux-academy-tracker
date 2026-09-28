@@ -258,7 +258,7 @@ export function TodayView({
       <header className="space-y-1">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Today</p>
+            <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">Calm Tracker · Progress, calmly.</p>
             <h1 className="text-2xl font-semibold text-stone-800 dark:text-stone-100">
               {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })}
             </h1>

@@ -341,7 +341,7 @@ export default function App() {
         </Suspense>
 
         <footer className="mt-12 pb-6 text-center text-xs text-stone-400">
-          Progress saved in your browser · built for calm focus, never guilt
+          Progress, calmly. · Better days. Calm progress. Progress saved in your browser.
         </footer>
       </div>
     </div>

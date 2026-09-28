@@ -69,10 +69,10 @@ export function CoursePicker({
           Calm Tracker
         </p>
         <h1 className="text-2xl font-semibold tracking-tight text-stone-800 dark:text-stone-100 sm:text-3xl">
-          Your calm focus
+          Progress, calmly.
         </h1>
         <p className="max-w-xl text-sm leading-relaxed text-stone-500 dark:text-stone-400">
-          A few courses up front. Pin one as your home base. Progress stays on this device — Sync
+          Better days. Calm progress. A few courses up front. Pin one as your home base. Progress stays on this device — Sync
           when you switch machines.
           {readyCount < cards.length
             ? ` ${readyCount} ready · ${cards.length - readyCount} coming soon.`

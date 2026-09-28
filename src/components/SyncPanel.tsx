@@ -123,7 +123,7 @@ export function SyncPanel({
           Cross-device progress
         </h1>
         <p className="max-w-xl text-sm text-stone-500 dark:text-stone-400">
-          Progress always saves in this browser. Sign in with the same Google account on every
+          Better days. Calm progress. Progress always saves in this browser. Sign in with the same Google account on every
           device — sync runs automatically. Export / Import stays as a calm backup.
         </p>
       </header>

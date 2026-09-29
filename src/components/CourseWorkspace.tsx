@@ -7,6 +7,8 @@ import { useCourseStore } from '../hooks/useCourseStore';
 import { makeLessonKey } from '../utils/lessonKeys';
 import type { AppPrefs, DailyStreakState, LessonKey, MainShare, View } from '../types';
 import { isLessonComplete } from '../utils/progress';
+import { resolveLessonNav, type LessonNavTarget } from '../utils/lessonNav';
+import { todayKey, todayKeyKolkata } from '../utils/dates';
 
 export const DEEP_LINK_KEY = 'flux-open-lesson';
 
@@ -70,6 +72,29 @@ export function CourseWorkspace({
     if (!module || !lesson) return null;
     return { module, lesson };
   }, [view, store.modules]);
+
+  const lessonNav = useMemo(() => {
+    if (!active) return { next: null, prev: null };
+    return resolveLessonNav({
+      courseId,
+      moduleId: active.module.id,
+      lessonId: active.lesson.id,
+      liveModules: store.modules,
+      schedule: prefs.schedule,
+      todayDates: [todayKey(), todayKeyKolkata()],
+    });
+  }, [active, courseId, store.modules, prefs.schedule]);
+
+  /** Stay in Focus mode: same course swaps the view; other course goes through App deep-link nav. */
+  const goToLesson = (t: LessonNavTarget) => {
+    if (t.courseId === courseId) {
+      setView({ type: 'lesson', moduleId: t.moduleId, lessonId: t.lessonId });
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    } else {
+      onOpenQueueLesson(t.courseId, t.moduleId, t.lessonId);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  };
 
   const openLesson = (moduleId: string, lessonId: string) => {
     setView({ type: 'lesson', moduleId, lessonId });
@@ -235,6 +260,9 @@ export function CourseWorkspace({
               onPinLesson={onPinLesson}
               onBack={onExitFocus}
               deferPractice={prefs.deferPractice}
+              nextLesson={lessonNav.next}
+              prevLesson={lessonNav.prev}
+              onNavigate={goToLesson}
               onToggleSubtask={(subtaskId) =>
                 handleToggle(active.module.id, active.lesson.id, subtaskId)
               }

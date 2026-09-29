@@ -7,6 +7,7 @@ import { lessonProgress } from '../utils/progress';
 import { classifySubtask, kindLabel } from '../utils/subtaskKind';
 import { fluxLessonUrl } from '../utils/fluxUrl';
 import { makeLessonKey } from '../utils/lessonKeys';
+import type { LessonNavTarget } from '../utils/lessonNav';
 
 interface Props {
   course: CourseData;
@@ -20,6 +21,18 @@ interface Props {
   onStopTimer: (subtaskId: string) => void;
   onSetActual: (subtaskId: string, minutes: number | null) => void;
   deferPractice?: boolean;
+  /** Next / previous lesson for Focus mode navigation */
+  nextLesson?: LessonNavTarget | null;
+  prevLesson?: LessonNavTarget | null;
+  onNavigate?: (target: LessonNavTarget) => void;
+}
+
+function nextHint(t: LessonNavTarget): string {
+  return `Next: ${t.label}`;
+}
+
+function nextWhy(t: LessonNavTarget): string {
+  return t.source === 'today' ? 'Next in today’s calm plan' : 'Next in course order';
 }
 
 export function LessonDetail({
@@ -34,6 +47,9 @@ export function LessonDetail({
   onStopTimer,
   onSetActual,
   deferPractice = false,
+  nextLesson = null,
+  prevLesson = null,
+  onNavigate,
 }: Props) {
   const lp = lessonProgress(lesson);
   const lessonNum = module.lessons.findIndex((l) => l.id === lesson.id) + 1;
@@ -41,6 +57,8 @@ export function LessonDetail({
   const lessonKey = makeLessonKey(course.id, module.id, lesson.id);
   const isBoss = pinnedLessonKey === lessonKey;
   const fluxUrl = fluxLessonUrl(course, lesson, module);
+  const isComplete = lesson.completed || (lp.total > 0 && lp.done === lp.total);
+  const canNav = !!onNavigate;
 
   const watchDone = lesson.subtasks.some(
     (s) => classifySubtask(s) === 'watch' && s.completed,
@@ -86,6 +104,36 @@ export function LessonDetail({
         </div>
       </div>
 
+      {canNav && (prevLesson || (!isComplete && nextLesson)) && (
+        <nav aria-label="Lesson navigation" className="flex items-start justify-between gap-3">
+          {prevLesson ? (
+            <button
+              type="button"
+              onClick={() => onNavigate!(prevLesson)}
+              title={`Previous: ${prevLesson.label}`}
+              className="shrink-0 rounded-xl px-2 py-1.5 text-xs text-stone-400 transition hover:bg-stone-100 hover:text-stone-600 dark:text-stone-500 dark:hover:bg-stone-800 dark:hover:text-stone-300"
+            >
+              ← Previous
+            </button>
+          ) : (
+            <span />
+          )}
+          {!isComplete && nextLesson && (
+            <button
+              type="button"
+              onClick={() => onNavigate!(nextLesson)}
+              title={nextWhy(nextLesson)}
+              className="min-w-0 max-w-[70%] rounded-xl bg-white px-3 py-1.5 text-right ring-1 ring-stone-200 transition hover:ring-orange-200 dark:bg-stone-900 dark:ring-stone-700 dark:hover:ring-orange-800"
+            >
+              <span className="block text-xs font-medium text-stone-600 dark:text-stone-300">Next lesson →</span>
+              <span className="block truncate text-[11px] text-stone-400 dark:text-stone-500">
+                {nextHint(nextLesson)}
+              </span>
+            </button>
+          )}
+        </nav>
+      )}
+
       <header className="rounded-3xl border border-stone-100 bg-white p-5 shadow-sm dark:border-stone-800 dark:bg-stone-900 sm:p-6">
         <p className="text-xs font-medium uppercase tracking-wider text-orange-600 dark:text-orange-300">
           Module {module.number} · Lesson {lessonNum || 1}
@@ -98,10 +146,31 @@ export function LessonDetail({
         <div className="mt-4">
           <ProgressBar pct={lp.pct} size="md" label={`${lp.done} of ${lp.total} tasks`} />
         </div>
-        {lesson.completed && (
+        {isComplete && (
           <p className="mt-3 rounded-2xl bg-orange-50 px-3 py-2 text-sm text-orange-700 dark:bg-orange-950/40 dark:text-orange-300">
             Lesson complete — well done. Soft celebrate.
           </p>
+        )}
+        {isComplete && canNav && (
+          nextLesson ? (
+            <button
+              type="button"
+              onClick={() => onNavigate!(nextLesson)}
+              title={nextWhy(nextLesson)}
+              className="mt-3 flex w-full flex-col items-center rounded-2xl bg-orange-500 px-4 py-3 text-white shadow-sm transition hover:bg-orange-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 sm:w-auto sm:min-w-[16rem] sm:items-start"
+            >
+              <span className="text-sm font-semibold">Next lesson →</span>
+              <span className="mt-0.5 max-w-full truncate text-xs text-orange-100">{nextHint(nextLesson)}</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onBack}
+              className="mt-3 w-full rounded-2xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-600 sm:w-auto"
+            >
+              All done for today → Today
+            </button>
+          )
         )}
       </header>
 
